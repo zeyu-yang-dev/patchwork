@@ -1,0 +1,19 @@
+# Godot
+.godot/
+/android/
+.import/
+*.import
+
+# .NET
+bin/
+obj/
+.mono/
+
+# IDE
+.idea/
+.vscode/
+
+# System
+.DS_Store
+Thumbs.db
+desktop.ini
