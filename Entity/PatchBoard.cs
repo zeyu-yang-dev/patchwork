@@ -17,23 +17,22 @@ public class PatchBoard
     
     private readonly bool[,] _cells = new bool[Size, Size];
     
-    
-
-    /// <summary>
-    /// Gets the total income provided by all placed patches on this board.
-    /// </summary>
-    /// <returns>The total income.</returns>
-    public int GetIncome()
+    public int Income
     {
-        var income = 0;
-
-        foreach (var placedPatch in _placedPatches)
+        get
         {
-            income += placedPatch.Patch.Income;
-        }
+            var income = 0;
 
-        return income;
+            foreach (var placedPatch in _placedPatches)
+            {
+                income += placedPatch.Patch.Income;
+            }
+
+            return income;
+        }
     }
+
+    
 
     /// <summary>
     /// Checks whether the given patch (with its mirror and rotation)
