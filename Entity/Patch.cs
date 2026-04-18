@@ -1,14 +1,16 @@
-﻿namespace Patchwork.Entity;
+﻿using Patchwork.Data;
 
-public class Patch(int id, bool[,] shape, int moneyCost, int timeCost, int income)
+namespace Patchwork.Entity;
+
+public class Patch(int id)
 {
     public int Id { get; } = id;
 
-    public bool[,] Shape { get; } = shape;
+    public bool[,] Shape { get; } = PatchData.Data[id].shape;
 
-    public int MoneyCost { get; } = moneyCost;
+    public int MoneyCost { get; } = PatchData.Data[id].moneyCost;
 
-    public int TimeCost { get; } = timeCost;
+    public int TimeCost { get; } = PatchData.Data[id].timeCost;
 
-    public int Income { get; } = income;
+    public int Income { get; } = PatchData.Data[id].income;
 }
