@@ -35,6 +35,39 @@ public class PatchBoard
     
 
     /// <summary>
+    /// Checks whether the given patch can be placed anywhere on this board
+    /// in any mirrored state and any rotation.
+    /// </summary>
+    public bool IsPlaceable(Patch patch)
+    {
+
+        foreach (var isMirrored in new[] { false, true })
+        {
+            foreach (var rotation in new[] { 0, 90, 180, 270 })
+            {
+                var placedPatch = new PlacedPatch(patch)
+                {
+                    IsMirrored = isMirrored,
+                    Rotation = rotation
+                };
+
+                for (var row = 0; row < Size; row++)
+                {
+                    for (var col = 0; col < Size; col++)
+                    {
+                        if (IsPlaceable(placedPatch, col, row))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
     /// Checks whether the given patch (with its mirror and rotation)
     /// can be placed on this board
     /// with its center at the given board coordinate.
