@@ -1,4 +1,4 @@
-﻿namespace Patchwork.Entity;
+namespace Patchwork.Domain;
 
 /// <summary>
 /// Represents a patch in its current placement state.

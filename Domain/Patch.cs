@@ -1,6 +1,6 @@
 ﻿using Patchwork.Data;
 
-namespace Patchwork.Entity;
+namespace Patchwork.Domain;
 
 public class Patch(int id)
 {

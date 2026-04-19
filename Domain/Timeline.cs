@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Patchwork.Entity;
+namespace Patchwork.Domain;
 
 /// <summary>
 /// Represents the timeline of the game.
