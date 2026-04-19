@@ -19,6 +19,8 @@ public class PatchShop
     // Index of the first patch among the three selectable patches in clockwise order.
     public int NeutralTokenIndex { get; set; }
 
+    // =================================================================================================================
+    
     public PatchShop()
     {
         Patches = CreateShuffledPatches();
