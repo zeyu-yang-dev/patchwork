@@ -7,7 +7,7 @@ namespace Patchwork.Service;
 /// </summary>
 public class RootService
 {
-    public GameState CurrentGame { get; private set; }
+    public GameState CurrentGame { get; set; }
 
     public GameService GameService { get; }
 
