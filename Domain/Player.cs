@@ -1,4 +1,4 @@
-﻿namespace Patchwork.Entity;
+namespace Patchwork.Domain;
 
 /// <summary>
 /// Represents a player in the game.

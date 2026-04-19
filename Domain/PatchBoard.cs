@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Patchwork.Entity;
+namespace Patchwork.Domain;
 
 /// <summary>
 /// Represents a player's patch board.
