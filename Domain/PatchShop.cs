@@ -25,12 +25,63 @@ public class PatchShop
         NeutralTokenIndex = FindInitialNeutralTokenIndex(Patches);
     }
 
+    // =================================================================================================================
+    
     /// <summary>
-    /// Gets the patch at the given clockwise offset starting from <see cref="NeutralTokenIndex"/>.
+    /// Removes and returns one of the selectable patches by its offset and moves the neutral token accordingly.
     /// </summary>
-    /// <param name="offset">The clockwise offset from the first selectable patch.</param>
+    /// <param name="offset">The clockwise offset from the first selectable patch, can be 0, 1 or 2.</param>
+    /// <returns>The removed patch.</returns>
+    public Patch TakePatch(int offset)
+    {
+        var patch = GetPatchByOffset(offset);
+        var patchIndex = (NeutralTokenIndex + offset) % Patches.Count;
+
+        Patches.RemoveAt(patchIndex);
+
+        if (Patches.Count == 0)
+        {
+            NeutralTokenIndex = 0;
+            return patch;
+        }
+
+        NeutralTokenIndex = patchIndex % Patches.Count;
+
+        return patch;
+    }
+    
+    /// <summary>
+    /// Gets the first three selectable patches in clockwise order.
+    /// </summary>
+    /// <returns>A list containing the currently selectable patches.</returns>
+    public List<Patch> GetSelectablePatches()
+    {
+        return GetPatchesInRange(0, Math.Min(3, Patches.Count));
+    }
+
+    /// <summary>
+    /// Gets all patches that come after the selectable patches in clockwise order.
+    /// </summary>
+    /// <returns>A list containing all non-selectable patches after the first three selectable patches.</returns>
+    public List<Patch> GetUnselectablePatches()
+    {
+        if (Patches.Count <= 3)
+        {
+            return [];
+        }
+
+        return GetPatchesInRange(3, Patches.Count - 3);
+    }
+
+    
+    // =================================================================================================================
+
+    /// <summary>
+    /// Gets the patch at the given clockwise offset starting from the neutral token.
+    /// </summary>
+    /// <param name="offset">The clockwise offset from the first selectable patch, can be 0, 1 or 2.</param>
     /// <returns>The patch at the specified offset.</returns>
-    public Patch GetPatchByOffset(int offset)
+    private Patch GetPatchByOffset(int offset)
     {
         if (Patches.Count == 0)
         {
@@ -45,30 +96,26 @@ public class PatchShop
         var index = (NeutralTokenIndex + offset) % Patches.Count;
         return Patches[index];
     }
-
+    
     /// <summary>
-    /// Gets the first three selectable patches in clockwise order.
+    /// Gets a list of patches in clockwise order starting from the given offset relative to the neutral token.
     /// </summary>
-    /// <returns>A list containing the currently selectable patches.</returns>
-    public List<Patch> GetSelectablePatches()
+    /// <param name="startOffset">The clockwise offset of the first patch to include.</param>
+    /// <param name="count">The number of patches to include.</param>
+    /// <returns>A list of patches in clockwise order.</returns>
+    private List<Patch> GetPatchesInRange(int startOffset, int count)
     {
-        return GetPatchesInRange(0, Math.Min(3, Patches.Count));
-    }
+        var patches = new List<Patch>(count);
 
-    /// <summary>
-    /// Gets all patches that come after the selectable patches in clockwise order.
-    /// </summary>
-    /// <returns>A list containing all non-selectable patches after the first three selectable patches.</returns>
-    public List<Patch> GetPatchesAfterSelectable()
-    {
-        if (Patches.Count <= 3)
+        for (var offset = startOffset; offset < startOffset + count; offset++)
         {
-            return [];
+            var index = (NeutralTokenIndex + offset) % Patches.Count;
+            patches.Add(Patches[index]);
         }
 
-        return GetPatchesInRange(3, Patches.Count - 3);
+        return patches;
     }
-
+    
     private static List<Patch> CreateShuffledPatches()
     {
         var patches = new List<Patch>();
@@ -87,23 +134,5 @@ public class PatchShop
     {
         var smallestPatchIndex = patches.FindIndex(smallestPatch => smallestPatch.Id == SmallestPatchId);
         return (smallestPatchIndex + 1) % patches.Count;
-    }
-
-    /// <summary>
-    /// Gets a list of patches in clockwise order starting from the given offset relative to <see cref="NeutralTokenIndex"/>.
-    /// </summary>
-    /// <param name="startOffset">The clockwise offset of the first patch to include.</param>
-    /// <param name="count">The number of patches to include.</param>
-    /// <returns>A list of patches in clockwise order.</returns>
-    private List<Patch> GetPatchesInRange(int startOffset, int count)
-    {
-        var patches = new List<Patch>(count);
-
-        for (var offset = startOffset; offset < startOffset + count; offset++)
-        {
-            patches.Add(GetPatchByOffset(offset));
-        }
-
-        return patches;
     }
 }
