@@ -89,6 +89,31 @@ public class PlayerActionService(RootService rootService)
 
         return buyablePatchOffsets;
     }
+    
+    public void PlacePatch()
+    {
+        var currentGame = rootService.CurrentGame
+                          ?? throw new InvalidOperationException("There is no current game.");
+        var currentPlacedPatch = currentGame.CurrentPlacedPatch
+                                 ?? throw new InvalidOperationException("There is no patch waiting to be placed.");
+        var coordinate = currentPlacedPatch.Coordinate
+                         ?? throw new InvalidOperationException("The current patch does not have a placement coordinate.");
+        var currentPlayer = currentGame.CurrentPlayer;
+
+        currentPlayer.PatchBoard.PlacePatch(currentPlacedPatch, coordinate.col, coordinate.row);
+        currentGame.CurrentPlacedPatch = null;
+
+        // Checks whether the player should be awarded with the bonus.
+        if (!currentGame.Players[0].HasSevenBySevenBonus &&
+            !currentGame.Players[1].HasSevenBySevenBonus &&
+            currentPlayer.PatchBoard.HasFilled7x7Area())
+        {
+            currentPlayer.HasSevenBySevenBonus = true;
+        }
+
+        // Advance always takes place after placing a patch.
+        Advance(currentPlacedPatch.Patch.TimeCost);
+    }
 
     public void BuyPatch(int patchOffset)
     {

@@ -32,7 +32,7 @@ public class PatchBoard
         }
     }
 
-    
+    // =================================================================================================================
 
     /// <summary>
     /// Checks whether the given patch can be placed anywhere on this board
@@ -144,6 +144,8 @@ public class PatchBoard
         }
     }
 
+    // =================================================================================================================
+    
     private bool IsCellOccupied(int col, int row)
     {
         if (!IsInsideBoard(col, row))
