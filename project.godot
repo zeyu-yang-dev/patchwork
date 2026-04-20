@@ -11,8 +11,14 @@ config_version=5
 [application]
 
 config/name="patchwork"
+run/main_scene="uid://13sfseu7pmqx"
 config/features=PackedStringArray("4.6", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
 
 [dotnet]
 
