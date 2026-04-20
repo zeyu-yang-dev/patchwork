@@ -10,7 +10,6 @@ public class RootService
     public GameState CurrentGame { get; set; }
 
     public GameService GameService { get; }
-
     public PlayerActionService PlayerActionService { get; }
 
     public RootService()
