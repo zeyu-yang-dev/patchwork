@@ -37,6 +37,7 @@ public class PlayerActionService(RootService rootService)
         }
 
         // Checks whether special patch positions are reached.
+        // Can't handle multiple special patches, which is not likely to happen.
         for (var i = currentGame.Timeline.RemainingSpecialPatchPositions.Count - 1; i >= 0; i--)
         {
             var specialPatchPosition = currentGame.Timeline.RemainingSpecialPatchPositions[i];
@@ -87,19 +88,16 @@ public class PlayerActionService(RootService rootService)
     
     // =================================================================================================================
 
-    public void BuyPatch(int patchOffset)
+    public void BuyPatch()
     {
         var currentGame = rootService.CurrentGame 
                           ?? throw new InvalidOperationException("There is no current game.");
-
+        var currentPlacedPatch = currentGame.CurrentPlacedPatch
+                                 ?? throw new InvalidOperationException("There is no patch waiting to be bought.");
         var currentPlayer = currentGame.CurrentPlayer;
-        var buyablePatchOffsets = GetBuyablePatchOffsets();
-
-        if (!buyablePatchOffsets.Contains(patchOffset))
-        {
-            throw new InvalidOperationException("The selected patch cannot be bought by the current player.");
-        }
-
+        var selectablePatches = currentGame.PatchShop.GetSelectablePatches();
+        var patchOffset = selectablePatches.FindIndex(patch => patch.Id == currentPlacedPatch.Patch.Id);
+        
         // Removes the path from the patch shop.
         var patch = currentGame.PatchShop.TakePatch(patchOffset);
         // The player pay the price of the patch.
@@ -158,49 +156,4 @@ public class PlayerActionService(RootService rootService)
         // Advance always takes place after placing a patch.
         Advance(currentPlacedPatch.Patch.TimeCost);
     }
-    
-    // =================================================================================================================
-    
-    /// <summary>
-    /// Prepares the selected patch for subsequent transformation and placement.
-    /// </summary>
-    public void TakePatch(int patchOffset)
-    {
-        var currentGame = rootService.CurrentGame
-                          ?? throw new InvalidOperationException("There is no current game.");
-
-        if (currentGame.CurrentPlacedPatch != null)
-        {
-            throw new InvalidOperationException("There is already a patch waiting to be placed.");
-        }
-
-        var buyablePatchOffsets = GetBuyablePatchOffsets();
-
-        if (!buyablePatchOffsets.Contains(patchOffset))
-        {
-            throw new InvalidOperationException("The selected patch cannot be taken by the current player.");
-        }
-
-        var patch = currentGame.PatchShop.GetSelectablePatches()[patchOffset];
-        currentGame.CurrentPlacedPatch = new PlacedPatch(patch);
-    }
-
-    
-    /// <summary>
-    /// The inverse operation of <see cref="TakePatch"/>.
-    /// </summary>
-    public void PutBackPatch()
-    {
-        var currentGame = rootService.CurrentGame
-                          ?? throw new InvalidOperationException("There is no current game.");
-
-        if (currentGame.CurrentPlacedPatch == null)
-        {
-            throw new InvalidOperationException("There is no patch waiting to be put back.");
-        }
-
-        currentGame.CurrentPlacedPatch = null;
-    }
-
-    
 }
