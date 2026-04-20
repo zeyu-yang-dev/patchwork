@@ -37,6 +37,7 @@ public class PlayerActionService(RootService rootService)
         }
 
         // Checks whether special patch positions are reached.
+        // Can't handle multiple special patches, which is not likely to happen.
         for (var i = currentGame.Timeline.RemainingSpecialPatchPositions.Count - 1; i >= 0; i--)
         {
             var specialPatchPosition = currentGame.Timeline.RemainingSpecialPatchPositions[i];

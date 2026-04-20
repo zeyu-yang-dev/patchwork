@@ -48,6 +48,12 @@ public class PatchService(RootService rootService)
     }
     
     // =================================================================================================================
+
+    public void MovePatch(int col, int row)
+    {
+        var currentPlacedPatch = GetCurrentPlacedPatch();
+        currentPlacedPatch.Coordinate = (col, row);
+    }
     
     public void RotateClockwise()
     {
