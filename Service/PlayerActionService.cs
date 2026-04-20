@@ -158,6 +158,49 @@ public class PlayerActionService(RootService rootService)
         // Advance always takes place after placing a patch.
         Advance(currentPlacedPatch.Patch.TimeCost);
     }
+    
+    // =================================================================================================================
+    
+    /// <summary>
+    /// Prepares the selected patch for subsequent transformation and placement.
+    /// </summary>
+    public void TakePatch(int patchOffset)
+    {
+        var currentGame = rootService.CurrentGame
+                          ?? throw new InvalidOperationException("There is no current game.");
+
+        if (currentGame.CurrentPlacedPatch != null)
+        {
+            throw new InvalidOperationException("There is already a patch waiting to be placed.");
+        }
+
+        var buyablePatchOffsets = GetBuyablePatchOffsets();
+
+        if (!buyablePatchOffsets.Contains(patchOffset))
+        {
+            throw new InvalidOperationException("The selected patch cannot be taken by the current player.");
+        }
+
+        var patch = currentGame.PatchShop.GetSelectablePatches()[patchOffset];
+        currentGame.CurrentPlacedPatch = new PlacedPatch(patch);
+    }
+
+    
+    /// <summary>
+    /// The inverse operation of <see cref="TakePatch"/>.
+    /// </summary>
+    public void PutBackPatch()
+    {
+        var currentGame = rootService.CurrentGame
+                          ?? throw new InvalidOperationException("There is no current game.");
+
+        if (currentGame.CurrentPlacedPatch == null)
+        {
+            throw new InvalidOperationException("There is no patch waiting to be put back.");
+        }
+
+        currentGame.CurrentPlacedPatch = null;
+    }
 
     
 }
