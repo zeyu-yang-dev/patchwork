@@ -63,15 +63,57 @@ public class PlayerActionService(RootService rootService)
                 ? otherPlayerIndex
                 : currentPlayerIndex;
     }
+    
+    public void Skip()
+    {
+        var currentGame = rootService.CurrentGame 
+                          ?? throw new InvalidOperationException("There is no current game.");
 
+        if (currentGame.CurrentPlacedPatch != null)
+        {
+            throw new InvalidOperationException("Unable to skip when a patch is selected.");
+        }
+
+        var currentPlayer = currentGame.CurrentPlayer;
+        var otherPlayerIndex = currentGame.CurrentPlayerIndex == 0 ? 1 : 0;
+        var otherPlayer = currentGame.Players[otherPlayerIndex];
+
+        var targetPosition = Math.Min(otherPlayer.TimePosition + 1, currentGame.Timeline.EndPosition);
+        var steps = targetPosition - currentPlayer.TimePosition;
+        
+        currentPlayer.Money += steps;
+        Advance(steps);
+    }
+    
+    // =================================================================================================================
+
+    public void BuyPatch(int patchOffset)
+    {
+        var currentGame = rootService.CurrentGame 
+                          ?? throw new InvalidOperationException("There is no current game.");
+
+        var currentPlayer = currentGame.CurrentPlayer;
+        var buyablePatchOffsets = GetBuyablePatchOffsets();
+
+        if (!buyablePatchOffsets.Contains(patchOffset))
+        {
+            throw new InvalidOperationException("The selected patch cannot be bought by the current player.");
+        }
+
+        // Removes the path from the patch shop.
+        var patch = currentGame.PatchShop.TakePatch(patchOffset);
+        // The player pay the price of the patch.
+        currentPlayer.Money -= patch.MoneyCost;
+    }
+    
     /// <summary>
     /// Gets the offsets of the buyable patches that the current player can both afford and place somewhere on the board.
     /// </summary>
     /// <returns>A list of buyable patch offsets, a subset of {0, 1, 2}.</returns>
     public List<int> GetBuyablePatchOffsets()
     {
-        var currentGame = rootService.CurrentGame
-            ?? throw new InvalidOperationException("There is no current game.");
+        var currentGame = rootService.CurrentGame 
+                          ?? throw new InvalidOperationException("There is no current game.");
 
         var currentPlayer = currentGame.CurrentPlayer;
         var selectablePatches = currentGame.PatchShop.GetSelectablePatches();
@@ -89,15 +131,17 @@ public class PlayerActionService(RootService rootService)
 
         return buyablePatchOffsets;
     }
+
+    // =================================================================================================================
     
     public void PlacePatch()
     {
         var currentGame = rootService.CurrentGame
                           ?? throw new InvalidOperationException("There is no current game.");
-        var currentPlacedPatch = currentGame.CurrentPlacedPatch
+        var currentPlacedPatch = currentGame.CurrentPlacedPatch 
                                  ?? throw new InvalidOperationException("There is no patch waiting to be placed.");
-        var coordinate = currentPlacedPatch.Coordinate
-                         ?? throw new InvalidOperationException("The current patch does not have a placement coordinate.");
+        var coordinate = currentPlacedPatch.Coordinate 
+                         ?? throw new InvalidOperationException("The current patch does not contain a coordinate.");
         var currentPlayer = currentGame.CurrentPlayer;
 
         currentPlayer.PatchBoard.PlacePatch(currentPlacedPatch, coordinate.col, coordinate.row);
@@ -115,22 +159,5 @@ public class PlayerActionService(RootService rootService)
         Advance(currentPlacedPatch.Patch.TimeCost);
     }
 
-    public void BuyPatch(int patchOffset)
-    {
-        var currentGame = rootService.CurrentGame
-            ?? throw new InvalidOperationException("There is no current game.");
-
-        var currentPlayer = currentGame.CurrentPlayer;
-        var buyablePatchOffsets = GetBuyablePatchOffsets();
-
-        if (!buyablePatchOffsets.Contains(patchOffset))
-        {
-            throw new InvalidOperationException("The selected patch cannot be bought by the current player.");
-        }
-
-        // Removes the path from the patch shop.
-        var patch = currentGame.PatchShop.TakePatch(patchOffset);
-        // The player pay the price of the patch.
-        currentPlayer.Money -= patch.MoneyCost;
-    }
+    
 }
