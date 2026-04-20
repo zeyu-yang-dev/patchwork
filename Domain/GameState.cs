@@ -12,6 +12,8 @@ public class GameState
 
     public int CurrentPlayerIndex { get; set; }
     public Player CurrentPlayer => Players[CurrentPlayerIndex];
+
+    public PlacedPatch CurrentPlacedPatch { get; set; }
     
     public PatchShop PatchShop { get; }
     public Timeline Timeline { get; }
