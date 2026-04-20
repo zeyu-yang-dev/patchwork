@@ -33,22 +33,7 @@ public class PlacedPatch(Patch patch)
 
         return currentShape;
     }
-
-    private static bool[,] MirrorShape(bool[,] shape)
-    {
-        var mirroredShape = new bool[5, 5];
-
-        for (var row = 0; row < 5; row++)
-        {
-            for (var col = 0; col < 5; col++)
-            {
-                mirroredShape[row, col] = shape[row, 4 - col];
-            }
-        }
-
-        return mirroredShape;
-    }
-
+    
     private static bool[,] RotateShape(bool[,] shape, int rotation)
     {
         var rotatedShape = shape;
@@ -74,7 +59,7 @@ public class PlacedPatch(Patch patch)
         return rotatedShape;
     }
 
-    private static bool[,] RotateShape90(bool[,] shape)
+    public static bool[,] RotateShape90(bool[,] shape)
     {
         var rotatedShape = new bool[5, 5];
 
@@ -88,5 +73,20 @@ public class PlacedPatch(Patch patch)
         }
 
         return rotatedShape;
+    }
+    
+    public static bool[,] MirrorShape(bool[,] shape)
+    {
+        var mirroredShape = new bool[5, 5];
+
+        for (var row = 0; row < 5; row++)
+        {
+            for (var col = 0; col < 5; col++)
+            {
+                mirroredShape[row, col] = shape[row, 4 - col];
+            }
+        }
+
+        return mirroredShape;
     }
 }

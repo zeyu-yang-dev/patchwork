@@ -11,10 +11,12 @@ public class RootService
 
     public GameService GameService { get; }
     public PlayerActionService PlayerActionService { get; }
+    public PatchService PatchService { get; }
 
     public RootService()
     {
         GameService = new GameService(this);
         PlayerActionService = new PlayerActionService(this);
+        PatchService = new PatchService(this);
     }
 }
