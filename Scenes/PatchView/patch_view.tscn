@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://df6hgke4ce42g"]
+[gd_scene format=3 uid="uid://b8urm7osreuhj"]
 
-[ext_resource type="Script" uid="uid://d26vji27dx21u" path="res://Scenes/PatchView/PatchView.cs" id="1_chb3r"]
+[ext_resource type="Script" path="res://Scenes/PatchView/PatchView.cs" id="1_chb3r"]
 
 [node name="Control" type="Control" unique_id=520127619]
 layout_mode = 3
