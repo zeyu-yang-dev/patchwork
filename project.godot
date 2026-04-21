@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="patchwork"
-run/main_scene="uid://13sfseu7pmqx"
+run/main_scene="res://Scenes/Application/application.tscn"
 config/features=PackedStringArray("4.6", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 

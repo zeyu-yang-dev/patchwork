@@ -1,5 +1,19 @@
-[gd_scene format=3 uid="uid://4ipkmqok57h7"]
+[gd_scene load_steps=5 format=3 uid="uid://4ipkmqok57h7"]
 
-[node name="Panel" type="Panel" unique_id=1209268079]
-offset_right = 40.0
-offset_bottom = 40.0
+[ext_resource type="Script" path="res://Scenes/PatchShop/PatchShop.cs" id="1_2m436"]
+[ext_resource type="PackedScene" uid="uid://df6hgke4ce42g" path="res://Scenes/PatchView/patch_view.tscn" id="2_ibjdd"]
+
+[node name="PatchShop" type="Panel" unique_id=1209268079]
+script = ExtResource("1_2m436")
+custom_minimum_size = Vector2(760, 250)
+offset_right = 760.0
+offset_bottom = 250.0
+
+[node name="PatchView0" parent="." instance=ExtResource("2_ibjdd")]
+layout_mode = 0
+
+[node name="PatchView1" parent="." instance=ExtResource("2_ibjdd")]
+layout_mode = 0
+
+[node name="PatchView2" parent="." instance=ExtResource("2_ibjdd")]
+layout_mode = 0

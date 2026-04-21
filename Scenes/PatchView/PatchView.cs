@@ -6,7 +6,7 @@ namespace Patchwork.Scenes.PatchView;
 public partial class PatchView : Control
 {
     public const int MatrixSize = 5;
-    public const float CellSize = 10.0f;
+    public const float CellSize = 50.0f;
     
     public static readonly Vector2 ViewSize = new(MatrixSize * CellSize, MatrixSize * CellSize);
     public static readonly Vector2 CenterOffset = ViewSize / 2.0f;

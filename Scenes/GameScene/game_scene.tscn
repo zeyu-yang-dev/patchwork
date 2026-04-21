@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://vtb3r6jm12j5" path="res://Assets/Backgrounds/game_scene.png" id="1_2p8i2"]
 [ext_resource type="PackedScene" uid="uid://4ipkmqok57h7" path="res://Scenes/PatchShop/patch_shop.tscn" id="2_04h35"]
 [ext_resource type="PackedScene" uid="uid://bx7tydtemd5lw" path="res://Scenes/PatchBoard/patch_board.tscn" id="3_kr7le"]
+[ext_resource type="Script" uid="uid://dxsh0yehygi0f" path="res://Scenes/GameScene/GameScene.cs" id="4_b4v8s"]
 
 [node name="GameScene" type="Control" unique_id=748340606]
 layout_mode = 3
@@ -11,6 +12,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("4_b4v8s")
 
 [node name="Background" type="TextureRect" parent="." unique_id=1584464432]
 layout_mode = 1
@@ -25,6 +27,14 @@ stretch_mode = 4
 
 [node name="PatchShop" parent="." unique_id=1209268079 instance=ExtResource("2_04h35")]
 layout_mode = 0
+offset_left = 800.0
+offset_top = 200.0
+offset_right = 1560.0
+offset_bottom = 450.0
 
 [node name="PatchBoard" parent="." unique_id=92066056 instance=ExtResource("3_kr7le")]
 layout_mode = 0
+offset_left = 100.0
+offset_top = 530.0
+offset_right = 550.0
+offset_bottom = 980.0
