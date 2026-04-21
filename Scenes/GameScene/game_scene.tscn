@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://13sfseu7pmqx"]
 
 [ext_resource type="Texture2D" uid="uid://vtb3r6jm12j5" path="res://Assets/Backgrounds/game_scene.png" id="1_2p8i2"]
+[ext_resource type="PackedScene" uid="uid://4ipkmqok57h7" path="res://Scenes/PatchShop/patch_shop.tscn" id="2_04h35"]
+[ext_resource type="PackedScene" uid="uid://bx7tydtemd5lw" path="res://Scenes/PatchBoard/patch_board.tscn" id="3_kr7le"]
 
 [node name="GameScene" type="Control" unique_id=748340606]
 layout_mode = 3
@@ -21,12 +23,8 @@ texture = ExtResource("1_2p8i2")
 expand_mode = 3
 stretch_mode = 4
 
-[node name="PatchBoard" type="Panel" parent="." unique_id=1102537589]
+[node name="PatchShop" parent="." unique_id=1209268079 instance=ExtResource("2_04h35")]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
 
-[node name="PatchShop" type="Panel" parent="." unique_id=739693302]
+[node name="PatchBoard" parent="." unique_id=92066056 instance=ExtResource("3_kr7le")]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
