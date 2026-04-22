@@ -17,14 +17,17 @@ public partial class PatchBoard : Panel
 	}
 
 	private const int BoardSize = 9;
-	private const float BoardPixelSize = 450.0f;
-	private const float BoardCellSize = BoardPixelSize / BoardSize;
+	private const float BoardCellSize = 50.0f;
+	private const float BoardPixelSize = BoardSize * BoardCellSize;
+	 
 
 	private RootService _rootService;
 	private Control _placedPatchLayer;
 	private Patchwork.Scenes.ActivePatchView.ActivePatchView _activePatchView;
 	private InteractionState _interactionState = InteractionState.Idle;
 	private Vector2 _dragOffsetFromPatchCenter;
+	
+	// =================================================================================================================
 
 	public override void _Ready()
 	{
@@ -90,6 +93,8 @@ public partial class PatchBoard : Panel
 				break;
 		}
 	}
+	
+	// =================================================================================================================
 
 	public void Initialize(RootService rootService)
 	{
@@ -156,6 +161,8 @@ public partial class PatchBoard : Panel
 		_activePatchView.Visible = false;
 		_activePatchView.Modulate = Colors.White;
 	}
+	
+	// =================================================================================================================
 
 	private void UpdateFreeDragPosition(Vector2 patchCenterGlobal)
 	{

@@ -4,6 +4,8 @@ using Patchwork.Domain;
 
 namespace Patchwork.Scenes.ActivePatchView;
 
+// 在PatchBoard运行过程中才被实例化
+// 运行时它会被PatchBoard动态加到场景树里
 public partial class ActivePatchView : Control
 {
     public event Action<ActivePatchView, Vector2> DragStarted;
@@ -45,7 +47,7 @@ public partial class ActivePatchView : Control
         }
 
         var dragOffsetFromCenter = GetLocalMousePosition() - CenterOffset;
-        // 通知所有订阅了DragStarted事件的订阅者执行对应的函数
+        // 通知所有订阅了DragStarted事件的订阅者执行对应的函数，需要把那个函数的参数从这里传入
         DragStarted?.Invoke(this, dragOffsetFromCenter);
         AcceptEvent();
     }
