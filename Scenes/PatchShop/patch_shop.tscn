@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://4ipkmqok57h7"]
+
+[ext_resource type="Script" path="res://Scenes/PatchShop/PatchShop.cs" id="1_2m436"]
+
+[node name="PatchShop" type="Panel" unique_id=1209268079]
+script = ExtResource("1_2m436")
+custom_minimum_size = Vector2(760, 250)
+offset_right = 760.0
+offset_bottom = 250.0
+
+[node name="PatchButton0" type="TextureButton" parent="."]
+layout_mode = 0
+offset_right = 250.0
+offset_bottom = 250.0
+ignore_texture_size = true
+
+[node name="PatchButton1" type="TextureButton" parent="."]
+layout_mode = 0
+offset_right = 250.0
+offset_bottom = 250.0
+ignore_texture_size = true
+
+[node name="PatchButton2" type="TextureButton" parent="."]
+layout_mode = 0
+offset_right = 250.0
+offset_bottom = 250.0
+ignore_texture_size = true
