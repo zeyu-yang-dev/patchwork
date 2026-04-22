@@ -17,16 +17,19 @@ public partial class PatchBoard : Panel
 		HasPlacedPatch, // _activePatchView已经被board捕获
 		DraggingFromBoard // 从board上开始再次拖动
 	}
+	private InteractionState _interactionState = InteractionState.Idle;
 
 	private const int BoardSize = 9;
 	private const float BoardCellSize = 50.0f;
 	private const float BoardPixelSize = BoardSize * BoardCellSize;
-	 
-
+	
 	private RootService _rootService;
 	
 	private Patchwork.Scenes.ActivePatchView.ActivePatchView _activePatchView;
-	private InteractionState _interactionState = InteractionState.Idle;
+	// 在PatchBoard内部的坐标
+	private Vector2 ActivePatchViewCenterLocal => _activePatchView.Position + ActivePatchView.ActivePatchView.TopLeftToCenterOffset;
+	private Vector2 ActivePatchViewCenterGlobal => GetGlobalTransform() * ActivePatchViewCenterLocal;
+	
 	// 从_activePatchView中心指向光标位置的向量
 	// 需要在从shop开始拖动，或者从board开始拖动后更新
 	private Vector2 _centerToCursorOffset;
@@ -78,8 +81,8 @@ public partial class PatchBoard : Panel
 	}
 
 	// 当有输入事件产生，并且这个事件还没有被前面的输入处理链消费掉时，Godot 会把它传进来
-	// 目前这个函数处理鼠标松开事件
-	public override void _UnhandledInput(InputEvent @event)
+	// 目前这个函数只处理鼠标松开事件
+	public override void _Input(InputEvent @event)
 	{
 		// 只响应鼠标松开
 		if (@event is not InputEventMouseButton { ButtonIndex: MouseButton.Left, Pressed: false })
@@ -87,17 +90,36 @@ public partial class PatchBoard : Panel
 			return;
 		}
 
-		switch (_interactionState)
-		{
-			case InteractionState.DraggingFromShop:
-				CancelDragFromShop();
-				_interactionState = InteractionState.Idle;
-				break;
+		// switch (_interactionState)
+		// {
+		// 	case InteractionState.DraggingFromShop:
+		// 		CancelDragFromShop();
+		// 		_interactionState = InteractionState.Idle;
+		// 		break;
+		// 	
+		// 	case InteractionState.DraggingFromBoard:
+		// 		_interactionState = InteractionState.HasPlacedPatch;
+		// 		break;
+		// }
+
+		
+		
 			
-			case InteractionState.DraggingFromBoard:
-				_interactionState = InteractionState.HasPlacedPatch;
-				break;
+		if (ContainsGlobalPoint(ActivePatchViewCenterGlobal))
+		{
+				
+			UpdatePlacement();
+			_interactionState = InteractionState.HasPlacedPatch;
+				
 		}
+		else
+		{
+			// 从视觉上将patch放回shop
+			CancelDragFromShop();
+			_interactionState = InteractionState.Idle;
+				
+		}
+			
 	}
 	
 	// =================================================================================================================
@@ -147,12 +169,7 @@ public partial class PatchBoard : Panel
 
 	
 
-	// 判断一个“全局坐标点”是否落在当前 PatchBoard 这个控件的屏幕范围内
-	public bool ContainsGlobalPoint(Vector2 globalPoint)
-	{
-		// GetGlobalRect()是 Control 的方法，返回当前 PatchBoard 在全局坐标系中的矩形区域
-		return GetGlobalRect().HasPoint(globalPoint);
-	}
+	
 
 	// 从视觉上将patch放回shop(Domain层的shop中的patch其实一直没有减少)
 	// 在 从shop拖出patch但没有拖入 或者 将已经放置的patch拖出board 时调用
@@ -171,6 +188,36 @@ public partial class PatchBoard : Panel
 	}
 	
 	// =================================================================================================================
+	
+	private void UpdatePlacement()
+	{
+		
+		// 向下取整
+		var col = Mathf.FloorToInt(ActivePatchViewCenterLocal.X / BoardCellSize);
+		var row = Mathf.FloorToInt(ActivePatchViewCenterLocal.Y / BoardCellSize);
+
+		// 也就是说，没拖动进board或者拖出了board
+		if (!IsInsideBoard(col, row))
+		{
+			return;
+		}
+
+		_rootService.PatchService.MovePatch(col, row);
+		
+		// 将_activePatchView按照格子吸附
+		_activePatchView.Position = GetDestinyCoordinateForPatch(col, row);
+		_activePatchView.Modulate = IsCurrentPatchPlaceable(col, row)
+			? Colors.White
+			: new Color(1.0f, 1.0f, 1.0f, 0.35f);
+		_activePatchView.Visible = true;
+	}
+	
+	// 判断一个“全局坐标点”是否落在当前 PatchBoard 这个控件的屏幕范围内
+	private bool ContainsGlobalPoint(Vector2 globalPoint)
+	{
+		// GetGlobalRect()是 Control 的方法，返回当前 PatchBoard 在全局坐标系中的矩形区域
+		return GetGlobalRect().HasPoint(globalPoint);
+	}
 
 	// 使_activePatchView在被拖动时移动
 	private void UpdateActivePatchPosition(Vector2 patchCenterGlobal)
@@ -182,28 +229,7 @@ public partial class PatchBoard : Panel
 		_activePatchView.Visible = true;
 	}
 
-	private void UpdatePlacement(Vector2 patchCenterGlobal)
-	{
-		// 把patch中心点的绝对坐标转换为patch中心点在board参考系中的相对坐标
-		var patchCenterLocal = GetGlobalTransform().AffineInverse() * patchCenterGlobal;
-		// 向下取整
-		var col = Mathf.FloorToInt(patchCenterLocal.X / BoardCellSize);
-		var row = Mathf.FloorToInt(patchCenterLocal.Y / BoardCellSize);
-
-		// 也就是说，没拖动进board或者拖出了board
-		if (!IsInsideBoard(col, row))
-		{
-			return;
-		}
-
-		_rootService.PatchService.MovePatch(col, row);
-		// 将_activePatchView按照格子吸附
-		_activePatchView.Position = GetDestinyCoordinateForPatch(col, row);
-		_activePatchView.Modulate = IsCurrentPatchPlaceable(col, row)
-			? Colors.White
-			: new Color(1.0f, 1.0f, 1.0f, 0.35f);
-		_activePatchView.Visible = true;
-	}
+	
 
 	private bool IsCurrentPatchPlaceable(int col, int row)
 	{
