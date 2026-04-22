@@ -19,10 +19,10 @@ public partial class GameScene : Control
 
 		patchShop.PatchSelected += (patchOffset, sourceCenterGlobal, dragOffsetFromCenter) =>
 		{
-			patchShop.HidePatchAtOffset(patchOffset);
+			patchShop.HideButtonAtOffset(patchOffset);
 			patchBoard.BeginDragFromShop(patchOffset, sourceCenterGlobal, dragOffsetFromCenter);
 		};
 
-		patchBoard.DragCancelled += patchShop.RestoreHiddenPatch;
+		patchBoard.DragCancelled += patchShop.RestoreHiddenButton;
 	}
 }
