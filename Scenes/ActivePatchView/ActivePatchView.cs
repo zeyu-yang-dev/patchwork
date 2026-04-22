@@ -13,7 +13,7 @@ public partial class ActivePatchView : Control
     public const int MatrixSize = 5;
     public const float CellSize = 50.0f;
     public static readonly Vector2 ViewSize = new(MatrixSize * CellSize, MatrixSize * CellSize);
-    public static readonly Vector2 CenterOffset = ViewSize / 2.0f; // 从中心到左上角的距离
+    public static readonly Vector2 TopLeftToCenterOffset = ViewSize / 2.0f; // 从中心到左上角的距离
 
     private const string OriginalTextureDirectory = "res://Assets/Patches/original";
     private const string MirroredTextureDirectory = "res://Assets/Patches/mirrored";
@@ -27,7 +27,7 @@ public partial class ActivePatchView : Control
     public override void _Ready()
     {
         Size = ViewSize;
-        PivotOffset = CenterOffset;
+        PivotOffset = TopLeftToCenterOffset;
         MouseFilter = MouseFilterEnum.Pass;
     }
 
@@ -46,7 +46,7 @@ public partial class ActivePatchView : Control
             return;
         }
 
-        var dragOffsetFromCenter = GetLocalMousePosition() - CenterOffset;
+        var dragOffsetFromCenter = GetLocalMousePosition() - TopLeftToCenterOffset;
         // 通知所有订阅了DragStarted事件的订阅者执行对应的函数，需要把那个函数的参数从这里传入
         DragStarted?.Invoke(this, dragOffsetFromCenter);
         AcceptEvent();
@@ -63,10 +63,10 @@ public partial class ActivePatchView : Control
             return;
         }
 
-        // 1. 把绘图原点移动到 CenterOffset 2. 按 GetCurrentRotationRadians() 给出的角度旋转 3. 缩放保持 1
-        DrawSetTransform(CenterOffset, GetCurrentRotationRadians(), Vector2.One);
+        // 1. 把绘图原点移动到 PatchCenterRelativePosition 2. 按 GetCurrentRotationRadians() 给出的角度旋转 3. 缩放保持 1
+        DrawSetTransform(TopLeftToCenterOffset, GetCurrentRotationRadians(), Vector2.One);
         // 实际绘制：1.按照texture 2. 从 (-125,-125) 开始画一个250x250的矩形  3. 不平铺贴图
-        DrawTextureRect(texture, new Rect2(-CenterOffset, ViewSize), false);
+        DrawTextureRect(texture, new Rect2(-TopLeftToCenterOffset, ViewSize), false);
         // 在把前面的绘图变换恢复成默认状态
         DrawSetTransform(Vector2.Zero, 0.0f, Vector2.One);
     }

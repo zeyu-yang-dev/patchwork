@@ -7,6 +7,7 @@ namespace Patchwork.Scenes.PatchShop;
 
 public partial class PatchShop : Panel
 {
+    // 1. 按钮的index 2. 按钮的中心点的全局坐标 3. 从按钮中心指向鼠标位置的矢量
     public event Action<int, Vector2, Vector2> PatchSelected;
 
     private const string OriginalTextureDirectory = "res://Assets/Patches/original";
@@ -36,6 +37,7 @@ public partial class PatchShop : Panel
         for (var i = 0; i < _Buttons.Length; i++)
         {
             var patchOffset = i;
+            // 指定3个TextureButton的位置和大小
             _Buttons[i].Position = ButtonPositions[i];
             _Buttons[i].Size = ButtonSize;
             // 订阅ButtonDown事件
@@ -43,6 +45,8 @@ public partial class PatchShop : Panel
         }
     }
 
+    // =================================================================================================================
+    
     public void Initialize(RootService rootService)
     {
         _rootService = rootService;
@@ -79,7 +83,7 @@ public partial class PatchShop : Panel
         }
     }
 
-    public void HideButtonAtOffset(int patchOffset)
+    public void HideButtonAtIndex(int patchOffset)
     {
         _hiddenButtonIndex = patchOffset;
         Refresh();
@@ -91,6 +95,11 @@ public partial class PatchShop : Panel
         Refresh();
     }
 
+    // =================================================================================================================
+    
+    // 在_Ready()中订阅了ButtonDown事件
+    // 先检查被按下的按钮对应的patchOffset是否buyable，
+    // 如果是buyable的，发出PatchSelected事件。
     private void OnButtonDown(int patchOffset)
     {
         if (_rootService == null)
@@ -106,11 +115,11 @@ public partial class PatchShop : Panel
         }
 
         var button = _Buttons[patchOffset];
-        // 这个按钮的中心点在屏幕上的坐标
-        var sourceCenterGlobal = button.GetGlobalRect().GetCenter();
-        var dragOffsetFromCenter = GetGlobalMousePosition() - sourceCenterGlobal;
+        var buttonCenterGlobal = button.GetGlobalRect().GetCenter(); // 这个按钮的中心点在屏幕上的坐标
+        var centerToCursorOffset = GetGlobalMousePosition() - buttonCenterGlobal;
 
-        PatchSelected?.Invoke(patchOffset, sourceCenterGlobal, dragOffsetFromCenter);
+        // 1. 按钮的index 2. 按钮的中心点的全局坐标 3. 从按钮中心指向鼠标位置的矢量
+        PatchSelected?.Invoke(patchOffset, buttonCenterGlobal, centerToCursorOffset);
     }
 
     private static Texture2D LoadButtonTexture(int patchId)
