@@ -36,13 +36,21 @@ public partial class PatchBoardView : Panel
 	
 	// =================================================================================================================
 
+	// _Ready处理场景树内部的事情：1. 子节点获取 2. 节点属性初始化 3. 场景内节点之间的事件连接
 	public override void _Ready()
 	{
-		
 		_activePatchView = GetNode<Patchwork.Scenes.ActivePatchView.ActivePatchView>("ActivePatchView");
 		
 		_activePatchView.DragStarted += OnActivePatchViewDragStarted;
 	}
+	
+	// Initialize处理场景树外部的依赖注入
+	public void Initialize(RootService rootService)
+	{
+		_rootService = rootService;
+	}
+	
+	// =================================================================================================================
 
 	// `_Process()` 是逐帧回调
 	// 只要节点处于可处理状态，Godot 就会在运行中每一帧调用它一次
@@ -126,10 +134,7 @@ public partial class PatchBoardView : Panel
 	
 	// =================================================================================================================
 
-	public void Initialize(RootService rootService)
-	{
-		_rootService = rootService;
-	}
+	
 
 	// 对PatchShop的事件PatchSelected的响应，注意没有直接订阅，而是通过GameScene协调
 	public void StartDragFromShop(int patchOffset, Vector2 buttonCenterGlobal, Vector2 centerToCursorOffset)

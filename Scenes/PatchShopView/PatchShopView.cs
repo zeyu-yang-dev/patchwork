@@ -25,6 +25,9 @@ public partial class PatchShopView : Panel
         new Vector2(510.0f, 0.0f)
     ];
 
+    // =================================================================================================================
+    
+    // _Ready处理场景树内部的事情：1. 子节点获取 2. 节点属性初始化 3. 场景内节点之间的事件连接
     public override void _Ready()
     {
         _Buttons =
@@ -44,15 +47,16 @@ public partial class PatchShopView : Panel
             _Buttons[i].ButtonDown += () => OnButtonDown(patchOffset);
         }
     }
-
-    // =================================================================================================================
     
+    // Initialize处理场景树外部的依赖注入
     public void Initialize(RootService rootService)
     {
         _rootService = rootService;
         Refresh();
     }
 
+    // =================================================================================================================
+    
     public void Refresh()
     {
         if (_rootService?.CurrentGame == null)
