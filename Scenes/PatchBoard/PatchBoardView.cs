@@ -98,7 +98,7 @@ public partial class PatchBoardView : Panel
 		else
 		{
 			// 从视觉上将patch放回shop
-			CancelDragFromShop();
+			_rootService.PatchService.PutBackPatch();
 			_interactionState = InteractionState.Idle;
 				
 		}
@@ -153,18 +153,11 @@ public partial class PatchBoardView : Panel
 
 	// 从视觉上将patch放回shop(Domain层的shop中的patch其实一直没有减少)
 	// 在 从shop拖出patch但没有拖入 或者 将已经放置的patch拖出board 时调用
-	public void CancelDragFromShop()
-	{
-		// 只影响Domain层的CurrentPlacedPatch
-		_rootService.PatchService.PutBackPatch();
-		
-		// 清空并隐藏_activePatchView
-		// _activePatchView.Clear();
-		_activePatchView.Visible = false;
-		_activePatchView.Modulate = Colors.White;
-		
-		
-	}
+	// public void CancelDragFromShop()
+	// {
+	// 	// 只影响Domain层的CurrentPlacedPatch
+	// 	_rootService.PatchService.PutBackPatch();
+	// }
 	
 	// =================================================================================================================
 	
