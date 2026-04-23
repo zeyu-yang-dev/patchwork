@@ -77,24 +77,22 @@ public partial class ActivePatchView : Control
 	// 拿到一个原始或者镜像过的patch的texture
 	private Texture2D GetCurrentTexture()
 	{
-		var placedPatch = _rootService.CurrentGame.CurrentPlacedPatch;
+		var currentPlacedPatch = _rootService.CurrentGame.CurrentPlacedPatch
+								 ?? throw new InvalidOperationException("CurrentPlacedPatch is null.");
 		
-		var patchId = placedPatch?.Patch.Id;
-		if (patchId == null)
-		{
-			return null;
-		}
-
-		var directory = placedPatch.IsMirrored ? MirroredTextureDirectory : OriginalTextureDirectory;
+		var patchId = currentPlacedPatch.Patch.Id;
+		var directory = currentPlacedPatch.IsMirrored ? MirroredTextureDirectory : OriginalTextureDirectory;
+		
 		return ResourceLoader.Load<Texture2D>($"{directory}/{patchId}.png");
 	}
 
 	// 将rotation的角度转换为弧度
 	private float GetCurrentRotationRadians()
 	{
-		var placedPatch = _rootService.CurrentGame.CurrentPlacedPatch;
+		var currentPlacedPatch = _rootService.CurrentGame.CurrentPlacedPatch
+								 ?? throw new InvalidOperationException("CurrentPlacedPatch is null.");
 		
-		var rotation = placedPatch?.Rotation ?? 0;
+		var rotation = currentPlacedPatch.Rotation;
 		return Mathf.DegToRad(rotation);
 	}
 	
