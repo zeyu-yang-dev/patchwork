@@ -63,6 +63,9 @@ public class PlayerActionService(RootService rootService)
             currentPlayer.TimePosition > otherPlayer.TimePosition
                 ? otherPlayerIndex
                 : currentPlayerIndex;
+        
+        // Notify UI to refresh
+        rootService.NotifyStateChanged();
     }
     
     public void Skip()
@@ -84,6 +87,9 @@ public class PlayerActionService(RootService rootService)
         
         currentPlayer.Money += steps;
         Advance(steps);
+        
+        // Notify UI to refresh
+        rootService.NotifyStateChanged();
     }
     
     // =================================================================================================================
@@ -102,6 +108,9 @@ public class PlayerActionService(RootService rootService)
         var patch = currentGame.PatchShop.TakePatch(patchOffset);
         // The player pay the price of the patch.
         currentPlayer.Money -= patch.MoneyCost;
+        
+        // Notify UI to refresh
+        rootService.NotifyStateChanged();
     }
     
     /// <summary>
@@ -155,5 +164,8 @@ public class PlayerActionService(RootService rootService)
 
         // Advance always takes place after placing a patch.
         Advance(currentPlacedPatch.Patch.TimeCost);
+        
+        // Notify UI to refresh
+        rootService.NotifyStateChanged();
     }
 }

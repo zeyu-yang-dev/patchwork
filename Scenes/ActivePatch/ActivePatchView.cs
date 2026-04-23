@@ -1,6 +1,8 @@
 using System;
 using Godot;
 using Patchwork.Domain;
+using Patchwork.Service;
+
 
 namespace Patchwork.Scenes.ActivePatch;
 
@@ -8,7 +10,8 @@ namespace Patchwork.Scenes.ActivePatch;
 public partial class ActivePatchView : Control
 {
 	public event Action<ActivePatchView, Vector2> DragStarted;
-
+	private RootService _rootService;
+	
 	public const int MatrixSize = 5;
 	public const float CellSize = 50.0f;
 	public static readonly Vector2 ViewSize = new(MatrixSize * CellSize, MatrixSize * CellSize);
@@ -19,7 +22,7 @@ public partial class ActivePatchView : Control
 
 	private TextureRect _textureDisplay;
 
-	public PlacedPatch PlacedPatch { get; private set; }
+	
 
 	// =================================================================================================================
 
@@ -32,6 +35,13 @@ public partial class ActivePatchView : Control
 		_textureDisplay.Size = ViewSize;
 		_textureDisplay.PivotOffset = TopLeftToCenterOffset;
 		RefreshVisual();
+	}
+	
+	// Initialize处理场景树外部的依赖注入
+	public void Initialize(RootService rootService)
+	{
+		_rootService = rootService;
+		_rootService.StateChanged += RefreshVisual;
 	}
 
 	// =================================================================================================================
@@ -46,7 +56,7 @@ public partial class ActivePatchView : Control
 			return;
 		}
 
-		if (PlacedPatch == null)
+		if (_rootService.CurrentGame.CurrentPlacedPatch == null)
 		{
 			return;
 		}
@@ -59,46 +69,42 @@ public partial class ActivePatchView : Control
 
 	// =================================================================================================================
 
-	public void DisplayPlacedPatch(PlacedPatch placedPatch)
-	{
-		PlacedPatch = placedPatch;
-		// 把显示PlacedPatch的工作交给TextureRect子节点
-		RefreshVisual();
-	}
-
-	public void Clear()
-	{
-		PlacedPatch = null;
-		RefreshVisual();
-	}
+	
 
 	// =================================================================================================================
 
-	private void RefreshVisual()
-	{
-		var texture = GetCurrentTexture();
-		_textureDisplay.Texture = texture;
-		_textureDisplay.Rotation = GetCurrentRotationRadians();
-		_textureDisplay.Visible = texture != null;
-	}
+	
 
 	// 拿到一个原始或者镜像过的patch的texture
 	private Texture2D GetCurrentTexture()
 	{
-		var patchId = PlacedPatch?.Patch.Id;
+		var placedPatch = _rootService.CurrentGame.CurrentPlacedPatch;
+		
+		var patchId = placedPatch?.Patch.Id;
 		if (patchId == null)
 		{
 			return null;
 		}
 
-		var directory = PlacedPatch.IsMirrored ? MirroredTextureDirectory : OriginalTextureDirectory;
+		var directory = placedPatch.IsMirrored ? MirroredTextureDirectory : OriginalTextureDirectory;
 		return ResourceLoader.Load<Texture2D>($"{directory}/{patchId}.png");
 	}
 
 	// 将rotation的角度转换为弧度
 	private float GetCurrentRotationRadians()
 	{
-		var rotation = PlacedPatch?.Rotation ?? 0;
+		var placedPatch = _rootService.CurrentGame.CurrentPlacedPatch;
+		
+		var rotation = placedPatch?.Rotation ?? 0;
 		return Mathf.DegToRad(rotation);
+	}
+	
+	// 由Service层驱动的外观刷新函数
+	private void RefreshVisual()
+	{
+		var texture = GetCurrentTexture();
+		_textureDisplay.Texture = texture;
+		_textureDisplay.Rotation = GetCurrentRotationRadians();
+		_textureDisplay.Visible = texture != null;
 	}
 }

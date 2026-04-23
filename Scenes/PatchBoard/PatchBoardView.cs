@@ -49,6 +49,9 @@ public partial class PatchBoardView : Panel
 	public void Initialize(RootService rootService)
 	{
 		_rootService = rootService;
+		_rootService.StateChanged += RefreshVisual;
+		
+		_activePatchView.Initialize(rootService);
 	}
 	
 	// =================================================================================================================
@@ -63,22 +66,7 @@ public partial class PatchBoardView : Panel
 			return;
 		}
 
-		// var patchCenterGlobal = GetGlobalMousePosition() - _centerToCursorOffset;
-		//
-		// if (_interactionState == InteractionState.DraggingFromShop)
-		// {
-		// 	UpdateActivePatchPosition(patchCenterGlobal);
-		//
-		// 	if (ContainsGlobalPoint(patchCenterGlobal))
-		// 	{
-		// 		_interactionState = InteractionState.HasPlacedPatch;
-		// 		UpdatePlacement(patchCenterGlobal);
-		// 	}
-		//
-		// 	return;
-		// }
-		//
-		// UpdatePlacement(patchCenterGlobal);
+		
 		
 		var patchCenterGlobal = GetGlobalMousePosition() - _centerToCursorOffset;
 		UpdateActivePatchPosition(patchCenterGlobal);
@@ -137,7 +125,7 @@ public partial class PatchBoardView : Panel
 		_interactionState = InteractionState.DraggingFromShop;
 		
 		// 用_activePatchView显示商店中被选中的patch
-		_activePatchView.DisplayPlacedPatch(_rootService.CurrentGame.CurrentPlacedPatch);
+		// _activePatchView.DisplayPlacedPatch(_rootService.CurrentGame.CurrentPlacedPatch);
 		// _activePatchView.Position指的是_activePatchView在PatchBoard中的相对坐标
 		_activePatchView.Position = GetLocalPositionFromGlobalCenter(buttonCenterGlobal);
 		// 给节点整体乘一个颜色，乘以白色表示不变
@@ -173,7 +161,7 @@ public partial class PatchBoardView : Panel
 		_rootService.PatchService.PutBackPatch();
 		
 		// 清空并隐藏_activePatchView
-		_activePatchView.Clear();
+		// _activePatchView.Clear();
 		_activePatchView.Visible = false;
 		_activePatchView.Modulate = Colors.White;
 		
@@ -253,6 +241,13 @@ public partial class PatchBoardView : Panel
 		var patchTopLeftGlobal = buttonCenterGlobal - ActivePatchViewNode.TopLeftToCenterOffset;
 		// 将patchTopLeftGlobal从绝对坐标转换为在PatchBoard的坐标系中的相对坐标
 		return GetGlobalTransform().AffineInverse() * patchTopLeftGlobal;
+	}
+	
+	// 由Service层驱动的外观刷新函数
+	// TODO:检查是否已经改为按GameState刷新
+	private void RefreshVisual()
+	{
+		
 	}
 
 	

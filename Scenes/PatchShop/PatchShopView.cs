@@ -52,41 +52,12 @@ public partial class PatchShopView : Panel
     public void Initialize(RootService rootService)
     {
         _rootService = rootService;
-        RefreshVisual();
+        _rootService.StateChanged += RefreshVisual;
     }
 
     // =================================================================================================================
     
-    public void RefreshVisual()
-    {
-        if (_rootService?.CurrentGame == null)
-        {
-            return;
-        }
-
-        var selectablePatches = _rootService.CurrentGame.PatchShop.GetSelectablePatches();
-        var buyablePatchOffsets = _rootService.PlayerActionService.GetBuyablePatchOffsets();
-
-        // 对每一个button的外观进行刷新
-        for (var i = 0; i < _Buttons.Length; i++)
-        {
-            if (i < selectablePatches.Count)
-            {
-                _Buttons[i].TextureNormal = LoadButtonTexture(selectablePatches[i].Id);
-                _Buttons[i].Visible = i != _hiddenButtonIndex;
-                _Buttons[i].Modulate = buyablePatchOffsets.Contains(i)
-                    ? Colors.White
-                    : new Color(1.0f, 1.0f, 1.0f, 0.35f);
-                _Buttons[i].Disabled = !buyablePatchOffsets.Contains(i);
-            }
-            else
-            {
-                _Buttons[i].TextureNormal = null;
-                _Buttons[i].Visible = false;
-                _Buttons[i].Disabled = true;
-            }
-        }
-    }
+    
 
     public void HideButtonAtIndex(int patchOffset)
     {
@@ -130,5 +101,38 @@ public partial class PatchShopView : Panel
     private static Texture2D LoadButtonTexture(int patchId)
     {
         return ResourceLoader.Load<Texture2D>($"{OriginalTextureDirectory}/{patchId}.png");
+    }
+    
+    // 由Service层驱动的外观刷新函数
+    // TODO:检查是否已经改为按GameState刷新
+    public void RefreshVisual()
+    {
+        if (_rootService?.CurrentGame == null)
+        {
+            return;
+        }
+
+        var selectablePatches = _rootService.CurrentGame.PatchShop.GetSelectablePatches();
+        var buyablePatchOffsets = _rootService.PlayerActionService.GetBuyablePatchOffsets();
+
+        // 对每一个button的外观进行刷新
+        for (var i = 0; i < _Buttons.Length; i++)
+        {
+            if (i < selectablePatches.Count)
+            {
+                _Buttons[i].TextureNormal = LoadButtonTexture(selectablePatches[i].Id);
+                _Buttons[i].Visible = i != _hiddenButtonIndex;
+                _Buttons[i].Modulate = buyablePatchOffsets.Contains(i)
+                    ? Colors.White
+                    : new Color(1.0f, 1.0f, 1.0f, 0.35f);
+                _Buttons[i].Disabled = !buyablePatchOffsets.Contains(i);
+            }
+            else
+            {
+                _Buttons[i].TextureNormal = null;
+                _Buttons[i].Visible = false;
+                _Buttons[i].Disabled = true;
+            }
+        }
     }
 }

@@ -10,6 +10,9 @@ public class GameService(RootService rootService)
     public void StartNewGame(string firstPlayerName, string secondPlayerName)
     {
         rootService.CurrentGame = new GameState(firstPlayerName, secondPlayerName);
+        
+        // Notify UI to refresh
+        rootService.NotifyStateChanged();
     }
     
     
