@@ -51,11 +51,13 @@ public partial class ActivePatchView : Control
 	// 当这个 Control 节点收到 GUI 输入事件时，Godot 会自动调用这个方法。
 	public override void _GuiInput(InputEvent @event)
 	{
+		// 只响应鼠标左键按下
 		if (@event is not InputEventMouseButton { ButtonIndex: MouseButton.Left, Pressed: true })
 		{
 			return;
 		}
 
+		// 如果CurrentPlacedPatch == null，那么当然没必要开始拖动
 		if (_rootService.CurrentGame.CurrentPlacedPatch == null)
 		{
 			return;

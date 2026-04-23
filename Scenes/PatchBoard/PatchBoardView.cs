@@ -40,7 +40,7 @@ public partial class PatchBoardView : Panel
 	{
 		_activePatchView = GetNode<ActivePatchViewNode>("ActivePatchView");
 		
-		_activePatchView.DragStarted += OnActivePatchViewDragStarted;
+		_activePatchView.DragStarted += OnDragStartedFromBoard;
 	}
 	
 	// Initialize处理场景树外部的依赖注入
@@ -110,7 +110,7 @@ public partial class PatchBoardView : Panel
 	
 
 	// 对PatchShop的事件PatchSelected的响应，注意没有直接订阅，而是通过GameScene协调
-	public void StartDragFromShop(int patchOffset, Vector2 buttonCenterGlobal, Vector2 centerToCursorOffset)
+	public void OnDragStartedFromShop(int patchOffset, Vector2 buttonCenterGlobal, Vector2 centerToCursorOffset)
 	{
 		if (_rootService?.CurrentGame?.CurrentPlacedPatch != null)
 		{
@@ -133,7 +133,7 @@ public partial class PatchBoardView : Panel
 	
 	// 订阅了ActivePatchView的DragStarted事件
 	// 更新_centerToCursorOffset并改变状态，使得_Process()可以让_activePatchView被拖动
-	private void OnActivePatchViewDragStarted(
+	private void OnDragStartedFromBoard(
 		ActivePatchViewNode _, 
 		Vector2 centerToCursorOffset)
 	{

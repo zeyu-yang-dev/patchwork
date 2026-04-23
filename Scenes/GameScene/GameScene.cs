@@ -18,13 +18,9 @@ public partial class GameScene : Control
 		_patchBoardView = GetNode<Patchwork.Scenes.PatchBoard.PatchBoardView>("PatchBoardView");
 		_patchShopView = GetNode<Patchwork.Scenes.PatchShop.PatchShopView>("PatchShopView");
 		
+		// 让_patchBoardView订阅_patchShopView的事件
 		// 1. 按钮的index 2. 按钮的中心点的全局坐标 3. 从按钮中心指向鼠标位置的矢量
-		_patchShopView.PatchSelected += (patchOffset, buttonCenterGlobal, centerToCursorOffset) =>
-		{
-			
-			_patchBoardView.StartDragFromShop(patchOffset, buttonCenterGlobal, centerToCursorOffset);
-		};
-
+		_patchShopView.PatchSelected += _patchBoardView.OnDragStartedFromShop;
 		
 	}
 
