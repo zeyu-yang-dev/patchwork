@@ -52,12 +52,12 @@ public partial class PatchShopView : Panel
     public void Initialize(RootService rootService)
     {
         _rootService = rootService;
-        Refresh();
+        RefreshVisual();
     }
 
     // =================================================================================================================
     
-    public void Refresh()
+    public void RefreshVisual()
     {
         if (_rootService?.CurrentGame == null)
         {
@@ -91,13 +91,13 @@ public partial class PatchShopView : Panel
     public void HideButtonAtIndex(int patchOffset)
     {
         _hiddenButtonIndex = patchOffset;
-        Refresh();
+        RefreshVisual();
     }
 
     public void RestoreHiddenButton()
     {
         _hiddenButtonIndex = -1;
-        Refresh();
+        RefreshVisual();
     }
 
     // =================================================================================================================

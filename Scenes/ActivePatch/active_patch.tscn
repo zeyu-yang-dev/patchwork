@@ -7,3 +7,12 @@ layout_mode = 0
 offset_right = 250.0
 offset_bottom = 250.0
 script = ExtResource("1_wtvan")
+
+[node name="TextureDisplay" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 250.0
+offset_bottom = 250.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 0
+visible = false
