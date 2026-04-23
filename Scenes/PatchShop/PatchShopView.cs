@@ -3,7 +3,7 @@ using Godot;
 using Patchwork.Domain;
 using Patchwork.Service;
 
-namespace Patchwork.Scenes.PatchShopView;
+namespace Patchwork.Scenes.PatchShop;
 
 public partial class PatchShopView : Panel
 {
@@ -67,6 +67,7 @@ public partial class PatchShopView : Panel
         var selectablePatches = _rootService.CurrentGame.PatchShop.GetSelectablePatches();
         var buyablePatchOffsets = _rootService.PlayerActionService.GetBuyablePatchOffsets();
 
+        // 对每一个button的外观进行刷新
         for (var i = 0; i < _Buttons.Length; i++)
         {
             if (i < selectablePatches.Count)

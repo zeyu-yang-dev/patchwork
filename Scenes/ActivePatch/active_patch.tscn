@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cd7hhn7cb5n6r"]
 
-[ext_resource type="Script" path="res://Scenes/ActivePatchView/ActivePatchView.cs" id="1_wtvan"]
+[ext_resource type="Script" path="res://Scenes/ActivePatch/ActivePatchView.cs" id="1_wtvan"]
 
 [node name="ActivePatchView" type="Control"]
 layout_mode = 0

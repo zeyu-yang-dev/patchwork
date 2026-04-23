@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bx7tydtemd5lw"]
 
-[ext_resource type="Script" path="res://Scenes/PatchBoardView/PatchBoardView.cs" id="1_jf313"]
-[ext_resource type="PackedScene" uid="uid://cd7hhn7cb5n6r" path="res://Scenes/ActivePatchView/active_patch_view.tscn" id="2_nh3c2"]
+[ext_resource type="Script" path="res://Scenes/PatchBoard/PatchBoardView.cs" id="1_jf313"]
+[ext_resource type="PackedScene" uid="uid://cd7hhn7cb5n6r" path="res://Scenes/ActivePatch/active_patch.tscn" id="2_nh3c2"]
 
 [node name="PatchBoardView" type="Panel" unique_id=92066056]
 script = ExtResource("1_jf313")

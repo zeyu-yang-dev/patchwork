@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://4ipkmqok57h7"]
 
-[ext_resource type="Script" path="res://Scenes/PatchShopView/PatchShopView.cs" id="1_2m436"]
+[ext_resource type="Script" path="res://Scenes/PatchShop/PatchShopView.cs" id="1_2m436"]
 
 [node name="PatchShopView" type="Panel" unique_id=1209268079]
 script = ExtResource("1_2m436")

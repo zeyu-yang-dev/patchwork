@@ -2,7 +2,7 @@ using System;
 using Godot;
 using Patchwork.Domain;
 
-namespace Patchwork.Scenes.ActivePatchView;
+namespace Patchwork.Scenes.ActivePatch;
 
 
 // 是PatchBoardView下的节点
