@@ -13,7 +13,7 @@ public partial class PatchShopView : Panel
     private const string OriginalTextureDirectory = "res://Assets/Patches/original";
 
     private RootService _rootService;
-    private TextureButton[] _Buttons;
+    private TextureButton[] _buttons;
     private int _hiddenButtonIndex = -1; // 需要隐藏的button的index
 
     private static readonly Vector2 ButtonSize = new(250.0f, 250.0f);
@@ -30,21 +30,21 @@ public partial class PatchShopView : Panel
     // _Ready处理场景树内部的事情：1. 子节点获取 2. 节点属性初始化 3. 场景内节点之间的事件连接
     public override void _Ready()
     {
-        _Buttons =
+        _buttons =
         [
             GetNode<TextureButton>("PatchButton0"),
             GetNode<TextureButton>("PatchButton1"),
             GetNode<TextureButton>("PatchButton2")
         ];
 
-        for (var i = 0; i < _Buttons.Length; i++)
+        for (var i = 0; i < _buttons.Length; i++)
         {
             var patchOffset = i;
             // 指定3个TextureButton的位置和大小
-            _Buttons[i].Position = ButtonPositions[i];
-            _Buttons[i].Size = ButtonSize;
+            _buttons[i].Position = ButtonPositions[i];
+            _buttons[i].Size = ButtonSize;
             // 订阅ButtonDown事件
-            _Buttons[i].ButtonDown += () => OnButtonDown(patchOffset);
+            _buttons[i].ButtonDown += () => OnButtonDown(patchOffset);
         }
     }
     
@@ -53,22 +53,6 @@ public partial class PatchShopView : Panel
     {
         _rootService = rootService;
         _rootService.StateChanged += RefreshVisual;
-    }
-
-    // =================================================================================================================
-    
-    
-
-    public void HideButtonAtIndex(int patchOffset)
-    {
-        _hiddenButtonIndex = patchOffset;
-        RefreshVisual();
-    }
-
-    public void RestoreHiddenButton()
-    {
-        _hiddenButtonIndex = -1;
-        RefreshVisual();
     }
 
     // =================================================================================================================
@@ -90,8 +74,10 @@ public partial class PatchShopView : Panel
             return;
         }
 
-        var button = _Buttons[patchOffset];
-        var buttonCenterGlobal = button.GetGlobalRect().GetCenter(); // 这个按钮的中心点在屏幕上的坐标
+        // 给RefreshVisual()提供信息，应该隐藏哪一个button
+        _hiddenButtonIndex = patchOffset;
+        
+        var buttonCenterGlobal = _buttons[patchOffset].GetGlobalRect().GetCenter(); // 这个按钮的中心点在屏幕上的坐标
         var centerToCursorOffset = GetGlobalMousePosition() - buttonCenterGlobal;
 
         // 1. 按钮的index 2. 按钮的中心点的全局坐标 3. 从按钮中心指向鼠标位置的矢量
@@ -104,34 +90,41 @@ public partial class PatchShopView : Panel
     }
     
     // 由Service层驱动的外观刷新函数
-    // TODO:检查是否已经改为按GameState刷新
-    public void RefreshVisual()
+    private void RefreshVisual()
     {
         if (_rootService?.CurrentGame == null)
         {
             return;
         }
 
+        // 如果CurrentPlacedPatch == null，说明不是正在放置的状态，按钮不需要隐藏
+        if (_rootService.CurrentGame.CurrentPlacedPatch == null)
+        {
+            _hiddenButtonIndex = -1;
+        }
+
         var selectablePatches = _rootService.CurrentGame.PatchShop.GetSelectablePatches();
         var buyablePatchOffsets = _rootService.PlayerActionService.GetBuyablePatchOffsets();
 
-        // 对每一个button的外观进行刷新
-        for (var i = 0; i < _Buttons.Length; i++)
+        // 按照Domain层的可选择patch以及_hiddenButtonIndex对每一个button的外观进行刷新
+        for (var i = 0; i < _buttons.Length; i++)
         {
-            if (i < selectablePatches.Count)
+            // selectablePatches指的是前3个，可能少于3个
+            if (i < selectablePatches.Count && i != _hiddenButtonIndex)
             {
-                _Buttons[i].TextureNormal = LoadButtonTexture(selectablePatches[i].Id);
-                _Buttons[i].Visible = i != _hiddenButtonIndex;
-                _Buttons[i].Modulate = buyablePatchOffsets.Contains(i)
+                _buttons[i].TextureNormal = LoadButtonTexture(selectablePatches[i].Id);
+                _buttons[i].Visible = i != _hiddenButtonIndex;
+                _buttons[i].Modulate = buyablePatchOffsets.Contains(i)
                     ? Colors.White
                     : new Color(1.0f, 1.0f, 1.0f, 0.35f);
-                _Buttons[i].Disabled = !buyablePatchOffsets.Contains(i);
+                _buttons[i].Disabled = !buyablePatchOffsets.Contains(i);
             }
             else
             {
-                _Buttons[i].TextureNormal = null;
-                _Buttons[i].Visible = false;
-                _Buttons[i].Disabled = true;
+                // 如果button的index已超出了selectablePatches，或者应该被隐藏，则不显示
+                _buttons[i].TextureNormal = null;
+                _buttons[i].Visible = false;
+                _buttons[i].Disabled = true;
             }
         }
     }

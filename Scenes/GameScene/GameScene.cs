@@ -21,11 +21,11 @@ public partial class GameScene : Control
 		// 1. 按钮的index 2. 按钮的中心点的全局坐标 3. 从按钮中心指向鼠标位置的矢量
 		_patchShopView.PatchSelected += (patchOffset, buttonCenterGlobal, centerToCursorOffset) =>
 		{
-			_patchShopView.HideButtonAtIndex(patchOffset);
+			
 			_patchBoardView.StartDragFromShop(patchOffset, buttonCenterGlobal, centerToCursorOffset);
 		};
 
-		_patchBoardView.DragCancelled += _patchShopView.RestoreHiddenButton;
+		
 	}
 
 	// Initialize处理场景树外部的依赖注入

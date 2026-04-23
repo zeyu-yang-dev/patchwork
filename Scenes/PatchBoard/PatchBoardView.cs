@@ -7,9 +7,7 @@ namespace Patchwork.Scenes.PatchBoard;
 
 public partial class PatchBoardView : Panel
 {
-	// 被GameScene订阅，GameScene会通知PatchShop把按钮重新显示
-	public event Action DragCancelled;
-
+	
 	// 决定_Process和_UnhandledInput如何处理鼠标
 	private enum InteractionState
 	{
@@ -165,8 +163,7 @@ public partial class PatchBoardView : Panel
 		_activePatchView.Visible = false;
 		_activePatchView.Modulate = Colors.White;
 		
-		// 通过GameScene调用PatchShop的RestoreHiddenButton
-		DragCancelled?.Invoke();
+		
 	}
 	
 	// =================================================================================================================
