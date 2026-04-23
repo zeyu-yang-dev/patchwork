@@ -2,7 +2,6 @@ using System;
 using Godot;
 using Patchwork.Service;
 
-
 namespace Patchwork.Scenes.ActivePatch;
 
 // 是PatchBoardView下的节点
@@ -19,7 +18,6 @@ public partial class ActivePatchView : Control
 	
 	private RootService _rootService;
 	private TextureRect _textureDisplay;
-
 	
 	// =================================================================================================================
 
@@ -43,37 +41,24 @@ public partial class ActivePatchView : Control
 
 	// =================================================================================================================
 
-	// 商店中的点击入口：
+	// 触发从shop处或者从board里开始拖动ActivePatchView
 	// _GuiInput 是 Godot 给 Control 节点提供的输入回调方法。
 	// 当这个 Control 节点收到 GUI 输入事件时，Godot 会自动调用这个方法。
 	public override void _GuiInput(InputEvent @event)
 	{
-		// 只响应鼠标左键按下
-		if (@event is not InputEventMouseButton { ButtonIndex: MouseButton.Left, Pressed: true })
-		{
-			return;
-		}
-
-		// 如果CurrentPlacedPatch == null，那么当然没必要开始拖动
-		if (_rootService.CurrentGame.CurrentPlacedPatch == null)
-		{
-			return;
-		}
-
+		// 只在鼠标左键按下的那一瞬间会执行，持续按住不会反复触发
+		if (@event is not InputEventMouseButton { ButtonIndex: MouseButton.Left, Pressed: true }) return;
+		
 		var dragOffsetFromCenter = GetLocalMousePosition() - TopLeftToCenterOffset;
 		// 通知所有订阅了DragStarted事件的订阅者执行对应的函数，需要把那个函数的参数从这里传入
 		DragStarted?.Invoke(this, dragOffsetFromCenter);
+		
+		// 告诉 Godot：这个输入事件已经被当前控件处理掉了，不要再继续传下去
 		AcceptEvent();
 	}
-
-	// =================================================================================================================
-
 	
-
 	// =================================================================================================================
-
 	
-
 	// 拿到一个原始或者镜像过的patch的texture
 	private Texture2D GetCurrentTexture()
 	{

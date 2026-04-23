@@ -65,25 +65,17 @@ public partial class PatchBoardView : Panel
 		var patchCenterGlobal = GetGlobalMousePosition() - _centerToCursorOffset;
 		UpdateActivePatchPosition(patchCenterGlobal);
 	}
-
-	// 当有输入事件产生，并且这个事件还没有被前面的输入处理链消费掉时，Godot 会把它传进来
+	
 	// 目前这个函数只处理鼠标松开事件
 	public override void _Input(InputEvent @event)
 	{
-		// 只处理 开始从shop或者board拖动后 
-		if (_interactionState is not (InteractionState.Dragging))
-		{
-			return;
-		}
+		// 只在拖动过程中触发，这个过滤很必要，否则在任何阶段鼠标松开都会触发
+		if (_interactionState is not (InteractionState.Dragging)) return;
+		
+		// 只响应鼠标左键松开
+		if (@event is not InputEventMouseButton { ButtonIndex: MouseButton.Left, Pressed: false }) return;
 		
 		
-		// 只响应鼠标松开
-		if (@event is not InputEventMouseButton { ButtonIndex: MouseButton.Left, Pressed: false })
-		{
-			return;
-		}
-		
-			
 		if (ContainsGlobalPoint(ActivePatchViewCenterGlobal))
 		{
 			UpdatePlacement();
