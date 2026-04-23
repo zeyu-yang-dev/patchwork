@@ -84,6 +84,13 @@ public partial class PatchBoard : Panel
 	// 目前这个函数只处理鼠标松开事件
 	public override void _Input(InputEvent @event)
 	{
+		// 只处理 开始从shop或者board拖动后 
+		if (_interactionState is not (InteractionState.DraggingFromShop or InteractionState.DraggingFromBoard))
+		{
+			return;
+		}
+		
+		
 		// 只响应鼠标松开
 		if (@event is not InputEventMouseButton { ButtonIndex: MouseButton.Left, Pressed: false })
 		{
