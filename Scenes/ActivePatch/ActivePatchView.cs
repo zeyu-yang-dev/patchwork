@@ -1,6 +1,5 @@
 using System;
 using Godot;
-using Patchwork.Domain;
 using Patchwork.Service;
 
 
@@ -9,21 +8,19 @@ namespace Patchwork.Scenes.ActivePatch;
 // 是PatchBoardView下的节点
 public partial class ActivePatchView : Control
 {
-	public event Action<ActivePatchView, Vector2> DragStarted;
-	private RootService _rootService;
-	
-	public const int MatrixSize = 5;
-	public const float CellSize = 50.0f;
-	public static readonly Vector2 ViewSize = new(MatrixSize * CellSize, MatrixSize * CellSize);
+	private const int MatrixSize = 5;
+	private const float CellSize = 50.0f;
+	private static readonly Vector2 ViewSize = new(MatrixSize * CellSize, MatrixSize * CellSize);
 	public static readonly Vector2 TopLeftToCenterOffset = ViewSize / 2.0f; // 从中心到左上角的距离
-
 	private const string OriginalTextureDirectory = "res://Assets/Patches/original";
 	private const string MirroredTextureDirectory = "res://Assets/Patches/mirrored";
-
+	
+	public event Action<ActivePatchView, Vector2> DragStarted;
+	
+	private RootService _rootService;
 	private TextureRect _textureDisplay;
 
 	
-
 	// =================================================================================================================
 
 	public override void _Ready()

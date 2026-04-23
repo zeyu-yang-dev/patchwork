@@ -12,9 +12,7 @@ public partial class PatchBoardView : Panel
 	private enum InteractionState
 	{
 		Idle, // 没有拖拽
-		DraggingFromShop, //从shop到board的路上
-		HasPlacedPatch, // _activePatchView已经被board捕获
-		DraggingFromBoard // 从board上开始再次拖动
+		Dragging // 正在拖拽
 	}
 	private InteractionState _interactionState = InteractionState.Idle;
 
@@ -59,7 +57,7 @@ public partial class PatchBoardView : Panel
 	public override void _Process(double delta)
 	{
 		// 只处理 开始从shop或者board拖动后 
-		if (_interactionState is not (InteractionState.DraggingFromShop or InteractionState.DraggingFromBoard))
+		if (_interactionState is not (InteractionState.Dragging))
 		{
 			return;
 		}
@@ -75,7 +73,7 @@ public partial class PatchBoardView : Panel
 	public override void _Input(InputEvent @event)
 	{
 		// 只处理 开始从shop或者board拖动后 
-		if (_interactionState is not (InteractionState.DraggingFromShop or InteractionState.DraggingFromBoard))
+		if (_interactionState is not (InteractionState.Dragging))
 		{
 			return;
 		}
@@ -90,10 +88,8 @@ public partial class PatchBoardView : Panel
 			
 		if (ContainsGlobalPoint(ActivePatchViewCenterGlobal))
 		{
-				
 			UpdatePlacement();
-			_interactionState = InteractionState.HasPlacedPatch;
-				
+			_interactionState = InteractionState.Idle;
 		}
 		else
 		{
@@ -120,7 +116,7 @@ public partial class PatchBoardView : Panel
 		_rootService.PatchService.TakePatch(patchOffset); // 只影响domain层的CurrentPlacedPatch
 		_centerToCursorOffset = centerToCursorOffset;
 		
-		_interactionState = InteractionState.DraggingFromShop;
+		_interactionState = InteractionState.Dragging;
 		
 		// 用_activePatchView显示商店中被选中的patch
 		// _activePatchView.DisplayPlacedPatch(_rootService.CurrentGame.CurrentPlacedPatch);
@@ -138,13 +134,13 @@ public partial class PatchBoardView : Panel
 		Vector2 centerToCursorOffset)
 	{
 		// 只响应从board开始的拖动
-		if (_interactionState != InteractionState.HasPlacedPatch)
+		if (_interactionState != InteractionState.Idle)
 		{
 			return;
 		}
 
 		_centerToCursorOffset = centerToCursorOffset;
-		_interactionState = InteractionState.DraggingFromBoard;
+		_interactionState = InteractionState.Dragging;
 	}
 
 	
