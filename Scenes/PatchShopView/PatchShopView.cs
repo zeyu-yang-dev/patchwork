@@ -3,9 +3,9 @@ using Godot;
 using Patchwork.Domain;
 using Patchwork.Service;
 
-namespace Patchwork.Scenes.PatchShop;
+namespace Patchwork.Scenes.PatchShopView;
 
-public partial class PatchShop : Panel
+public partial class PatchShopView : Panel
 {
     // 1. 按钮的index 2. 按钮的中心点的全局坐标 3. 从按钮中心指向鼠标位置的矢量
     public event Action<int, Vector2, Vector2> PatchSelected;

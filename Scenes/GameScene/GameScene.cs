@@ -11,8 +11,8 @@ public partial class GameScene : Control
 	{
 		RootService = rootService;
 
-		var patchBoard = GetNode<Patchwork.Scenes.PatchBoard.PatchBoard>("PatchBoard");
-		var patchShop = GetNode<Patchwork.Scenes.PatchShop.PatchShop>("PatchShop");
+		var patchBoard = GetNode<Patchwork.Scenes.PatchBoardView.PatchBoardView>("PatchBoardView");
+		var patchShop = GetNode<Patchwork.Scenes.PatchShopView.PatchShopView>("PatchShopView");
 
 		patchBoard.Initialize(rootService);
 		patchShop.Initialize(rootService);

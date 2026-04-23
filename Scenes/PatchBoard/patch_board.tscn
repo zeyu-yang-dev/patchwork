@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bx7tydtemd5lw"]
-
-[ext_resource type="Script" path="res://Scenes/PatchBoard/PatchBoard.cs" id="1_jf313"]
-
-[node name="PatchBoard" type="Panel" unique_id=92066056]
-script = ExtResource("1_jf313")
-offset_right = 450.0
-offset_bottom = 450.0

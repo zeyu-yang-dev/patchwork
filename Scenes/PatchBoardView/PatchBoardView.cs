@@ -2,9 +2,9 @@ using System;
 using Godot;
 using Patchwork.Service;
 
-namespace Patchwork.Scenes.PatchBoard;
+namespace Patchwork.Scenes.PatchBoardView;
 
-public partial class PatchBoard : Panel
+public partial class PatchBoardView : Panel
 {
 	// 被GameScene订阅，GameScene会通知PatchShop把按钮重新显示
 	public event Action DragCancelled;
