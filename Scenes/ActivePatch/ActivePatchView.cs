@@ -31,7 +31,7 @@ public partial class ActivePatchView : Control
 		_textureDisplay = GetNode<TextureRect>("TextureDisplay");
 		_textureDisplay.Size = ViewSize;
 		_textureDisplay.PivotOffset = TopLeftToCenterOffset;
-		RefreshVisual();
+		
 	}
 	
 	// Initialize处理场景树外部的依赖注入
@@ -101,9 +101,17 @@ public partial class ActivePatchView : Control
 	// 由Service层驱动的外观刷新函数
 	private void RefreshVisual()
 	{
-		var texture = GetCurrentTexture();
-		_textureDisplay.Texture = texture;
-		_textureDisplay.Rotation = GetCurrentRotationRadians();
-		_textureDisplay.Visible = texture != null;
+		if (_rootService.CurrentGame.CurrentPlacedPatch == null)
+		{
+			Visible = false;
+			_textureDisplay.Visible = false;
+		}
+		else
+		{
+			Visible = true;
+			_textureDisplay.Visible = true;
+			_textureDisplay.Texture = GetCurrentTexture();
+			_textureDisplay.Rotation = GetCurrentRotationRadians();
+		}
 	}
 }

@@ -82,6 +82,8 @@ public partial class PatchShopView : Panel
 
         // 1. 按钮的index 2. 按钮的中心点的全局坐标 3. 从按钮中心指向鼠标位置的矢量
         PatchSelected?.Invoke(patchOffset, buttonCenterGlobal, centerToCursorOffset);
+        
+        GD.Print($"OnButtonDown reached, patchOffset = {patchOffset}");
     }
 
     private static Texture2D LoadButtonTexture(int patchId)

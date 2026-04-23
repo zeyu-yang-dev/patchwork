@@ -1,12 +1,14 @@
 using System;
 using Godot;
 using Patchwork.Service;
-using ActivePatchViewNode = Patchwork.Scenes.ActivePatch.ActivePatchView;
+using ActivePatchView = Patchwork.Scenes.ActivePatch.ActivePatchView;
 
 namespace Patchwork.Scenes.PatchBoard;
 
 public partial class PatchBoardView : Panel
 {
+	private const int BoardSize = 9;
+	private const float BoardCellSize = 50.0f;
 	
 	// 决定_Process和_UnhandledInput如何处理鼠标
 	private enum InteractionState
@@ -15,20 +17,16 @@ public partial class PatchBoardView : Panel
 		Dragging // 正在拖拽
 	}
 	private InteractionState _interactionState = InteractionState.Idle;
-
-	private const int BoardSize = 9;
-	private const float BoardCellSize = 50.0f;
-	private const float BoardPixelSize = BoardSize * BoardCellSize;
-	
 	private RootService _rootService;
+	private ActivePatchView _activePatchView;
 	
-	private ActivePatchViewNode _activePatchView;
-	// 在PatchBoard内部的坐标
-	private Vector2 ActivePatchViewCenterLocal => _activePatchView.Position + ActivePatchViewNode.TopLeftToCenterOffset;
+	// _activePatchView在PatchBoard内部的本地坐标
+	private Vector2 ActivePatchViewCenterLocal => _activePatchView.Position + ActivePatchView.TopLeftToCenterOffset;
+	// _activePatchView在整个画面中的全局坐标
 	private Vector2 ActivePatchViewCenterGlobal => GetGlobalTransform() * ActivePatchViewCenterLocal;
-	
 	// 从_activePatchView中心指向光标位置的向量
 	// 需要在从shop开始拖动，或者从board开始拖动后更新
+	// 更新的地方在两个事件处理方法（event handler）中
 	private Vector2 _centerToCursorOffset;
 	
 	// =================================================================================================================
@@ -36,7 +34,7 @@ public partial class PatchBoardView : Panel
 	// _Ready处理场景树内部的事情：1. 子节点获取 2. 节点属性初始化 3. 场景内节点之间的事件连接
 	public override void _Ready()
 	{
-		_activePatchView = GetNode<ActivePatchViewNode>("ActivePatchView");
+		_activePatchView = GetNode<ActivePatchView>("ActivePatchView");
 		
 		_activePatchView.DragStarted += OnDragStartedFromBoard;
 	}
@@ -96,7 +94,8 @@ public partial class PatchBoardView : Panel
 			// 从视觉上将patch放回shop
 			_rootService.PatchService.PutBackPatch();
 			_interactionState = InteractionState.Idle;
-				
+			
+			GD.Print("return patch to shop");	
 		}
 			
 	}
@@ -108,11 +107,7 @@ public partial class PatchBoardView : Panel
 	// 对PatchShop的事件PatchSelected的响应，注意没有直接订阅，而是通过GameScene协调
 	public void OnDragStartedFromShop(int patchOffset, Vector2 buttonCenterGlobal, Vector2 centerToCursorOffset)
 	{
-		if (_rootService?.CurrentGame?.CurrentPlacedPatch != null)
-		{
-			return;
-		}
-
+		
 		_rootService.PatchService.TakePatch(patchOffset); // 只影响domain层的CurrentPlacedPatch
 		_centerToCursorOffset = centerToCursorOffset;
 		
@@ -129,9 +124,7 @@ public partial class PatchBoardView : Panel
 	
 	// 订阅了ActivePatchView的DragStarted事件
 	// 更新_centerToCursorOffset并改变状态，使得_Process()可以让_activePatchView被拖动
-	private void OnDragStartedFromBoard(
-		ActivePatchViewNode _, 
-		Vector2 centerToCursorOffset)
+	private void OnDragStartedFromBoard(ActivePatchView _, Vector2 centerToCursorOffset)
 	{
 		// 只响应从board开始的拖动
 		if (_interactionState != InteractionState.Idle)
@@ -216,7 +209,7 @@ public partial class PatchBoardView : Panel
 		// (col, row)格子的中心点坐标
 		var cellCenter = new Vector2((col + 0.5f) * BoardCellSize, (row + 0.5f) * BoardCellSize);
 		// patch目标位置
-		return cellCenter - ActivePatchViewNode.TopLeftToCenterOffset;
+		return cellCenter - ActivePatchView.TopLeftToCenterOffset;
 	}
 
 	// 当一个patch在shop中被选中时，从事件PatchSelected得到的是它的中心的绝对坐标，
@@ -224,7 +217,7 @@ public partial class PatchBoardView : Panel
 	private Vector2 GetLocalPositionFromGlobalCenter(Vector2 buttonCenterGlobal)
 	{
 		// _activePatchView的左上角的绝对坐标
-		var patchTopLeftGlobal = buttonCenterGlobal - ActivePatchViewNode.TopLeftToCenterOffset;
+		var patchTopLeftGlobal = buttonCenterGlobal - ActivePatchView.TopLeftToCenterOffset;
 		// 将patchTopLeftGlobal从绝对坐标转换为在PatchBoard的坐标系中的相对坐标
 		return GetGlobalTransform().AffineInverse() * patchTopLeftGlobal;
 	}
