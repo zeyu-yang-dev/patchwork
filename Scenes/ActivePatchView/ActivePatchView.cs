@@ -4,8 +4,8 @@ using Patchwork.Domain;
 
 namespace Patchwork.Scenes.ActivePatchView;
 
-// 在PatchBoard运行过程中才被实例化
-// 运行时它会被PatchBoard动态加到场景树里
+
+// 是PatchBoardView下的节点
 public partial class ActivePatchView : Control
 {
     public event Action<ActivePatchView, Vector2> DragStarted;

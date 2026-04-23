@@ -38,15 +38,10 @@ public partial class PatchBoardView : Panel
 
 	public override void _Ready()
 	{
-		// 动态新建一个子节点
-		_activePatchView = new Patchwork.Scenes.ActivePatchView.ActivePatchView
-		{
-			Name = "ActivePatchView",
-			Visible = false
-		};
+		
+		_activePatchView = GetNode<Patchwork.Scenes.ActivePatchView.ActivePatchView>("ActivePatchView");
 		
 		_activePatchView.DragStarted += OnActivePatchViewDragStarted;
-		AddChild(_activePatchView);
 	}
 
 	// `_Process()` 是逐帧回调
