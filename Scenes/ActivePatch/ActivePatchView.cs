@@ -14,7 +14,7 @@ public partial class ActivePatchView : Control
 	private const string OriginalTextureDirectory = "res://Assets/Patches/original";
 	private const string MirroredTextureDirectory = "res://Assets/Patches/mirrored";
 	
-	public event Action<ActivePatchView, Vector2> DragStarted;
+	public event Action<Vector2> DragStarted;
 	
 	private RootService _rootService;
 	private TextureRect _textureDisplay;
@@ -49,9 +49,9 @@ public partial class ActivePatchView : Control
 		// 只在鼠标左键按下的那一瞬间会执行，持续按住不会反复触发
 		if (@event is not InputEventMouseButton { ButtonIndex: MouseButton.Left, Pressed: true }) return;
 		
-		var dragOffsetFromCenter = GetLocalMousePosition() - TopLeftToCenterOffset;
+		var centerToCursorOffset = GetLocalMousePosition() - TopLeftToCenterOffset;
 		// 通知所有订阅了DragStarted事件的订阅者执行对应的函数，需要把那个函数的参数从这里传入
-		DragStarted?.Invoke(this, dragOffsetFromCenter);
+		DragStarted?.Invoke(centerToCursorOffset);
 		
 		// 告诉 Godot：这个输入事件已经被当前控件处理掉了，不要再继续传下去
 		AcceptEvent();
