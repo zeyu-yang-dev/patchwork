@@ -1,0 +1,37 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scenes/ControlPanel/ControlPanelView.cs" id="1_5y0wh"]
+
+[node name="ControlPanelView" type="Panel"]
+script = ExtResource("1_5y0wh")
+custom_minimum_size = Vector2(400, 270)
+offset_right = 400.0
+offset_bottom = 270.0
+
+[node name="PlacementButtons" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 120.0
+offset_bottom = 270.0
+theme_override_constants/separation = 10
+
+[node name="RotateCounterClockwiseButton" type="Button" parent="PlacementButtons"]
+layout_mode = 2
+text = "Rotate Left"
+
+[node name="RotateClockwiseButton" type="Button" parent="PlacementButtons"]
+layout_mode = 2
+text = "Rotate Right"
+
+[node name="MirrorButton" type="Button" parent="PlacementButtons"]
+layout_mode = 2
+text = "Mirror"
+
+[node name="ConfirmPlacementButton" type="Button" parent="PlacementButtons"]
+layout_mode = 2
+text = "Place"
+
+[node name="SkipButton" type="Button" parent="."]
+layout_mode = 0
+offset_right = 120.0
+offset_bottom = 60.0
+text = "Skip"
