@@ -97,6 +97,15 @@ public class PatchService(RootService rootService)
 
     // =================================================================================================================
     
+    private PlacedPatch GetCurrentPlacedPatch()
+    {
+        var currentGame = rootService.CurrentGame
+                          ?? throw new InvalidOperationException("There is no current game.");
+
+        return currentGame.CurrentPlacedPatch
+               ?? throw new InvalidOperationException("There is no patch waiting to be transformed.");
+    }
+    
     /// <summary>
     /// Change the isMirrored and rotation properties of the current placed patch,
     /// so that it has the target shape.
@@ -148,14 +157,5 @@ public class PatchService(RootService rootService)
         }
 
         return true;
-    }
-
-    private PlacedPatch GetCurrentPlacedPatch()
-    {
-        var currentGame = rootService.CurrentGame
-                          ?? throw new InvalidOperationException("There is no current game.");
-
-        return currentGame.CurrentPlacedPatch
-               ?? throw new InvalidOperationException("There is no patch waiting to be transformed.");
     }
 }
