@@ -117,10 +117,6 @@ public partial class PatchBoardView : Panel
 		
 		// 将_activePatchView按照格子吸附
 		_activePatchView.Position = GetLocalPositionFromCoordinate(col, row);
-		// 根据是否能放置改变_activePatchView的不透明度
-		_activePatchView.Modulate = _rootService.PlayerActionService.IsPlaceable()
-			? Colors.White
-			: new Color(1.0f, 1.0f, 1.0f, 0.35f);
 	}
 	
 	// 当一个patch在shop中被选中时，从事件PatchSelected得到的是它的中心的绝对坐标，
