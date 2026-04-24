@@ -36,7 +36,7 @@ public partial class ActivePatchView : Control
 	public void Initialize(RootService rootService)
 	{
 		_rootService = rootService;
-		_rootService.StateChanged += RefreshVisual;
+		_rootService.StateChanged += OnGameStateChanged;
 	}
 
 	// =================================================================================================================
@@ -96,5 +96,11 @@ public partial class ActivePatchView : Control
 			_textureDisplay.Texture = GetCurrentTexture();
 			_textureDisplay.Rotation = GetCurrentRotationRadians();
 		}
+	}
+	
+	// 由Service层驱动的刷新函数
+	private void OnGameStateChanged()
+	{
+		RefreshVisual();
 	}
 }

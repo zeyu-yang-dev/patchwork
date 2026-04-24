@@ -41,7 +41,7 @@ public partial class PatchBoardView : Panel
 	public void Initialize(RootService rootService)
 	{
 		_rootService = rootService;
-		_rootService.StateChanged += RefreshVisual;
+		_rootService.StateChanged += OnGameStateChanged;
 		_activePatchView.Initialize(rootService);
 	}
 	
@@ -142,8 +142,8 @@ public partial class PatchBoardView : Panel
 		return cellCenter - ActivePatchView.TopLeftToCenterOffset;
 	}
 	
-	// 由Service层驱动的外观刷新函数
-	private void RefreshVisual()
+	// 由Service层驱动的刷新函数
+	private void OnGameStateChanged()
 	{
 		
 	}

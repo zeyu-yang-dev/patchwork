@@ -52,7 +52,7 @@ public partial class PatchShopView : Panel
     public void Initialize(RootService rootService)
     {
         _rootService = rootService;
-        _rootService.StateChanged += RefreshVisual;
+        _rootService.StateChanged += OnGameStateChanged;
     }
 
     // =================================================================================================================
@@ -91,7 +91,7 @@ public partial class PatchShopView : Panel
         return ResourceLoader.Load<Texture2D>($"{OriginalTextureDirectory}/{patchId}.png");
     }
     
-    // 由Service层驱动的外观刷新函数
+    // 外观刷新函数
     private void RefreshVisual()
     {
         if (_rootService?.CurrentGame == null)
@@ -129,5 +129,11 @@ public partial class PatchShopView : Panel
                 _buttons[i].Disabled = true;
             }
         }
+    }
+    
+    // 由Service层驱动的刷新函数
+    private void OnGameStateChanged()
+    {
+        RefreshVisual();
     }
 }
