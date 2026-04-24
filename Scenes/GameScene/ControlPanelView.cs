@@ -65,13 +65,26 @@ public partial class ControlPanelView : Panel
 
     // =================================================================================================================
     
-    
-    
-    
-    
     private void RefreshVisual()
     {
+        var currentPlacedPatch = _rootService.CurrentGame.CurrentPlacedPatch;
         
+        _skipButton.Disabled = currentPlacedPatch != null;
+
+        if (currentPlacedPatch?.Coordinate == null)
+        {
+            _rotateLeftButton.Visible = false;
+            _rotateRightButton.Visible = false;
+            _mirrorButton.Visible = false;
+            _confirmButton.Visible = false;
+        }
+        else
+        {
+            _rotateLeftButton.Visible = true;
+            _rotateRightButton.Visible = true;
+            _mirrorButton.Visible = true;
+            _confirmButton.Visible = _rootService.PlayerActionService.IsPlaceable();
+        }
     }
     
     // 由Service层驱动的刷新函数
