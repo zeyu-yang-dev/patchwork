@@ -6,7 +6,7 @@ namespace Patchwork.Scenes.GameScene;
 public partial class GameScene : Control
 {
 	private PatchBoard.PatchBoardView _patchBoardView;
-	private PatchShop.PatchShopView _patchShopView;
+	private PatchShopView _patchShopView;
 	private ControlPanelView _controlPanelView;
 
 	public RootService RootService { get; private set; }
@@ -17,7 +17,7 @@ public partial class GameScene : Control
 	public override void _Ready()
 	{
 		_patchBoardView = GetNode<PatchBoard.PatchBoardView>("PatchBoardView");
-		_patchShopView = GetNode<PatchShop.PatchShopView>("PatchShopView");
+		_patchShopView = GetNode<PatchShopView>("PatchShopView");
 		_controlPanelView = GetNode<ControlPanelView>("ControlPanelView");
 		
 		// 让_patchBoardView订阅_patchShopView的事件，不能直接订阅是因为它们不相互持有

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://13sfseu7pmqx"]
 
 [ext_resource type="Texture2D" uid="uid://vtb3r6jm12j5" path="res://Assets/Backgrounds/game_scene.png" id="1_2p8i2"]
-[ext_resource type="PackedScene" uid="uid://4ipkmqok57h7" path="res://Scenes/PatchShop/patch_shop.tscn" id="2_04h35"]
+[ext_resource type="Script" uid="uid://bopn28762oqwd" path="res://Scenes/GameScene/PatchShopView.cs" id="2_04h35"]
 [ext_resource type="PackedScene" uid="uid://bx7tydtemd5lw" path="res://Scenes/PatchBoard/patch_board.tscn" id="3_kr7le"]
 [ext_resource type="Script" uid="uid://wj0dvrwsdbuv" path="res://Scenes/GameScene/ControlPanelView.cs" id="4_0o7sr"]
 [ext_resource type="Script" uid="uid://dxsh0yehygi0f" path="res://Scenes/GameScene/GameScene.cs" id="4_b4v8s"]
@@ -33,12 +33,32 @@ texture = ExtResource("1_2p8i2")
 expand_mode = 3
 stretch_mode = 4
 
-[node name="PatchShopView" parent="." unique_id=1209268079 instance=ExtResource("2_04h35")]
+[node name="PatchShopView" type="Panel" parent="." unique_id=1209268079]
+script = ExtResource("2_04h35")
+custom_minimum_size = Vector2(760, 250)
 layout_mode = 0
 offset_left = 800.0
 offset_top = 200.0
 offset_right = 1560.0
 offset_bottom = 450.0
+
+[node name="PatchButton0" type="TextureButton" parent="PatchShopView"]
+layout_mode = 0
+offset_right = 250.0
+offset_bottom = 250.0
+ignore_texture_size = true
+
+[node name="PatchButton1" type="TextureButton" parent="PatchShopView"]
+layout_mode = 0
+offset_right = 250.0
+offset_bottom = 250.0
+ignore_texture_size = true
+
+[node name="PatchButton2" type="TextureButton" parent="PatchShopView"]
+layout_mode = 0
+offset_right = 250.0
+offset_bottom = 250.0
+ignore_texture_size = true
 
 [node name="PatchBoardView" parent="." unique_id=92066056 instance=ExtResource("3_kr7le")]
 layout_mode = 0

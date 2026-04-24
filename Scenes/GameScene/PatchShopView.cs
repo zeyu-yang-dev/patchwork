@@ -3,11 +3,11 @@ using Godot;
 using Patchwork.Domain;
 using Patchwork.Service;
 
-namespace Patchwork.Scenes.PatchShop;
+namespace Patchwork.Scenes.GameScene;
 
 public partial class PatchShopView : Panel
 {
-    // 1. 按钮的index 2. 按钮的中心点的全局坐标 3. 从按钮中心指向鼠标位置的矢量
+    // 1. 按钮的index 2. 按钮的中心点的全局坐标 3. 从按钮中心指向鼠标位置的向量
     public event Action<int, Vector2, Vector2> PatchSelected;
 
     private const string OriginalTextureDirectory = "res://Assets/Patches/original";
@@ -19,7 +19,7 @@ public partial class PatchShopView : Panel
     private static readonly Vector2 ButtonSize = new(250.0f, 250.0f);
     private static readonly Vector2[] ButtonPositions =
     [
-        // 每个button之间的间隔为5
+        // 每个button之间的间隙为5
         new Vector2(0.0f, 0.0f),
         new Vector2(255.0f, 0.0f),
         new Vector2(510.0f, 0.0f)
@@ -57,9 +57,8 @@ public partial class PatchShopView : Panel
 
     // =================================================================================================================
     
-    // 在_Ready()中订阅了ButtonDown事件
-    // 先检查被按下的按钮对应的patchOffset是否buyable，
-    // 如果是buyable的，发出PatchSelected事件。
+    // 在Ready()中订阅了ButtonDown事件
+    // 先检查被按下的按钮对应的patchOffset是否buyable，如果是buyable的，则发出PatchSelected事件。
     private void OnButtonDown(int patchOffset)
     {
         if (_rootService == null)
@@ -74,13 +73,13 @@ public partial class PatchShopView : Panel
             return;
         }
 
-        // 给RefreshVisual()提供信息，应该隐藏哪一个button
+        // 给RefreshVisual()提供信息，应当隐藏哪一个button
         _hiddenButtonIndex = patchOffset;
         
         var buttonCenterGlobal = _buttons[patchOffset].GetGlobalRect().GetCenter(); // 这个按钮的中心点在屏幕上的坐标
         var centerToCursorOffset = GetGlobalMousePosition() - buttonCenterGlobal;
 
-        // 1. 按钮的index 2. 按钮的中心点的全局坐标 3. 从按钮中心指向鼠标位置的矢量
+        // 1. 按钮的index 2. 按钮的中心点的全局坐标 3. 从按钮中心指向鼠标位置的向量
         PatchSelected?.Invoke(patchOffset, buttonCenterGlobal, centerToCursorOffset);
         
         GD.Print($"OnButtonDown reached, patchOffset = {patchOffset}");
@@ -123,7 +122,7 @@ public partial class PatchShopView : Panel
             }
             else
             {
-                // 如果button的index已超出了selectablePatches，或者应该被隐藏，则不显示
+                // 如果button的index已经超出了selectablePatches，或者应当被隐藏，则不显示
                 _buttons[i].TextureNormal = null;
                 _buttons[i].Visible = false;
                 _buttons[i].Disabled = true;
