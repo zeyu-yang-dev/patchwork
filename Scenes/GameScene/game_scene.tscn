@@ -25,14 +25,14 @@ texture = ExtResource("1_2p8i2")
 expand_mode = 3
 stretch_mode = 4
 
-[node name="PatchShop" parent="." unique_id=1209268079 instance=ExtResource("2_04h35")]
+[node name="PatchShopView" parent="." unique_id=1209268079 instance=ExtResource("2_04h35")]
 layout_mode = 0
 offset_left = 800.0
 offset_top = 200.0
 offset_right = 1560.0
 offset_bottom = 450.0
 
-[node name="PatchBoard" parent="." unique_id=92066056 instance=ExtResource("3_kr7le")]
+[node name="PatchBoardView" parent="." unique_id=92066056 instance=ExtResource("3_kr7le")]
 layout_mode = 0
 offset_left = 100.0
 offset_top = 530.0

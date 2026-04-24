@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cd7hhn7cb5n6r"]
+
+[ext_resource type="Script" path="res://Scenes/ActivePatch/ActivePatchView.cs" id="1_wtvan"]
+
+[node name="ActivePatchView" type="Control"]
+layout_mode = 0
+offset_right = 250.0
+offset_bottom = 250.0
+script = ExtResource("1_wtvan")
+
+[node name="TextureDisplay" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 250.0
+offset_bottom = 250.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 0
+visible = false

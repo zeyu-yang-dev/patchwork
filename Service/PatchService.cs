@@ -28,6 +28,9 @@ public class PatchService(RootService rootService)
 
         var patch = currentGame.PatchShop.GetSelectablePatches()[patchOffset];
         currentGame.CurrentPlacedPatch = new PlacedPatch(patch);
+        
+        // Notify UI to refresh
+        rootService.NotifyStateChanged();
     }
 
     
@@ -45,6 +48,9 @@ public class PatchService(RootService rootService)
         }
 
         currentGame.CurrentPlacedPatch = null;
+        
+        // Notify UI to refresh
+        rootService.NotifyStateChanged();
     }
     
     // =================================================================================================================
@@ -53,6 +59,9 @@ public class PatchService(RootService rootService)
     {
         var currentPlacedPatch = GetCurrentPlacedPatch();
         currentPlacedPatch.Coordinate = (col, row);
+        
+        // Notify UI to refresh
+        rootService.NotifyStateChanged();
     }
     
     public void RotateClockwise()
@@ -60,6 +69,9 @@ public class PatchService(RootService rootService)
         var currentPlacedPatch = GetCurrentPlacedPatch();
         var targetShape = PlacedPatch.RotateShape90(currentPlacedPatch.GetCurrentShape());
         ApplyTransformation(targetShape);
+        
+        // Notify UI to refresh
+        rootService.NotifyStateChanged();
     }
 
     public void RotateCounterClockwise()
@@ -68,6 +80,9 @@ public class PatchService(RootService rootService)
         var currentShape = currentPlacedPatch.GetCurrentShape();
         var targetShape = PlacedPatch.RotateShape90(PlacedPatch.RotateShape90(PlacedPatch.RotateShape90(currentShape)));
         ApplyTransformation(targetShape);
+        
+        // Notify UI to refresh
+        rootService.NotifyStateChanged();
     }
 
     public void Mirror()
@@ -75,9 +90,21 @@ public class PatchService(RootService rootService)
         var currentPlacedPatch = GetCurrentPlacedPatch();
         var targetShape = PlacedPatch.MirrorShape(currentPlacedPatch.GetCurrentShape());
         ApplyTransformation(targetShape);
+        
+        // Notify UI to refresh
+        rootService.NotifyStateChanged();
     }
 
     // =================================================================================================================
+    
+    private PlacedPatch GetCurrentPlacedPatch()
+    {
+        var currentGame = rootService.CurrentGame
+                          ?? throw new InvalidOperationException("There is no current game.");
+
+        return currentGame.CurrentPlacedPatch
+               ?? throw new InvalidOperationException("There is no patch waiting to be transformed.");
+    }
     
     /// <summary>
     /// Change the isMirrored and rotation properties of the current placed patch,
@@ -130,14 +157,5 @@ public class PatchService(RootService rootService)
         }
 
         return true;
-    }
-
-    private PlacedPatch GetCurrentPlacedPatch()
-    {
-        var currentGame = rootService.CurrentGame
-                          ?? throw new InvalidOperationException("There is no current game.");
-
-        return currentGame.CurrentPlacedPatch
-               ?? throw new InvalidOperationException("There is no patch waiting to be transformed.");
     }
 }

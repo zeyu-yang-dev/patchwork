@@ -14,9 +14,11 @@ public partial class Application : Control
 	public override void _Ready()
 	{
 		_rootService = new RootService();
-		_rootService.GameService.StartNewGame(FirstPlayerName, SecondPlayerName);
+		
 
 		var gameScene = GetNode<Patchwork.Scenes.GameScene.GameScene>("GameScene");
 		gameScene.Initialize(_rootService);
+		
+		_rootService.GameService.StartNewGame(FirstPlayerName, SecondPlayerName);
 	}
 }
