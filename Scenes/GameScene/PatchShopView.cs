@@ -16,14 +16,6 @@ public partial class PatchShopView : Panel
     private TextureButton[] _buttons;
     private int _hiddenButtonIndex = -1; // 需要隐藏的button的index
 
-    private static readonly Vector2 ButtonSize = new(250.0f, 250.0f);
-    private static readonly Vector2[] ButtonPositions =
-    [
-        // 每个button之间的间隙为5
-        new Vector2(0.0f, 0.0f),
-        new Vector2(255.0f, 0.0f),
-        new Vector2(510.0f, 0.0f)
-    ];
 
     // =================================================================================================================
     
@@ -40,9 +32,6 @@ public partial class PatchShopView : Panel
         for (var i = 0; i < _buttons.Length; i++)
         {
             var patchOffset = i;
-            // 指定3个TextureButton的位置和大小
-            _buttons[i].Position = ButtonPositions[i];
-            _buttons[i].Size = ButtonSize;
             // 订阅ButtonDown事件
             _buttons[i].ButtonDown += () => OnButtonDown(patchOffset);
         }
@@ -61,10 +50,8 @@ public partial class PatchShopView : Panel
     // 先检查被按下的按钮对应的patchOffset是否buyable，如果是buyable的，则发出PatchSelected事件。
     private void OnButtonDown(int patchOffset)
     {
-        if (_rootService == null)
-        {
-            return;
-        }
+        // 如果GameState中已经有正在放置的patch了，那么按钮应该失效
+        if (_rootService.CurrentGame.CurrentPlacedPatch != null) return;
 
         var buyablePatchOffsets = _rootService.PlayerActionService.GetBuyablePatchOffsets();
 
@@ -73,6 +60,7 @@ public partial class PatchShopView : Panel
             return;
         }
 
+        
         // 给RefreshVisual()提供信息，应当隐藏哪一个button
         _hiddenButtonIndex = patchOffset;
         
