@@ -34,7 +34,7 @@ public class PatchShop
     /// </summary>
     /// <param name="offset">The clockwise offset from the first selectable patch, can be 0, 1 or 2.</param>
     /// <returns>The removed patch.</returns>
-    public Patch TakePatch(int offset)
+    public Patch RemovePatch(int offset)
     {
         var patch = GetPatchByOffset(offset);
         var patchIndex = (NeutralTokenIndex + offset) % Patches.Count;

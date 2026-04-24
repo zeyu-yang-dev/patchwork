@@ -95,6 +95,13 @@ public partial class ActivePatchView : Control
 			_textureDisplay.Visible = true;
 			_textureDisplay.Texture = GetCurrentTexture();
 			_textureDisplay.Rotation = GetCurrentRotationRadians();
+
+			// 如果还没有坐标，不能根据IsPlaceable()决定不透明度，因为IsPlaceable()依赖坐标
+			if (_rootService.CurrentGame.CurrentPlacedPatch.Coordinate == null) return;
+			// 更新不透明度
+			_textureDisplay.Modulate = _rootService.PlayerActionService.IsPlaceable() 
+				? Colors.White 
+				: new Color(1.0f, 1.0f, 1.0f, 0.35f);
 		}
 	}
 	

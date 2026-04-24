@@ -15,8 +15,7 @@ public partial class PatchShopView : Panel
     private RootService _rootService;
     private TextureButton[] _buttons;
     private int _hiddenButtonIndex = -1; // 需要隐藏的button的index
-
-
+    
     // =================================================================================================================
     
     // _Ready处理场景树内部的事情：1. 子节点获取 2. 节点属性初始化 3. 场景内节点之间的事件连接

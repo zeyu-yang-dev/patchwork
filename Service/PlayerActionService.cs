@@ -94,7 +94,7 @@ public class PlayerActionService(RootService rootService)
     
     // =================================================================================================================
 
-    public void BuyPatch()
+    private void BuyPatch()
     {
         var currentGame = rootService.CurrentGame 
                           ?? throw new InvalidOperationException("There is no current game.");
@@ -105,7 +105,7 @@ public class PlayerActionService(RootService rootService)
         var patchOffset = selectablePatches.FindIndex(patch => patch.Id == currentPlacedPatch.Patch.Id);
         
         // Removes the path from the patch shop.
-        var patch = currentGame.PatchShop.TakePatch(patchOffset);
+        var patch = currentGame.PatchShop.RemovePatch(patchOffset);
         // The player pay the price of the patch.
         currentPlayer.Money -= patch.MoneyCost;
         
@@ -144,11 +144,13 @@ public class PlayerActionService(RootService rootService)
     public bool IsPlaceable()
     {
         var currentGame = rootService.CurrentGame ?? throw new InvalidOperationException("There is no current game.");
-        var currentPlacedPatch = currentGame.CurrentPlacedPatch ?? throw new InvalidOperationException("There is no patch waiting to be placed.");
-        var coordinate = currentPlacedPatch.Coordinate ?? throw new InvalidOperationException("The current patch does not contain a coordinate.");
         var currentPlayer = currentGame.CurrentPlayer ?? throw new InvalidOperationException("There is no current player");
-
-        return currentPlayer.PatchBoard.IsPlaceable(currentPlacedPatch, coordinate.col, coordinate.row);
+        var currentPlacedPatch = currentGame.CurrentPlacedPatch ?? throw new InvalidOperationException("There is no patch waiting to be placed.");
+        var coordinate = currentPlacedPatch.Coordinate;
+        
+        if (coordinate == null) return false;
+        
+        return currentPlayer.PatchBoard.IsPlaceable(currentPlacedPatch, coordinate.Value.col, coordinate.Value.row);
     }
     
     public void PlacePatch()
@@ -164,7 +166,6 @@ public class PlayerActionService(RootService rootService)
         var currentPlayer = currentGame.CurrentPlayer ?? throw new InvalidOperationException("There is no current player");
 
         currentPlayer.PatchBoard.PlacePatch(currentPlacedPatch, coordinate.col, coordinate.row);
-        currentGame.CurrentPlacedPatch = null;
         
         // Checks whether the player should be awarded with the bonus.
         if (!currentGame.Players[0].HasSevenBySevenBonus &&
@@ -173,6 +174,9 @@ public class PlayerActionService(RootService rootService)
         {
             currentPlayer.HasSevenBySevenBonus = true;
         }
+
+        BuyPatch();
+        currentGame.CurrentPlacedPatch = null;
         
         // Advance always takes place after placing a patch.
         Advance(currentPlacedPatch.Patch.TimeCost);
