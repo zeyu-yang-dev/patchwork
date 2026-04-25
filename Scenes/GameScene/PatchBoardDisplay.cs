@@ -14,8 +14,9 @@ public enum DisplayTarget
 public partial class PatchBoardDisplay : Node2D
 {
 	public DisplayTarget Target { get; set; } = DisplayTarget.CurrentPlayer;
-	private float BoardCellSize => Target == DisplayTarget.CurrentPlayer ? 50.0f : 20.0f;
+	private float CellSize => Target == DisplayTarget.CurrentPlayer ? 50.0f : 20.0f;
 	
+	private const int MatrixSize = 5;
 	private const string OriginalTextureDirectory = "res://Assets/Patches/original";
 	private const string MirroredTextureDirectory = "res://Assets/Patches/mirrored";
 	
@@ -51,8 +52,8 @@ public partial class PatchBoardDisplay : Node2D
 		var coordinate = placedPatch.Coordinate
 						 ?? throw new System.InvalidOperationException("PlacedPatch.Coordinate is null.");
 		return new Vector2(
-			(coordinate.col + 0.5f) * BoardCellSize,
-			(coordinate.row + 0.5f) * BoardCellSize
+			(coordinate.col + 0.5f) * CellSize,
+			(coordinate.row + 0.5f) * CellSize
 		);
 	}
 
@@ -67,11 +68,19 @@ public partial class PatchBoardDisplay : Node2D
 		var sprite = new Sprite2D();
 		AddChild(sprite);
 
-		sprite.Texture = GetPatchTexture(placedPatch);
+		var texture = GetPatchTexture(placedPatch);
+		sprite.Texture = texture;
+		
+		// 让Sprite2D以目标大小缩放
+		sprite.Scale = new Vector2(
+			CellSize * MatrixSize / texture.GetSize().X, 
+			CellSize * MatrixSize / texture.GetSize().Y
+		);
+		
+		// 让Sprite2D以中心点作为定位基准
 		sprite.Centered = true;
 		sprite.Position = GetPatchCenterPosition(placedPatch);
 		sprite.Rotation = Mathf.DegToRad(placedPatch.Rotation);
-		
 	}
 	
 	private void RefreshVisual()
