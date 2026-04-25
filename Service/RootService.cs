@@ -10,6 +10,7 @@ public class RootService
 {
     // 用来在状态改变后通知UI层刷新
     public event Action StateChanged;
+    public event Action GameStarted;
     
     public GameState CurrentGame { get; set; }
 
@@ -27,5 +28,10 @@ public class RootService
     public void NotifyStateChanged()
     {
         StateChanged?.Invoke();
+    }
+
+    public void NotifyGameStarted()
+    {
+        GameStarted?.Invoke();
     }
 }

@@ -12,7 +12,7 @@ public class GameService(RootService rootService)
     {
         rootService.CurrentGame = new GameState(firstPlayerName, secondPlayerName);
         
-        // Notify UI to refresh
+        rootService.NotifyGameStarted();
         rootService.NotifyStateChanged();
     }
 

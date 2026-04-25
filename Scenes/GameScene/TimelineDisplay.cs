@@ -27,10 +27,21 @@ public partial class TimelineDisplay : Node2D
 	{
 		_rootService = rootService;
 		_rootService.StateChanged += OnGameStateChanged;
+		_rootService.GameStarted += OnGameStarted;
 	}
 
 	// =================================================================================================================
 
+	/// <summary>
+	/// Resets the X position for both tokens.
+	/// </summary>
+	private void ResetTimeTokens()
+	{
+		foreach (var token in _tokens)
+		{
+			token.Position = new Vector2(0, token.Position.Y);
+		}
+	}
 
 	/// <summary>
 	/// Returns the index of the player and the token, for which the token should be moved.
@@ -53,6 +64,9 @@ public partial class TimelineDisplay : Node2D
 		return null;
 	}
 	
+	/// <summary>
+	/// Moves a time token to the should-position with animation.
+	/// </summary>
 	private void MoveTimeToken()
 	{
 		// The index of the target player and token.
@@ -73,16 +87,15 @@ public partial class TimelineDisplay : Node2D
 			targetX, 
 			duration
 		);
-
-
-
-
 	}
 	
-	
-	// 由Service层驱动的刷新函数
 	private void OnGameStateChanged()
 	{
 		MoveTimeToken();
+	}
+	
+	private void OnGameStarted()
+	{
+		ResetTimeTokens();
 	}
 }
