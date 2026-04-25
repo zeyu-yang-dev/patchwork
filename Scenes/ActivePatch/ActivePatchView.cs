@@ -97,11 +97,21 @@ public partial class ActivePatchView : Control
 			_textureDisplay.Rotation = GetCurrentRotationRadians();
 
 			// 如果还没有坐标，不能根据IsPlaceable()决定不透明度，因为IsPlaceable()依赖坐标
-			if (_rootService.CurrentGame.CurrentPlacedPatch.Coordinate == null) return;
-			// 更新不透明度
-			_textureDisplay.Modulate = _rootService.PlayerActionService.IsPlaceable() 
-				? Colors.White 
-				: new Color(1.0f, 1.0f, 1.0f, 0.35f);
+			// 然而，如果刚从商店里拖出来，是没有坐标的，但是这个时候也需要更新不透明度
+			// 如果有CurrentPlacedPatch但是它没坐标，说明刚从商店拖出来，这个时候要不透明
+			if (_rootService.CurrentGame.CurrentPlacedPatch.Coordinate == null)
+			{
+				_textureDisplay.Modulate = Colors.White;
+			}
+			else
+			{
+				// 在有坐标的情况下，按照是否能放置更新不透明度
+				_textureDisplay.Modulate = _rootService.PlayerActionService.IsPlaceable() 
+					? Colors.White 
+					: new Color(1.0f, 1.0f, 1.0f, 0.5f);
+			}
+			
+			
 		}
 	}
 	
