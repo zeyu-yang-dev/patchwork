@@ -28,28 +28,32 @@ public partial class TimelineDisplay : Node2D
 	}
 
 	// =================================================================================================================
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	private void RefreshVisual()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	private void MoveTimeToken()
 	{
-		
+		var currentGame =  _rootService.CurrentGame;
+		var currentPlayer = currentGame.CurrentPlayer;
+		var token = _tokens[currentGame.CurrentPlayerIndex];
+
 	}
+	
 	
 	// 由Service层驱动的刷新函数
 	private void OnGameStateChanged()
 	{
-		RefreshVisual();
+		MoveTimeToken();
 	}
 }

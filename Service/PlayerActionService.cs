@@ -20,49 +20,47 @@ public class PlayerActionService(RootService rootService)
 
         var currentPlayerIndex = currentGame.CurrentPlayerIndex;
         var currentPlayer = currentGame.CurrentPlayer;
-        var otherPlayerIndex = currentPlayerIndex == 0 ? 1 : 0;
-        var otherPlayer = currentGame.Players[otherPlayerIndex];
-
-        // Decides end position.
+        
+        // Decides target position.
         var startPosition = currentPlayer.TimePosition;
-        var destinyPosition = Math.Min(startPosition + steps, currentGame.Timeline.EndPosition);
+        var targetPosition = Math.Min(startPosition + steps, currentGame.Timeline.EndPosition);
 
         // Checks whether income positions are reached.
         foreach (var incomePosition in currentGame.Timeline.IncomePositions)
         {
-            if (incomePosition > startPosition && incomePosition <= destinyPosition)
+            if (incomePosition > startPosition && incomePosition <= targetPosition)
             {
                 currentPlayer.Money += currentPlayer.Income;
             }
         }
+
+        
 
         // Checks whether special patch positions are reached.
         // Can't handle multiple special patches, which is not likely to happen.
         for (var i = currentGame.Timeline.RemainingSpecialPatchPositions.Count - 1; i >= 0; i--)
         {
             var specialPatchPosition = currentGame.Timeline.RemainingSpecialPatchPositions[i];
-            if (specialPatchPosition > startPosition && specialPatchPosition <= destinyPosition)
+            if (specialPatchPosition > startPosition && specialPatchPosition <= targetPosition)
             {
                 currentGame.Timeline.RemainingSpecialPatchPositions.RemoveAt(i);
-                currentGame.CurrentPlacedPatch = new PlacedPatch(new Patch(-1));
+                
+                rootService.PatchService.TakeSpecialPatch();
             }
         }
 
         // Moves the player's position directly to the destiny position.
-        currentPlayer.TimePosition = destinyPosition;
+        currentPlayer.TimePosition = targetPosition;
 
         // Marks the first player to reach the end point.
-        if (destinyPosition == currentGame.Timeline.EndPosition &&
+        if (targetPosition == currentGame.Timeline.EndPosition &&
             currentGame.FirstPlayerIndexToReachEnd == -1)
         {
             currentGame.FirstPlayerIndexToReachEnd = currentPlayerIndex;
         }
 
-        // Decides the next player in turn.
-        currentGame.CurrentPlayerIndex =
-            currentPlayer.TimePosition > otherPlayer.TimePosition
-                ? otherPlayerIndex
-                : currentPlayerIndex;
+        
+        rootService.GameService.EndTurn();
         
         // Notify UI to refresh
         rootService.NotifyStateChanged();
@@ -100,6 +98,10 @@ public class PlayerActionService(RootService rootService)
                           ?? throw new InvalidOperationException("There is no current game.");
         var currentPlacedPatch = currentGame.CurrentPlacedPatch
                                  ?? throw new InvalidOperationException("There is no patch waiting to be bought.");
+        
+        // Skip if the current patch is the special patch.
+        if (currentPlacedPatch.Patch.Id == -1) return;
+        
         var currentPlayer = currentGame.CurrentPlayer;
         var selectablePatches = currentGame.PatchShop.GetSelectablePatches();
         var patchOffset = selectablePatches.FindIndex(patch => patch.Id == currentPlacedPatch.Patch.Id);
@@ -174,14 +176,15 @@ public class PlayerActionService(RootService rootService)
         {
             currentPlayer.HasSevenBySevenBonus = true;
         }
+        
+        // Notify UI to refresh
+        rootService.NotifyStateChanged();
+        
 
         BuyPatch();
         currentGame.CurrentPlacedPatch = null;
         
         // Advance always takes place after placing a patch.
         Advance(currentPlacedPatch.Patch.TimeCost);
-        
-        // Notify UI to refresh
-        rootService.NotifyStateChanged();
     }
 }
