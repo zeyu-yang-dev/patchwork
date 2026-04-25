@@ -11,6 +11,12 @@
 [ext_resource type="Texture2D" uid="uid://d3uyaaeukn3jm" path="res://Assets/Buttons/control_panel/2.png" id="7_q8v5k"]
 [ext_resource type="Texture2D" uid="uid://dbrg6rswuoh4p" path="res://Assets/Buttons/control_panel/3.png" id="8_l2w6c"]
 [ext_resource type="Texture2D" uid="uid://b25viib413p4i" path="res://Assets/Buttons/control_panel/4.png" id="9_t3r8p"]
+[ext_resource type="Texture2D" uid="uid://drcti8brw5pv6" path="res://Assets/Timeline/time_token_01.png" id="12_njm7v"]
+[ext_resource type="Texture2D" uid="uid://d2cej31t4k2cr" path="res://Assets/Timeline/time_token_02.png" id="13_bkvnf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_njm7v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bkvnf"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_dc78n"]
 
@@ -24,6 +30,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_b4v8s")
+metadata/_edit_vertical_guides_ = [112.0]
 
 [node name="Background" type="TextureRect" parent="." unique_id=1584464432]
 layout_mode = 1
@@ -43,6 +50,7 @@ offset_left = 800.0
 offset_top = 200.0
 offset_right = 1560.0
 offset_bottom = 450.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_njm7v")
 script = ExtResource("2_04h35")
 
 [node name="PatchButton0" type="TextureButton" parent="PatchShopView" unique_id=582094701]
@@ -71,6 +79,7 @@ offset_left = 100.0
 offset_top = 530.0
 offset_right = 550.0
 offset_bottom = 980.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_bkvnf")
 
 [node name="PatchBoardDisplayLeft" type="Node2D" parent="." unique_id=1856490641]
 material = SubResource("CanvasItemMaterial_dc78n")
@@ -120,3 +129,14 @@ offset_top = 176.0
 offset_right = 1383.0
 offset_bottom = 276.0
 texture_normal = ExtResource("9_t3r8p")
+
+[node name="TimelineDisplay" type="Node2D" parent="." unique_id=1497560672]
+position = Vector2(112, 32)
+
+[node name="TimeToken01" type="Sprite2D" parent="TimelineDisplay" unique_id=114962299]
+position = Vector2(0, -24)
+texture = ExtResource("12_njm7v")
+
+[node name="TimeToken02" type="Sprite2D" parent="TimelineDisplay" unique_id=328025957]
+position = Vector2(0, 60)
+texture = ExtResource("13_bkvnf")
