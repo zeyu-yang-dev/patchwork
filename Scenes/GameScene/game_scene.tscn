@@ -74,11 +74,11 @@ offset_bottom = 980.0
 
 [node name="PatchBoardDisplayLeft" type="Node2D" parent="." unique_id=1856490641]
 material = SubResource("CanvasItemMaterial_dc78n")
-position = Vector2(871, 626)
+position = Vector2(100, 530)
 script = ExtResource("2_k8y4n")
 
 [node name="PatchBoardDisplayRight" type="Node2D" parent="." unique_id=742553833]
-position = Vector2(1203, 623)
+position = Vector2(1500, 850)
 script = ExtResource("2_k8y4n")
 
 [node name="ControlPanelView" type="Panel" parent="." unique_id=1591350217]
