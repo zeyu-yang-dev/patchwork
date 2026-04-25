@@ -62,7 +62,7 @@ public class PatchService(RootService rootService)
             return;
         }
         
-
+        // Key functionality:
         currentGame.CurrentPlacedPatch = null;
         
         // Notify UI to refresh

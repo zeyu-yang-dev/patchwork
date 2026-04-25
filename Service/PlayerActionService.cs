@@ -15,8 +15,7 @@ public class PlayerActionService(RootService rootService)
     /// <param name="steps">The number of steps to move forward.</param>
     public void Advance(int steps)
     {
-        var currentGame = rootService.CurrentGame
-            ?? throw new InvalidOperationException("There is no current game.");
+        var currentGame = rootService.CurrentGame ?? throw new InvalidOperationException("There is no current game.");
 
         var currentPlayerIndex = currentGame.CurrentPlayerIndex;
         var currentPlayer = currentGame.CurrentPlayer;
@@ -33,9 +32,7 @@ public class PlayerActionService(RootService rootService)
                 currentPlayer.Money += currentPlayer.Income;
             }
         }
-
         
-
         // Checks whether special patch positions are reached.
         // Can't handle multiple special patches, which is not likely to happen.
         for (var i = currentGame.Timeline.RemainingSpecialPatchPositions.Count - 1; i >= 0; i--)
@@ -68,8 +65,7 @@ public class PlayerActionService(RootService rootService)
     
     public void Skip()
     {
-        var currentGame = rootService.CurrentGame 
-                          ?? throw new InvalidOperationException("There is no current game.");
+        var currentGame = rootService.CurrentGame ?? throw new InvalidOperationException("There is no current game.");
 
         if (currentGame.CurrentPlacedPatch != null)
         {
@@ -94,10 +90,8 @@ public class PlayerActionService(RootService rootService)
 
     private void BuyPatch()
     {
-        var currentGame = rootService.CurrentGame 
-                          ?? throw new InvalidOperationException("There is no current game.");
-        var currentPlacedPatch = currentGame.CurrentPlacedPatch
-                                 ?? throw new InvalidOperationException("There is no patch waiting to be bought.");
+        var currentGame = rootService.CurrentGame ?? throw new InvalidOperationException("There is no current game.");
+        var currentPlacedPatch = currentGame.CurrentPlacedPatch ?? throw new InvalidOperationException("There is no patch waiting to be bought.");
         
         // Skip if the current patch is the special patch.
         if (currentPlacedPatch.Patch.Id == -1) return;
@@ -108,6 +102,7 @@ public class PlayerActionService(RootService rootService)
         
         // Removes the path from the patch shop.
         var patch = currentGame.PatchShop.RemovePatch(patchOffset);
+        
         // The player pay the price of the patch.
         currentPlayer.Money -= patch.MoneyCost;
         
@@ -121,8 +116,7 @@ public class PlayerActionService(RootService rootService)
     /// <returns>A list of buyable patch offsets, a subset of {0, 1, 2}.</returns>
     public List<int> GetBuyablePatchOffsets()
     {
-        var currentGame = rootService.CurrentGame 
-                          ?? throw new InvalidOperationException("There is no current game.");
+        var currentGame = rootService.CurrentGame ?? throw new InvalidOperationException("There is no current game.");
 
         var currentPlayer = currentGame.CurrentPlayer;
         var selectablePatches = currentGame.PatchShop.GetSelectablePatches();
@@ -150,6 +144,7 @@ public class PlayerActionService(RootService rootService)
         var currentPlacedPatch = currentGame.CurrentPlacedPatch ?? throw new InvalidOperationException("There is no patch waiting to be placed.");
         var coordinate = currentPlacedPatch.Coordinate;
         
+        // The patch is not placeable, if it doesn't have a coordinate.
         if (coordinate == null) return false;
         
         return currentPlayer.PatchBoard.IsPlaceable(currentPlacedPatch, coordinate.Value.col, coordinate.Value.row);
@@ -180,7 +175,6 @@ public class PlayerActionService(RootService rootService)
         // Notify UI to refresh
         rootService.NotifyStateChanged();
         
-
         BuyPatch();
         currentGame.CurrentPlacedPatch = null;
         

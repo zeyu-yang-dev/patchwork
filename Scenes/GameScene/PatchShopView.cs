@@ -90,6 +90,17 @@ public partial class PatchShopView : Panel
         {
             _hiddenButtonIndex = -1;
         }
+        else
+        {
+            // 即使有正在放置的patch，如果它是special patch，按钮也不需要隐藏
+            if (_rootService.CurrentGame.CurrentPlacedPatch.Patch.Id == -1)
+            {
+                _hiddenButtonIndex = -1;
+            }
+        }
+
+        
+        
 
         var selectablePatches = _rootService.CurrentGame.PatchShop.GetSelectablePatches();
         var buyablePatchOffsets = _rootService.PlayerActionService.GetBuyablePatchOffsets();
