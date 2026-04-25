@@ -6,6 +6,8 @@ namespace Patchwork.Scenes.GameScene;
 
 public partial class TimelineDisplay : Node2D
 {
+	private const float StepSize = 32.0f;
+	private const float Speed = 90.0f;
 	private RootService _rootService;
 	private Sprite2D[] _tokens;
 	
@@ -30,23 +32,50 @@ public partial class TimelineDisplay : Node2D
 	// =================================================================================================================
 
 
+	/// <summary>
+	/// Returns the index of the player and the token, for which the token should be moved.
+	/// </summary>
+	/// <returns>Index of the player and the corresponding token. Null if no need to move.</returns>
+	private int? GetTargetIndex()
+	{
+		var currentGame = _rootService.CurrentGame;
+		for (var i = 0; i < _tokens.Length; i++)
+		{
+			var player = currentGame.Players[i];
+			// Read from GameState.
+			var playerTimePosition = player.TimePosition;
+			// The actual value.
+			var tokenTimePosition = Mathf.RoundToInt(_tokens[i].Position.X / StepSize);
+			
+			if (playerTimePosition != tokenTimePosition) return i;
+		}
 
-
-
-
-
-
-
-
-
-
-
-
+		return null;
+	}
+	
 	private void MoveTimeToken()
 	{
-		var currentGame =  _rootService.CurrentGame;
-		var currentPlayer = currentGame.CurrentPlayer;
-		var token = _tokens[currentGame.CurrentPlayerIndex];
+		// The index of the target player and token.
+		var targetIndex = GetTargetIndex();
+		if (targetIndex == null) return;
+
+		// The player-token pair. Only need to move for one pair.
+		var player = _rootService.CurrentGame.Players[targetIndex.Value];
+		var token = _tokens[targetIndex.Value];
+		
+		var targetX = player.TimePosition * StepSize;
+		var duration = Mathf.Abs(targetX - token.Position.X) / Speed;
+		
+		var tween = CreateTween();
+		tween.TweenProperty(
+			token, 
+			"position:x", 
+			targetX, 
+			duration
+		);
+
+
+
 
 	}
 	
