@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://7grpjqvgidb2" path="res://Scenes/GameScene/TimelineDisplay.cs" id="12_bkvnf"]
 [ext_resource type="Texture2D" uid="uid://drcti8brw5pv6" path="res://Assets/Timeline/time_token_01.png" id="12_njm7v"]
 [ext_resource type="Texture2D" uid="uid://d2cej31t4k2cr" path="res://Assets/Timeline/time_token_02.png" id="13_bkvnf"]
+[ext_resource type="Texture2D" uid="uid://bgloypy4epivr" path="res://Assets/Patches/original/-1.png" id="15_rpdpv"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_njm7v"]
 
@@ -31,7 +32,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_b4v8s")
-metadata/_edit_vertical_guides_ = [112.0]
+metadata/_edit_vertical_guides_ = [112.0, 720.0, 752.0, 736.0, 912.0, 944.0, 928.0, 0.0, 1104.0, 1136.0, 1120.0, 1488.0, 1520.0, 1504.0, 1680.0, 1712.0, 1696.0]
+metadata/_edit_horizontal_guides_ = [34.0, 66.0, 50.0, 0.0]
 
 [node name="Background" type="TextureRect" parent="." unique_id=1584464432]
 layout_mode = 1
@@ -142,3 +144,31 @@ texture = ExtResource("12_njm7v")
 [node name="TimeToken02" type="Sprite2D" parent="TimelineDisplay" unique_id=328025957]
 position = Vector2(0, 60)
 texture = ExtResource("13_bkvnf")
+
+[node name="SpecialPatches" type="Node2D" parent="TimelineDisplay" unique_id=526101457]
+position = Vector2(-112, -32)
+
+[node name="SpecialPatch01" type="Sprite2D" parent="TimelineDisplay/SpecialPatches" unique_id=799771203]
+position = Vector2(736, 50)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("15_rpdpv")
+
+[node name="SpecialPatch02" type="Sprite2D" parent="TimelineDisplay/SpecialPatches" unique_id=705876103]
+position = Vector2(928, 50)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("15_rpdpv")
+
+[node name="SpecialPatch03" type="Sprite2D" parent="TimelineDisplay/SpecialPatches" unique_id=2033323648]
+position = Vector2(1120.0001, 50.000004)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("15_rpdpv")
+
+[node name="SpecialPatch04" type="Sprite2D" parent="TimelineDisplay/SpecialPatches" unique_id=864031543]
+position = Vector2(1504, 49.999996)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("15_rpdpv")
+
+[node name="SpecialPatch05" type="Sprite2D" parent="TimelineDisplay/SpecialPatches" unique_id=1195942746]
+position = Vector2(1695.9999, 50)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("15_rpdpv")

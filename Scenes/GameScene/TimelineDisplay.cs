@@ -1,5 +1,5 @@
 using Godot;
-using Patchwork.Domain;
+using System.Collections.Generic;
 using Patchwork.Service;
 
 namespace Patchwork.Scenes.GameScene;
@@ -28,6 +28,9 @@ public partial class TimelineDisplay : Node2D
 		_rootService = rootService;
 		_rootService.StateChanged += OnGameStateChanged;
 		_rootService.GameStarted += OnGameStarted;
+		_rootService.AdvanceStarted += OnAdvanceStarted;
+		_rootService.IncomeChecked += OnIncomeChecked;
+		_rootService.SpecialPatchChecked += OnSpecialPatchChecked;
 	}
 
 	// =================================================================================================================
@@ -80,6 +83,8 @@ public partial class TimelineDisplay : Node2D
 		var targetX = player.TimePosition * StepSize;
 		var duration = Mathf.Abs(targetX - token.Position.X) / Speed;
 		
+		
+		// token.Position = new Vector2(targetX, token.Position.Y);
 		var tween = CreateTween();
 		tween.TweenProperty(
 			token, 
@@ -87,15 +92,30 @@ public partial class TimelineDisplay : Node2D
 			targetX, 
 			duration
 		);
+		// tween.TweenCallback(Callable.From(AfterMoveFinished));
 	}
-	
-	private void OnGameStateChanged()
-	{
-		MoveTimeToken();
-	}
+
+	private void OnGameStateChanged() {}
 	
 	private void OnGameStarted()
 	{
 		ResetTimeTokens();
 	}
+	
+	private void OnAdvanceStarted(int startPosition, int targetPosition)
+	{
+		MoveTimeToken();
+	}
+	
+	private void OnIncomeChecked(List<int> incomePositions)
+	{
+		
+	}
+	
+	private void OnSpecialPatchChecked(int? indexInFullArray)
+	{
+		
+	}
+	
+	
 }

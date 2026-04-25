@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Patchwork.Domain;
 
 namespace Patchwork.Service;
@@ -8,9 +9,12 @@ namespace Patchwork.Service;
 /// </summary>
 public class RootService
 {
-    // 用来在状态改变后通知UI层刷新
     public event Action StateChanged;
     public event Action GameStarted;
+    
+    public event Action<int, int> AdvanceStarted;
+    public event Action<List<int>> IncomeChecked;
+    public event Action<int?> SpecialPatchChecked;
     
     public GameState CurrentGame { get; set; }
 
@@ -33,5 +37,20 @@ public class RootService
     public void NotifyGameStarted()
     {
         GameStarted?.Invoke();
+    }
+
+    public void NotifyAdvanceStarted(int startPosition, int targetPosition)
+    {
+        AdvanceStarted?.Invoke(startPosition, targetPosition);
+    }
+
+    public void NotifyIncomeChecked(List<int> incomePositions)
+    {
+        IncomeChecked?.Invoke(incomePositions);
+    }
+
+    public void NotifySpecialPatchChecked(int? indexInFullArray)
+    {
+        SpecialPatchChecked?.Invoke(indexInFullArray);
     }
 }
