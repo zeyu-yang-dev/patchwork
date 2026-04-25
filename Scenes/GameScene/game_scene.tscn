@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://vtb3r6jm12j5" path="res://Assets/Backgrounds/game_scene.png" id="1_2p8i2"]
 [ext_resource type="Script" uid="uid://bopn28762oqwd" path="res://Scenes/GameScene/PatchShopView.cs" id="2_04h35"]
+[ext_resource type="Script" uid="uid://yt6jfhvuk80m" path="res://Scenes/GameScene/PatchBoardDisplay.cs" id="2_k8y4n"]
 [ext_resource type="PackedScene" uid="uid://bx7tydtemd5lw" path="res://Scenes/PatchBoard/patch_board.tscn" id="3_kr7le"]
 [ext_resource type="Script" uid="uid://wj0dvrwsdbuv" path="res://Scenes/GameScene/ControlPanelView.cs" id="4_0o7sr"]
 [ext_resource type="Script" uid="uid://dxsh0yehygi0f" path="res://Scenes/GameScene/GameScene.cs" id="4_b4v8s"]
@@ -10,6 +11,8 @@
 [ext_resource type="Texture2D" uid="uid://d3uyaaeukn3jm" path="res://Assets/Buttons/control_panel/2.png" id="7_q8v5k"]
 [ext_resource type="Texture2D" uid="uid://dbrg6rswuoh4p" path="res://Assets/Buttons/control_panel/3.png" id="8_l2w6c"]
 [ext_resource type="Texture2D" uid="uid://b25viib413p4i" path="res://Assets/Buttons/control_panel/4.png" id="9_t3r8p"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_dc78n"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g3lhp"]
 
@@ -68,6 +71,15 @@ offset_left = 100.0
 offset_top = 530.0
 offset_right = 550.0
 offset_bottom = 980.0
+
+[node name="PatchBoardDisplayLeft" type="Node2D" parent="." unique_id=1856490641]
+material = SubResource("CanvasItemMaterial_dc78n")
+position = Vector2(100, 530)
+script = ExtResource("2_k8y4n")
+
+[node name="PatchBoardDisplayRight" type="Node2D" parent="." unique_id=742553833]
+position = Vector2(1500, 850)
+script = ExtResource("2_k8y4n")
 
 [node name="ControlPanelView" type="Panel" parent="." unique_id=1591350217]
 custom_minimum_size = Vector2(50, 0)

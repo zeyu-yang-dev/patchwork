@@ -104,7 +104,7 @@ public partial class PatchShopView : Panel
                 _buttons[i].Visible = i != _hiddenButtonIndex;
                 _buttons[i].Modulate = buyablePatchOffsets.Contains(i)
                     ? Colors.White
-                    : new Color(1.0f, 1.0f, 1.0f, 0.35f);
+                    : new Color(1.0f, 1.0f, 1.0f, 0.5f);
                 _buttons[i].Disabled = !buyablePatchOffsets.Contains(i);
             }
             else
