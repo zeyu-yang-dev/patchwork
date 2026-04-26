@@ -101,14 +101,14 @@ public partial class TimelineDisplay : Node2D
 	private async Task PlayIncomeAnimation(List<int> incomePositions)
 	{
 		var tween = CreateTween();
-		tween.TweenInterval(1.0f);
+		tween.TweenInterval(0.1f);
 		await ToSignal(tween, Tween.SignalName.Finished);
 	}
 	
 	private async Task PlaySpecialPatchAnimation(int? indexInFullArray)
 	{
 		var tween = CreateTween();
-		tween.TweenInterval(1.0f);
+		tween.TweenInterval(0.1f);
 		await ToSignal(tween, Tween.SignalName.Finished);
 	}
 	

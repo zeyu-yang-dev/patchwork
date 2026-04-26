@@ -199,6 +199,8 @@ public class PlayerActionService(RootService rootService)
         // The player pay the price of the patch.
         currentPlayer.Money -= patch.MoneyCost;
         
+        currentGame.CurrentPlacedPatch = null;
+        
         // Notify UI to refresh
         rootService.NotifyStateChanged();
     }
@@ -267,9 +269,17 @@ public class PlayerActionService(RootService rootService)
         
         // Notify UI to refresh
         rootService.NotifyStateChanged();
+
+        if (currentPlacedPatch.Patch.Id != -1)
+        {
+            BuyPatch();
+        }
+        else
+        {
+            currentGame.CurrentPlacedPatch = null;
+        }
         
-        BuyPatch();
-        currentGame.CurrentPlacedPatch = null;
+        
         
         // Advance always takes place after placing a patch.
         StartAdvance(currentPlacedPatch.Patch.TimeCost);
