@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://d3uyaaeukn3jm" path="res://Assets/Buttons/control_panel/2.png" id="7_q8v5k"]
 [ext_resource type="Texture2D" uid="uid://dbrg6rswuoh4p" path="res://Assets/Buttons/control_panel/3.png" id="8_l2w6c"]
 [ext_resource type="Texture2D" uid="uid://b25viib413p4i" path="res://Assets/Buttons/control_panel/4.png" id="9_t3r8p"]
+[ext_resource type="Texture2D" uid="uid://bed2twpo57qno" path="res://Assets/Buttons/control_panel/5.png" id="12_6dkqd"]
 [ext_resource type="Script" uid="uid://7grpjqvgidb2" path="res://Scenes/GameScene/TimelineDisplay.cs" id="12_bkvnf"]
 [ext_resource type="Texture2D" uid="uid://drcti8brw5pv6" path="res://Assets/Timeline/time_token_01.png" id="12_njm7v"]
 [ext_resource type="Texture2D" uid="uid://d2cej31t4k2cr" path="res://Assets/Timeline/time_token_02.png" id="13_bkvnf"]
@@ -127,11 +128,12 @@ texture_normal = ExtResource("8_l2w6c")
 
 [node name="SkipButton" type="TextureButton" parent="ControlPanelView" unique_id=1374615795]
 layout_mode = 0
-offset_left = 1283.0
+offset_left = 1258.0
 offset_top = 176.0
-offset_right = 1383.0
+offset_right = 1408.0
 offset_bottom = 276.0
 texture_normal = ExtResource("9_t3r8p")
+texture_pressed = ExtResource("12_6dkqd")
 
 [node name="TimelineDisplay" type="Node2D" parent="." unique_id=1497560672]
 position = Vector2(112, 32)
