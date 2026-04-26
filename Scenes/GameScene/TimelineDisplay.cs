@@ -1,5 +1,7 @@
 using Godot;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Patchwork.Service;
 
 namespace Patchwork.Scenes.GameScene;
@@ -10,6 +12,8 @@ public partial class TimelineDisplay : Node2D
 	private const float Speed = 90.0f;
 	private RootService _rootService;
 	private Sprite2D[] _tokens;
+	private int _startPosition;
+	private int _targetPosition;
 	
 	// =================================================================================================================
 	
@@ -70,7 +74,7 @@ public partial class TimelineDisplay : Node2D
 	/// <summary>
 	/// Moves a time token to the should-position with animation.
 	/// </summary>
-	private void MoveTimeToken()
+	private async Task PlayMoveTokenAnimation()
 	{
 		// The index of the target player and token.
 		var targetIndex = GetTargetIndex();
@@ -83,8 +87,6 @@ public partial class TimelineDisplay : Node2D
 		var targetX = player.TimePosition * StepSize;
 		var duration = Mathf.Abs(targetX - token.Position.X) / Speed;
 		
-		
-		// token.Position = new Vector2(targetX, token.Position.Y);
 		var tween = CreateTween();
 		tween.TweenProperty(
 			token, 
@@ -92,29 +94,84 @@ public partial class TimelineDisplay : Node2D
 			targetX, 
 			duration
 		);
-		// tween.TweenCallback(Callable.From(AfterMoveFinished));
+		// 等动画播放结束
+		await ToSignal(tween, Tween.SignalName.Finished);
 	}
 
+	private async Task PlayIncomeAnimation(List<int> incomePositions)
+	{
+		var tween = CreateTween();
+		tween.TweenInterval(1.0f);
+		await ToSignal(tween, Tween.SignalName.Finished);
+	}
+	
+	private async Task PlaySpecialPatchAnimation(int? indexInFullArray)
+	{
+		var tween = CreateTween();
+		tween.TweenInterval(1.0f);
+		await ToSignal(tween, Tween.SignalName.Finished);
+	}
+	
+	
+
+	
+	private async void OnAdvanceStarted(int startPosition, int targetPosition)
+	{
+		try
+		{
+			// 等待MoveTimeToken结束后再运行接下来的代码
+			await PlayMoveTokenAnimation();
+			_rootService.PlayerActionService.CheckForIncome(startPosition, targetPosition);
+		}
+		catch (Exception e)
+		{
+			GD.PrintErr(e);
+		}
+	}
+	
+	private async void OnIncomeChecked(List<int> incomePositions, int startPosition, int targetPosition)
+	{
+		try
+		{
+			await PlayIncomeAnimation(incomePositions);
+			_rootService.PlayerActionService.CheckForSpecialPatch(startPosition, targetPosition);
+		}
+		catch (Exception e)
+		{
+			GD.PrintErr(e);
+		}
+		
+	}
+	
+	private async void OnSpecialPatchChecked(int? indexInFullArray)
+	{
+		try
+		{
+			await PlaySpecialPatchAnimation(indexInFullArray);
+			if (indexInFullArray != null)
+			{
+				_rootService.PatchService.TakeSpecialPatch();
+			}
+			else
+			{
+				_rootService.GameService.EndTurn();
+			}
+			
+		}
+		catch (Exception e)
+		{
+			GD.PrintErr(e);
+		}
+		
+	}
+	
+	
+	
 	private void OnGameStateChanged() {}
 	
 	private void OnGameStarted()
 	{
 		ResetTimeTokens();
-	}
-	
-	private void OnAdvanceStarted(int startPosition, int targetPosition)
-	{
-		MoveTimeToken();
-	}
-	
-	private void OnIncomeChecked(List<int> incomePositions)
-	{
-		
-	}
-	
-	private void OnSpecialPatchChecked(int? indexInFullArray)
-	{
-		
 	}
 	
 	

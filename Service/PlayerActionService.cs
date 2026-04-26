@@ -66,7 +66,9 @@ public class PlayerActionService(RootService rootService)
         
         rootService.GameService.EndTurn();
     }
-
+    
+    
+    
     /// <summary>
     /// 1. Step of advance action: Increase the time position of the current player.
     /// </summary>
@@ -114,7 +116,7 @@ public class PlayerActionService(RootService rootService)
             }
         }
         
-        rootService.NotifyIncomeChecked(incomePositions);
+        rootService.NotifyIncomeChecked(incomePositions, startPosition, targetPosition);
         return incomePositions;
     }
 
@@ -152,7 +154,7 @@ public class PlayerActionService(RootService rootService)
     
     
     
-    
+    // =================================================================================================================
     
     public void Skip()
     {
@@ -171,7 +173,7 @@ public class PlayerActionService(RootService rootService)
         var steps = targetPosition - currentPlayer.TimePosition;
         
         currentPlayer.Money += steps;
-        Advance(steps);
+        StartAdvance(steps);
         
         // Notify UI to refresh
         rootService.NotifyStateChanged();
@@ -270,6 +272,6 @@ public class PlayerActionService(RootService rootService)
         currentGame.CurrentPlacedPatch = null;
         
         // Advance always takes place after placing a patch.
-        Advance(currentPlacedPatch.Patch.TimeCost);
+        StartAdvance(currentPlacedPatch.Patch.TimeCost);
     }
 }

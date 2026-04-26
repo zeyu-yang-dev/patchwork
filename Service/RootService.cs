@@ -13,7 +13,7 @@ public class RootService
     public event Action GameStarted;
     
     public event Action<int, int> AdvanceStarted;
-    public event Action<List<int>> IncomeChecked;
+    public event Action<List<int>, int, int> IncomeChecked;
     public event Action<int?> SpecialPatchChecked;
     
     public GameState CurrentGame { get; set; }
@@ -44,9 +44,9 @@ public class RootService
         AdvanceStarted?.Invoke(startPosition, targetPosition);
     }
 
-    public void NotifyIncomeChecked(List<int> incomePositions)
+    public void NotifyIncomeChecked(List<int> incomePositions, int startPosition, int targetPosition)
     {
-        IncomeChecked?.Invoke(incomePositions);
+        IncomeChecked?.Invoke(incomePositions,  startPosition, targetPosition);
     }
 
     public void NotifySpecialPatchChecked(int? indexInFullArray)
