@@ -5,6 +5,16 @@ namespace Patchwork.Service;
 
 public class PatchService(RootService rootService)
 {
+    public void TakeSpecialPatch()
+    {
+        var currentGame = rootService.CurrentGame;
+        
+        currentGame.CurrentPlacedPatch = new PlacedPatch(new Patch(-1));
+        MovePatch(8, 0);
+        
+        // Notify UI to refresh
+        rootService.NotifyStateChanged();
+    }
     /// <summary>
     /// Prepares the selected patch for subsequent transformation and placement.
     /// Invoked when a patch is dragged from patch shop to patch board.
@@ -42,11 +52,17 @@ public class PatchService(RootService rootService)
         var currentGame = rootService.CurrentGame
                           ?? throw new InvalidOperationException("There is no current game.");
 
-        if (currentGame.CurrentPlacedPatch == null)
-        {
-            throw new InvalidOperationException("There is no patch waiting to be put back.");
-        }
+        var currentPlacedPatch = currentGame.CurrentPlacedPatch 
+                                 ?? throw new InvalidOperationException("There is no patch waiting to be put back.");
 
+        // If the special patch is put back, take a new special patch.
+        if (currentPlacedPatch.Patch.Id == -1)
+        {
+            TakeSpecialPatch();
+            return;
+        }
+        
+        // Key functionality:
         currentGame.CurrentPlacedPatch = null;
         
         // Notify UI to refresh

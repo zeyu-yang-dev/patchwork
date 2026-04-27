@@ -15,63 +15,151 @@ public class PlayerActionService(RootService rootService)
     /// <param name="steps">The number of steps to move forward.</param>
     public void Advance(int steps)
     {
-        var currentGame = rootService.CurrentGame
-            ?? throw new InvalidOperationException("There is no current game.");
+        var currentGame = rootService.CurrentGame ?? throw new InvalidOperationException("There is no current game.");
 
         var currentPlayerIndex = currentGame.CurrentPlayerIndex;
         var currentPlayer = currentGame.CurrentPlayer;
-        var otherPlayerIndex = currentPlayerIndex == 0 ? 1 : 0;
-        var otherPlayer = currentGame.Players[otherPlayerIndex];
-
-        // Decides end position.
+        
+        // Decides target position.
         var startPosition = currentPlayer.TimePosition;
-        var destinyPosition = Math.Min(startPosition + steps, currentGame.Timeline.EndPosition);
-
-        // Checks whether income positions are reached.
-        foreach (var incomePosition in currentGame.Timeline.IncomePositions)
-        {
-            if (incomePosition > startPosition && incomePosition <= destinyPosition)
-            {
-                currentPlayer.Money += currentPlayer.Income;
-            }
-        }
-
-        // Checks whether special patch positions are reached.
-        // Can't handle multiple special patches, which is not likely to happen.
-        for (var i = currentGame.Timeline.RemainingSpecialPatchPositions.Count - 1; i >= 0; i--)
-        {
-            var specialPatchPosition = currentGame.Timeline.RemainingSpecialPatchPositions[i];
-            if (specialPatchPosition > startPosition && specialPatchPosition <= destinyPosition)
-            {
-                currentGame.Timeline.RemainingSpecialPatchPositions.RemoveAt(i);
-                currentGame.CurrentPlacedPatch = new PlacedPatch(new Patch(-1));
-            }
-        }
-
-        // Moves the player's position directly to the destiny position.
-        currentPlayer.TimePosition = destinyPosition;
-
+        var targetPosition = Math.Min(startPosition + steps, currentGame.Timeline.EndPosition);
+        
         // Marks the first player to reach the end point.
-        if (destinyPosition == currentGame.Timeline.EndPosition &&
+        if (targetPosition == currentGame.Timeline.EndPosition &&
             currentGame.FirstPlayerIndexToReachEnd == -1)
         {
             currentGame.FirstPlayerIndexToReachEnd = currentPlayerIndex;
         }
-
-        // Decides the next player in turn.
-        currentGame.CurrentPlayerIndex =
-            currentPlayer.TimePosition > otherPlayer.TimePosition
-                ? otherPlayerIndex
-                : currentPlayerIndex;
         
-        // Notify UI to refresh
-        rootService.NotifyStateChanged();
+        // Moves the player's position directly to the destiny position.
+        currentPlayer.TimePosition = targetPosition;
+        // Refresh should take place before the current player get income or the special patch.
+        rootService.NotifyAdvanceStarted(startPosition, targetPosition);
+        
+        // =============================================================================================================
+        
+        // Checks whether income positions are reached.
+        foreach (var incomePosition in currentGame.Timeline.IncomePositions)
+        {
+            if (incomePosition > startPosition && incomePosition <= targetPosition)
+            {
+                currentPlayer.Money += currentPlayer.Income;
+            }
+        }
+        
+        // =============================================================================================================
+        
+        // Checks whether any of the special patch positions is reached.
+        // Can't handle multiple special patches, which is not possible to happen.
+        for (var i = currentGame.Timeline.RemainingSpecialPatchPositions.Count - 1; i >= 0; i--)
+        {
+            var specialPatchPosition = currentGame.Timeline.RemainingSpecialPatchPositions[i];
+            if (specialPatchPosition > startPosition && specialPatchPosition <= targetPosition)
+            {
+                currentGame.Timeline.RemainingSpecialPatchPositions.RemoveAt(i);
+                
+                rootService.PatchService.TakeSpecialPatch();
+            }
+        }
+        
+        
+        
+        rootService.GameService.EndTurn();
     }
+    
+    
+    
+    /// <summary>
+    /// 1. Step of advance action: Increase the time position of the current player.
+    /// </summary>
+    private (int startPosition, int targetPosition) StartAdvance(int steps)
+    {
+        var currentGame = rootService.CurrentGame ?? throw new InvalidOperationException("There is no current game.");
+        var currentPlayer = currentGame.CurrentPlayer;
+        var currentPlayerIndex = currentGame.CurrentPlayerIndex;
+        
+        // Decides target position.
+        var startPosition = currentPlayer.TimePosition;
+        var targetPosition = Math.Min(startPosition + steps, currentGame.Timeline.EndPosition);
+        
+        // Marks the first player to reach the end point.
+        if (targetPosition == currentGame.Timeline.EndPosition &&
+            currentGame.FirstPlayerIndexToReachEnd == -1)
+        {
+            currentGame.FirstPlayerIndexToReachEnd = currentPlayerIndex;
+        }
+        
+        // Moves the player's position directly to the destiny position.
+        currentPlayer.TimePosition = targetPosition;
+        
+        // Refresh should take place before the current player get income or the special patch.
+        rootService.NotifyAdvanceStarted(startPosition, targetPosition);
+        return (startPosition, targetPosition);
+    }
+
+    /// <summary>
+    /// 2. Step of advance action: Check for income positions.
+    /// </summary>
+    public List<int> CheckForIncome(int startPosition, int targetPosition)
+    {
+        var currentGame = rootService.CurrentGame ?? throw new InvalidOperationException("There is no current game.");
+        var currentPlayer = currentGame.CurrentPlayer;
+
+        var incomeIndices = new List<int>();
+        // Checks whether income positions are reached.
+        for (var incomeIndex = 0; incomeIndex < currentGame.Timeline.IncomePositions.Count; incomeIndex++)
+        {
+            var incomePosition = currentGame.Timeline.IncomePositions[incomeIndex];
+            if (startPosition < incomePosition && incomePosition <= targetPosition)
+            {
+                currentPlayer.Money += currentPlayer.Income;
+                incomeIndices.Add(incomeIndex);
+            }
+        }
+        
+        rootService.NotifyIncomeChecked(incomeIndices, startPosition, targetPosition);
+        return incomeIndices;
+    }
+
+    /// <summary>
+    /// 3. Step of advance action:
+    /// </summary>
+    public int? CheckForSpecialPatch(int startPosition, int targetPosition)
+    {
+        var currentGame = rootService.CurrentGame ?? throw new InvalidOperationException("There is no current game.");
+        var remainingPositions = currentGame.Timeline.RemainingSpecialPatchPositions;
+        const int totalNumber = 5;
+        var remainingNumber = remainingPositions.Count;
+
+        
+        for (int i = totalNumber - remainingNumber; i < totalNumber; i++)
+        {
+            var indexInRemaining = i - (totalNumber - remainingNumber);
+            var specialPatchPosition = remainingPositions[indexInRemaining];
+            if (startPosition < specialPatchPosition && specialPatchPosition <= targetPosition)
+            {
+                remainingPositions.RemoveAt(indexInRemaining);
+                rootService.NotifySpecialPatchChecked(i);
+                return i;
+            }
+        }
+        
+        rootService.NotifySpecialPatchChecked(null);
+        return null;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    // =================================================================================================================
     
     public void Skip()
     {
-        var currentGame = rootService.CurrentGame 
-                          ?? throw new InvalidOperationException("There is no current game.");
+        var currentGame = rootService.CurrentGame ?? throw new InvalidOperationException("There is no current game.");
 
         if (currentGame.CurrentPlacedPatch != null)
         {
@@ -86,7 +174,7 @@ public class PlayerActionService(RootService rootService)
         var steps = targetPosition - currentPlayer.TimePosition;
         
         currentPlayer.Money += steps;
-        Advance(steps);
+        StartAdvance(steps);
         
         // Notify UI to refresh
         rootService.NotifyStateChanged();
@@ -96,18 +184,23 @@ public class PlayerActionService(RootService rootService)
 
     private void BuyPatch()
     {
-        var currentGame = rootService.CurrentGame 
-                          ?? throw new InvalidOperationException("There is no current game.");
-        var currentPlacedPatch = currentGame.CurrentPlacedPatch
-                                 ?? throw new InvalidOperationException("There is no patch waiting to be bought.");
+        var currentGame = rootService.CurrentGame ?? throw new InvalidOperationException("There is no current game.");
+        var currentPlacedPatch = currentGame.CurrentPlacedPatch ?? throw new InvalidOperationException("There is no patch waiting to be bought.");
+        
+        // Skip if the current patch is the special patch.
+        if (currentPlacedPatch.Patch.Id == -1) return;
+        
         var currentPlayer = currentGame.CurrentPlayer;
         var selectablePatches = currentGame.PatchShop.GetSelectablePatches();
         var patchOffset = selectablePatches.FindIndex(patch => patch.Id == currentPlacedPatch.Patch.Id);
         
         // Removes the path from the patch shop.
         var patch = currentGame.PatchShop.RemovePatch(patchOffset);
+        
         // The player pay the price of the patch.
         currentPlayer.Money -= patch.MoneyCost;
+        
+        currentGame.CurrentPlacedPatch = null;
         
         // Notify UI to refresh
         rootService.NotifyStateChanged();
@@ -119,8 +212,7 @@ public class PlayerActionService(RootService rootService)
     /// <returns>A list of buyable patch offsets, a subset of {0, 1, 2}.</returns>
     public List<int> GetBuyablePatchOffsets()
     {
-        var currentGame = rootService.CurrentGame 
-                          ?? throw new InvalidOperationException("There is no current game.");
+        var currentGame = rootService.CurrentGame ?? throw new InvalidOperationException("There is no current game.");
 
         var currentPlayer = currentGame.CurrentPlayer;
         var selectablePatches = currentGame.PatchShop.GetSelectablePatches();
@@ -148,6 +240,7 @@ public class PlayerActionService(RootService rootService)
         var currentPlacedPatch = currentGame.CurrentPlacedPatch ?? throw new InvalidOperationException("There is no patch waiting to be placed.");
         var coordinate = currentPlacedPatch.Coordinate;
         
+        // The patch is not placeable, if it doesn't have a coordinate.
         if (coordinate == null) return false;
         
         return currentPlayer.PatchBoard.IsPlaceable(currentPlacedPatch, coordinate.Value.col, coordinate.Value.row);
@@ -174,14 +267,22 @@ public class PlayerActionService(RootService rootService)
         {
             currentPlayer.HasSevenBySevenBonus = true;
         }
-
-        BuyPatch();
-        currentGame.CurrentPlacedPatch = null;
-        
-        // Advance always takes place after placing a patch.
-        Advance(currentPlacedPatch.Patch.TimeCost);
         
         // Notify UI to refresh
         rootService.NotifyStateChanged();
+
+        if (currentPlacedPatch.Patch.Id != -1)
+        {
+            BuyPatch();
+        }
+        else
+        {
+            currentGame.CurrentPlacedPatch = null;
+        }
+        
+        
+        
+        // Advance always takes place after placing a patch.
+        StartAdvance(currentPlacedPatch.Patch.TimeCost);
     }
 }

@@ -11,7 +11,6 @@ public class PatchShop
 {
     // 33 patches in total, id from 0 to 32.
     private const int PatchCount = 33;
-    
     private const int SmallestPatchId = 0;
 
     public List<Patch> Patches { get; }
@@ -127,7 +126,7 @@ public class PatchShop
             patches.Add(new Patch(id));
         }
 
-        Random.Shared.Shuffle(CollectionsMarshal.AsSpan(patches));
+        // Random.Shared.Shuffle(CollectionsMarshal.AsSpan(patches));
 
         return patches;
     }

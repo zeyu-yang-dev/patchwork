@@ -1,6 +1,7 @@
 using System;
 using Godot;
 using Patchwork.Service;
+using PatchBoardView = Patchwork.Scenes.PatchBoard.PatchBoardView;
 
 namespace Patchwork.Scenes.ActivePatch;
 
@@ -95,16 +96,20 @@ public partial class ActivePatchView : Control
 			_textureDisplay.Visible = true;
 			_textureDisplay.Texture = GetCurrentTexture();
 			_textureDisplay.Rotation = GetCurrentRotationRadians();
-
-			// 如果还没有坐标，不能根据IsPlaceable()决定不透明度，因为IsPlaceable()依赖坐标
-			// 然而，如果刚从商店里拖出来，是没有坐标的，但是这个时候也需要更新不透明度
-			// 如果有CurrentPlacedPatch但是它没坐标，说明刚从商店拖出来，这个时候要不透明
-			if (_rootService.CurrentGame.CurrentPlacedPatch.Coordinate == null)
+			
+			// 如果还没有坐标，不能根据IsPlaceable()决定不透明度，因为IsPlaceable()依赖坐标，
+			// 然而，如果刚从商店里拖出来，是没有坐标的，但是这个时候也需要更新不透明度，
+			// 如果有CurrentPlacedPatch但是它没坐标，说明刚从商店拖出来，这个时候要不透明显示。
+			var coordinate = _rootService.CurrentGame.CurrentPlacedPatch.Coordinate;
+			if (coordinate == null)
 			{
 				_textureDisplay.Modulate = Colors.White;
 			}
 			else
 			{
+				// 将_activePatchView按照格子吸附，也就是更新位置
+				Position = GetLocalPositionFromCoordinate(coordinate.Value.col, coordinate.Value.row);
+				
 				// 在有坐标的情况下，按照是否能放置更新不透明度
 				_textureDisplay.Modulate = _rootService.PlayerActionService.IsPlaceable() 
 					? Colors.White 
@@ -113,6 +118,16 @@ public partial class ActivePatchView : Control
 			
 			
 		}
+	}
+	
+	// 由中心点的坐标得到它在patch board中的相对位置
+	private static Vector2 GetLocalPositionFromCoordinate(int col, int row)
+	{
+		const float cellSize = PatchBoardView.BoardCellSize;
+		// 先计算出cellCenter，也就是_activePatchView中心点所在的格子的中心点坐标
+		var cellCenter = new Vector2((col + 0.5f) * cellSize, (row + 0.5f) * cellSize);
+		// patch的应该移动到的位置：
+		return cellCenter - TopLeftToCenterOffset;
 	}
 	
 	// 由Service层驱动的刷新函数

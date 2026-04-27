@@ -7,7 +7,7 @@ namespace Patchwork.Scenes.PatchBoard;
 
 public partial class PatchBoardView : Panel
 {
-	private const float BoardCellSize = 50.0f;
+	public const float BoardCellSize = 50.0f;
 	
 	// 决定_Process和_UnhandledInput如何处理鼠标
 	private enum InteractionState
@@ -114,9 +114,6 @@ public partial class PatchBoardView : Panel
 		var row = Mathf.FloorToInt(ActivePatchViewCenterLocal.Y / BoardCellSize);
 		
 		_rootService.PatchService.MovePatch(col, row);
-		
-		// 将_activePatchView按照格子吸附
-		_activePatchView.Position = GetLocalPositionFromCoordinate(col, row);
 	}
 	
 	// 当一个patch在shop中被选中时，从事件PatchSelected得到的是它的中心的绝对坐标，
@@ -129,14 +126,7 @@ public partial class PatchBoardView : Panel
 		return GetGlobalTransform().AffineInverse() * topLeftGlobal;
 	}
 	
-	// 由_activePatchView中心点的坐标得到它的位置
-	private static Vector2 GetLocalPositionFromCoordinate(int col, int row)
-	{
-		// 先计算出cellCenter，也就是_activePatchView中心点所在的格子的中心点坐标
-		var cellCenter = new Vector2((col + 0.5f) * BoardCellSize, (row + 0.5f) * BoardCellSize);
-		// patch的目标位置
-		return cellCenter - ActivePatchView.TopLeftToCenterOffset;
-	}
+	
 	
 	// 由Service层驱动的刷新函数
 	private void OnGameStateChanged()

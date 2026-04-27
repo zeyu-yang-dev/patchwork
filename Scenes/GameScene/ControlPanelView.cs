@@ -27,7 +27,7 @@ public partial class ControlPanelView : Panel
         _rotateRightButton.ButtonDown += OnRotateRightPressed;
         _mirrorButton.ButtonDown += OnMirrorPressed;
         _confirmButton.ButtonDown += OnConfirmPressed;
-        _skipButton.ButtonDown += OnSkipPressed;
+        _skipButton.Pressed += OnSkipPressed;
     }
 
     public void Initialize(RootService rootService)

@@ -10,6 +10,7 @@ public partial class GameScene : Control
 	private ControlPanelView _controlPanelView;
 	private PatchBoardDisplay _patchBoardDisplayLeft;
 	private PatchBoardDisplay _patchBoardDisplayRight;
+	private TimelineDisplay _timelineDisplay;
 
 	public RootService RootService { get; private set; }
 
@@ -25,6 +26,7 @@ public partial class GameScene : Control
 		_patchBoardDisplayRight = GetNode<PatchBoardDisplay>("PatchBoardDisplayRight");
 		_patchBoardDisplayLeft.Target = DisplayTarget.CurrentPlayer;
 		_patchBoardDisplayRight.Target = DisplayTarget.OtherPlayer;
+		_timelineDisplay =  GetNode<TimelineDisplay>("TimelineDisplay");
 		
 		// 让_patchBoardView订阅_patchShopView的事件，不能直接订阅是因为它们不相互持有
 		// 1. 按钮的index 2. 按钮的中心点的全局坐标 3. 从按钮中心指向鼠标位置的矢量
@@ -42,6 +44,7 @@ public partial class GameScene : Control
 		_controlPanelView.Initialize(rootService);
 		_patchBoardDisplayLeft.Initialize(rootService);
 		_patchBoardDisplayRight.Initialize(rootService);
+		_timelineDisplay.Initialize(rootService);
 	}
 	
 	// =================================================================================================================
