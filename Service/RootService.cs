@@ -44,9 +44,9 @@ public class RootService
         AdvanceStarted?.Invoke(startPosition, targetPosition);
     }
 
-    public void NotifyIncomeChecked(List<int> incomePositions, int startPosition, int targetPosition)
+    public void NotifyIncomeChecked(List<int> incomeIndices, int startPosition, int targetPosition)
     {
-        IncomeChecked?.Invoke(incomePositions,  startPosition, targetPosition);
+        IncomeChecked?.Invoke(incomeIndices,  startPosition, targetPosition);
     }
 
     public void NotifySpecialPatchChecked(int? indexInFullArray)

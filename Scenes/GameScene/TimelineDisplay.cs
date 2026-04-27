@@ -16,6 +16,7 @@ public partial class TimelineDisplay : Node2D
 	private RootService _rootService;
 	private Sprite2D[] _tokens;
 	private Sprite2D[] _specialPatches;
+	private AnimatedSprite2D[] _coins;
 	
 	// =================================================================================================================
 	
@@ -28,6 +29,7 @@ public partial class TimelineDisplay : Node2D
 		];
 		
 		_specialPatches = GetNode<Node2D>("SpecialPatches").GetChildren().OfType<Sprite2D>().ToArray();
+		_coins = GetNode<Node2D>("Coins").GetChildren().OfType<AnimatedSprite2D>().ToArray();
 	}
 	
 	public void Initialize(RootService rootService)
@@ -74,6 +76,8 @@ public partial class TimelineDisplay : Node2D
 		return null;
 	}
 	
+	// =================================================================================================================
+	
 	/// <summary>
 	/// Moves a time token to the should-position with animation.
 	/// </summary>
@@ -101,11 +105,29 @@ public partial class TimelineDisplay : Node2D
 		await ToSignal(tween, Tween.SignalName.Finished);
 	}
 
-	private async Task PlayIncomeAnimation(List<int> incomePositions)
+	private async Task PlayIncomeAnimation(List<int> incomeIndices)
 	{
-		var tween = CreateTween();
-		tween.TweenInterval(0.1f);
-		await ToSignal(tween, Tween.SignalName.Finished);
+		
+		if (incomeIndices.Count == 0) return;
+
+		async Task WaitAnim(AnimatedSprite2D sprite)
+		{
+			await ToSignal(sprite, AnimatedSprite2D.SignalName.AnimationFinished);
+		}
+
+		var tasks = new List<Task>();
+
+		foreach (var index in incomeIndices)
+		{
+			if (index >= _coins.Length) continue;
+			
+			GD.Print("Coin Animation with Index = " + index);
+			var coin = _coins[index];
+			coin.Play("explode_animation");
+			tasks.Add(WaitAnim(coin));
+		}
+
+		await Task.WhenAll(tasks);
 	}
 	
 	private async Task PlaySpecialPatchAnimation(int? indexInFullArray)
@@ -135,7 +157,7 @@ public partial class TimelineDisplay : Node2D
 		sprite.QueueFree();
 	}
 	
-
+	// =================================================================================================================
 	
 	private async void OnAdvanceStarted(int startPosition, int targetPosition)
 	{
@@ -151,11 +173,11 @@ public partial class TimelineDisplay : Node2D
 		}
 	}
 	
-	private async void OnIncomeChecked(List<int> incomePositions, int startPosition, int targetPosition)
+	private async void OnIncomeChecked(List<int> incomeIndices, int startPosition, int targetPosition)
 	{
 		try
 		{
-			await PlayIncomeAnimation(incomePositions);
+			await PlayIncomeAnimation(incomeIndices);
 			_rootService.PlayerActionService.CheckForSpecialPatch(startPosition, targetPosition);
 		}
 		catch (Exception e)

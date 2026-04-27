@@ -105,19 +105,20 @@ public class PlayerActionService(RootService rootService)
         var currentGame = rootService.CurrentGame ?? throw new InvalidOperationException("There is no current game.");
         var currentPlayer = currentGame.CurrentPlayer;
 
-        var incomePositions = new List<int>();
+        var incomeIndices = new List<int>();
         // Checks whether income positions are reached.
-        foreach (var incomePosition in currentGame.Timeline.IncomePositions)
+        for (var incomeIndex = 0; incomeIndex < currentGame.Timeline.IncomePositions.Count; incomeIndex++)
         {
-            if (incomePosition > startPosition && incomePosition <= targetPosition)
+            var incomePosition = currentGame.Timeline.IncomePositions[incomeIndex];
+            if (startPosition < incomePosition && incomePosition <= targetPosition)
             {
                 currentPlayer.Money += currentPlayer.Income;
-                incomePositions.Add(incomePosition);
+                incomeIndices.Add(incomeIndex);
             }
         }
         
-        rootService.NotifyIncomeChecked(incomePositions, startPosition, targetPosition);
-        return incomePositions;
+        rootService.NotifyIncomeChecked(incomeIndices, startPosition, targetPosition);
+        return incomeIndices;
     }
 
     /// <summary>
