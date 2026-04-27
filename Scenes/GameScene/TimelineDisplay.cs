@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Patchwork.Service;
 
@@ -8,12 +9,13 @@ namespace Patchwork.Scenes.GameScene;
 
 public partial class TimelineDisplay : Node2D
 {
-	private const float StepSize = 32.0f;
-	private const float Speed = 90.0f;
+	private const float TokenStepSize = 32.0f;
+	private const float TokenSpeed = 120.0f;
+	private static readonly Vector2 SpecialPatchSpawnGlobal = new(525.0f, 555.0f);
+	
 	private RootService _rootService;
 	private Sprite2D[] _tokens;
-	private int _startPosition;
-	private int _targetPosition;
+	private Sprite2D[] _specialPatches;
 	
 	// =================================================================================================================
 	
@@ -24,7 +26,8 @@ public partial class TimelineDisplay : Node2D
 			GetNode<Sprite2D>("TimeToken01"),
 			GetNode<Sprite2D>("TimeToken02"),
 		];
-
+		
+		_specialPatches = GetNode<Node2D>("SpecialPatches").GetChildren().OfType<Sprite2D>().ToArray();
 	}
 	
 	public void Initialize(RootService rootService)
@@ -63,7 +66,7 @@ public partial class TimelineDisplay : Node2D
 			// Read from GameState.
 			var playerTimePosition = player.TimePosition;
 			// The actual value.
-			var tokenTimePosition = Mathf.RoundToInt(_tokens[i].Position.X / StepSize);
+			var tokenTimePosition = Mathf.RoundToInt(_tokens[i].Position.X / TokenStepSize);
 			
 			if (playerTimePosition != tokenTimePosition) return i;
 		}
@@ -84,8 +87,8 @@ public partial class TimelineDisplay : Node2D
 		var player = _rootService.CurrentGame.Players[targetIndex.Value];
 		var token = _tokens[targetIndex.Value];
 		
-		var targetX = player.TimePosition * StepSize;
-		var duration = Mathf.Abs(targetX - token.Position.X) / Speed;
+		var targetX = player.TimePosition * TokenStepSize;
+		var duration = Mathf.Abs(targetX - token.Position.X) / TokenSpeed;
 		
 		var tween = CreateTween();
 		tween.TweenProperty(
@@ -107,11 +110,30 @@ public partial class TimelineDisplay : Node2D
 	
 	private async Task PlaySpecialPatchAnimation(int? indexInFullArray)
 	{
+		if (indexInFullArray == null) return;
+		var sprite = _specialPatches[indexInFullArray.Value];
+		const float duration = 1.5f;
+		
 		var tween = CreateTween();
-		tween.TweenInterval(0.1f);
+		tween.SetParallel();
+		
+		tween.TweenProperty(
+			sprite, 
+			"position", 
+			SpecialPatchSpawnGlobal, 
+			duration
+		);
+		tween.TweenProperty(
+			sprite, 
+			"scale", 
+			new Vector2(1.0f, 1.0f), 
+			duration
+		);
+		
 		await ToSignal(tween, Tween.SignalName.Finished);
+		
+		sprite.QueueFree();
 	}
-	
 	
 
 	
