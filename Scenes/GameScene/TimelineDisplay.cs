@@ -32,7 +32,10 @@ public partial class TimelineDisplay : Node2D
 		];
 		
 		_specialPatches = GetNode<Node2D>("SpecialPatches").GetChildren().OfType<Sprite2D>().ToArray();
-		_coins = GetNode<Node2D>("Coins").GetChildren().OfType<AnimatedSprite2D>().ToArray();
+		_coins = GetNode<Node2D>("Coins")
+			.GetChildren()
+			.Select(node => node.GetNode<AnimatedSprite2D>("CoinAnimation"))
+			.ToArray();
 	}
 	
 	public void Initialize(RootService rootService)
@@ -124,9 +127,8 @@ public partial class TimelineDisplay : Node2D
 		{
 			if (index >= _coins.Length) continue;
 			
-			GD.Print("Coin Animation with Index = " + index);
 			var coin = _coins[index];
-			coin.Play("explode_animation");
+			coin.Play("dummy_coin_animation");
 			tasks.Add(WaitAnim(coin));
 		}
 

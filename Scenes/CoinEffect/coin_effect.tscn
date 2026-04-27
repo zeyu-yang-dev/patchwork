@@ -454,7 +454,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_4kwqx")
 }],
 "loop": false,
-"name": &"dummy_animation",
+"name": &"dummy_coin_animation",
 "speed": 30.0
 }]
 
@@ -463,4 +463,4 @@ animations = [{
 [node name="CoinAnimation" type="AnimatedSprite2D" parent="." unique_id=223968064]
 position = Vector2(4, -38)
 sprite_frames = SubResource("SpriteFrames_xo4n7")
-animation = &"dummy_animation"
+animation = &"dummy_coin_animation"
