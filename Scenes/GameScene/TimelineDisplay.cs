@@ -14,6 +14,7 @@ public partial class TimelineDisplay : Node2D
 	private static readonly Vector2 SpecialPatchSpawnGlobal = new(525.0f, 555.0f);
 	
 	private RootService _rootService;
+	private InputBlocker _inputBlocker;
 	private Sprite2D[] _tokens;
 	private Sprite2D[] _specialPatches;
 	private AnimatedSprite2D[] _coins;
@@ -22,6 +23,8 @@ public partial class TimelineDisplay : Node2D
 	
 	public override void _Ready()
 	{
+		_inputBlocker = GetNode<InputBlocker>("../InputBlocker");
+		
 		_tokens =
 		[
 			GetNode<Sprite2D>("TimeToken01"),
@@ -163,6 +166,7 @@ public partial class TimelineDisplay : Node2D
 	{
 		try
 		{
+			_inputBlocker.Enable();
 			// 等待MoveTimeToken结束后再运行接下来的代码
 			await PlayMoveTokenAnimation();
 			_rootService.PlayerActionService.CheckForIncome(startPosition, targetPosition);
@@ -192,6 +196,7 @@ public partial class TimelineDisplay : Node2D
 		try
 		{
 			await PlaySpecialPatchAnimation(indexInFullArray);
+			_inputBlocker.Disable();
 			if (indexInFullArray != null)
 			{
 				_rootService.PatchService.TakeSpecialPatch();
@@ -208,8 +213,6 @@ public partial class TimelineDisplay : Node2D
 		}
 		
 	}
-	
-	
 	
 	private void OnGameStateChanged() {}
 	

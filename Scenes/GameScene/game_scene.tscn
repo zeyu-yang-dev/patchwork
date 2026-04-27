@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://vtb3r6jm12j5" path="res://Assets/Backgrounds/game_scene.png" id="1_2p8i2"]
 [ext_resource type="Script" uid="uid://bopn28762oqwd" path="res://Scenes/GameScene/PatchShopView.cs" id="2_04h35"]
 [ext_resource type="Script" uid="uid://yt6jfhvuk80m" path="res://Scenes/GameScene/PatchBoardDisplay.cs" id="2_k8y4n"]
+[ext_resource type="Script" uid="uid://d2bf6jiwjoh6a" path="res://Scenes/GameScene/InputBlocker.cs" id="2_pyj2o"]
 [ext_resource type="PackedScene" uid="uid://bx7tydtemd5lw" path="res://Scenes/PatchBoard/patch_board.tscn" id="3_kr7le"]
 [ext_resource type="Script" uid="uid://wj0dvrwsdbuv" path="res://Scenes/GameScene/ControlPanelView.cs" id="4_0o7sr"]
 [ext_resource type="Script" uid="uid://dxsh0yehygi0f" path="res://Scenes/GameScene/GameScene.cs" id="4_b4v8s"]
@@ -492,6 +493,17 @@ grow_vertical = 2
 script = ExtResource("4_b4v8s")
 metadata/_edit_vertical_guides_ = [112.0, 720.0, 752.0, 736.0, 912.0, 944.0, 928.0, 0.0, 1104.0, 1136.0, 1120.0, 1488.0, 1520.0, 1504.0, 1680.0, 1712.0, 1696.0, 525.0, 240.0, 272.0, 256.0]
 metadata/_edit_horizontal_guides_ = [34.0, 66.0, 50.0, 0.0, 555.0]
+
+[node name="InputBlocker" type="Control" parent="." unique_id=1561877921]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+script = ExtResource("2_pyj2o")
 
 [node name="Background" type="TextureRect" parent="." unique_id=1584464432]
 layout_mode = 1
