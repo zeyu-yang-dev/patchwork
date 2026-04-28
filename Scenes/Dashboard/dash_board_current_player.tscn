@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://s4ppgsxegecw"]
+
+[ext_resource type="Texture2D" uid="uid://vtb3r6jm12j5" path="res://Assets/Backgrounds/game_scene.png" id="1_x4qdi"]
+
+[node name="Control" type="Control" unique_id=1637338973]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=345596703]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_x4qdi")
+
+[node name="NameLabel" type="Label" parent="." unique_id=641653450]
+layout_mode = 0
+offset_left = 1131.0
+offset_top = 901.0
+offset_right = 1187.0
+offset_bottom = 933.825
+text = "Muster"
+
+[node name="MoneyLabel" type="Label" parent="." unique_id=698352952]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="IncomeLabel" type="Label" parent="." unique_id=1334196601]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="ScoreLabel" type="Label" parent="." unique_id=198090938]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
