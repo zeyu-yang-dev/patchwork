@@ -20,6 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://dvqlb4gqtpfjj" path="res://Scenes/CoinEffect/coin_effect.tscn" id="18_pyj2o"]
 [ext_resource type="PackedScene" uid="uid://s4ppgsxegecw" path="res://Scenes/Dashboard/dash_board_current_player.tscn" id="19_coono"]
 [ext_resource type="PackedScene" uid="uid://bc6v3g6ododhn" path="res://Scenes/Dashboard/dash_board_other_player.tscn" id="20_auf0h"]
+[ext_resource type="Script" uid="uid://by74ayq3kmp2g" path="res://Scenes/Dashboard/Dashboard.cs" id="20_oieme"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_njm7v"]
 
@@ -226,6 +227,8 @@ offset_bottom = 40.0
 
 [node name="CurrentPlayer" parent="Dashboard" unique_id=1637338973 instance=ExtResource("19_coono")]
 layout_mode = 1
+script = ExtResource("20_oieme")
 
 [node name="OtherPlayer" parent="Dashboard" unique_id=1853539250 instance=ExtResource("20_auf0h")]
 layout_mode = 1
+script = ExtResource("20_oieme")
