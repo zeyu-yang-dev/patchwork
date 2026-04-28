@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://bgloypy4epivr" path="res://Assets/Patches/original/-1.png" id="15_rpdpv"]
 [ext_resource type="PackedScene" uid="uid://dvqlb4gqtpfjj" path="res://Scenes/CoinEffect/coin_effect.tscn" id="18_pyj2o"]
 [ext_resource type="PackedScene" uid="uid://s4ppgsxegecw" path="res://Scenes/Dashboard/dash_board_current_player.tscn" id="19_coono"]
+[ext_resource type="PackedScene" uid="uid://bc6v3g6ododhn" path="res://Scenes/Dashboard/dash_board_other_player.tscn" id="20_auf0h"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_njm7v"]
 
@@ -218,5 +219,13 @@ grow_vertical = 2
 focus_mode = 2
 script = ExtResource("2_pyj2o")
 
-[node name="Control" parent="." unique_id=1637338973 instance=ExtResource("19_coono")]
+[node name="Dashboard" type="Control" parent="." unique_id=1594948202]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CurrentPlayer" parent="Dashboard" unique_id=1637338973 instance=ExtResource("19_coono")]
+layout_mode = 1
+
+[node name="OtherPlayer" parent="Dashboard" unique_id=1853539250 instance=ExtResource("20_auf0h")]
 layout_mode = 1
