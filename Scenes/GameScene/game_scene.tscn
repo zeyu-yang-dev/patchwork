@@ -18,6 +18,9 @@
 [ext_resource type="Texture2D" uid="uid://d2cej31t4k2cr" path="res://Assets/Timeline/time_token_02.png" id="13_bkvnf"]
 [ext_resource type="Texture2D" uid="uid://bgloypy4epivr" path="res://Assets/Patches/original/-1.png" id="15_rpdpv"]
 [ext_resource type="PackedScene" uid="uid://dvqlb4gqtpfjj" path="res://Scenes/CoinEffect/coin_effect.tscn" id="18_pyj2o"]
+[ext_resource type="PackedScene" uid="uid://s4ppgsxegecw" path="res://Scenes/Dashboard/dash_board_current_player.tscn" id="19_coono"]
+[ext_resource type="PackedScene" uid="uid://bc6v3g6ododhn" path="res://Scenes/Dashboard/dash_board_other_player.tscn" id="20_auf0h"]
+[ext_resource type="Script" uid="uid://by74ayq3kmp2g" path="res://Scenes/Dashboard/Dashboard.cs" id="20_oieme"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_njm7v"]
 
@@ -35,19 +38,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_b4v8s")
-metadata/_edit_vertical_guides_ = [112.0, 720.0, 752.0, 736.0, 912.0, 944.0, 928.0, 0.0, 1104.0, 1136.0, 1120.0, 1488.0, 1520.0, 1504.0, 1680.0, 1712.0, 1696.0, 525.0, 256.0, 448.0, 640.0, 832.0, 1024.0, 1216.0, 1408.0, 1600.0, 1792.0]
+metadata/_edit_vertical_guides_ = [112.0, 736.0, 928.0, 0.0, 1120.0, 1504.0, 1696.0, 525.0, 256.0, 448.0, 640.0, 832.0, 1024.0, 1216.0, 1408.0, 1600.0, 1792.0]
 metadata/_edit_horizontal_guides_ = [34.0, 66.0, 50.0, 0.0, 555.0]
-
-[node name="InputBlocker" type="Control" parent="." unique_id=1561877921]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 2
-script = ExtResource("2_pyj2o")
 
 [node name="Background" type="TextureRect" parent="." unique_id=1584464432]
 layout_mode = 1
@@ -216,3 +208,27 @@ position = Vector2(1488, 18)
 
 [node name="Coin09" parent="TimelineDisplay/Coins" unique_id=648259396 instance=ExtResource("18_pyj2o")]
 position = Vector2(1680, 18)
+
+[node name="InputBlocker" type="Control" parent="." unique_id=1561877921]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+script = ExtResource("2_pyj2o")
+
+[node name="Dashboard" type="Control" parent="." unique_id=1594948202]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CurrentPlayer" parent="Dashboard" unique_id=1637338973 instance=ExtResource("19_coono")]
+layout_mode = 1
+script = ExtResource("20_oieme")
+
+[node name="OtherPlayer" parent="Dashboard" unique_id=1853539250 instance=ExtResource("20_auf0h")]
+layout_mode = 1
+script = ExtResource("20_oieme")

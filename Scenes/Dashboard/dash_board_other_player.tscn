@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://bc6v3g6ododhn"]
+
+[ext_resource type="Texture2D" uid="uid://vtb3r6jm12j5" path="res://Assets/Backgrounds/game_scene.png" id="1_4rd4i"]
+
+[node name="Control" type="Control" unique_id=1853539250]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1769998801]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_4rd4i")
+
+[node name="NameLabel" type="Label" parent="." unique_id=1076639449]
+layout_mode = 0
+offset_left = 1792.0
+offset_top = 949.99994
+offset_right = 1861.7323
+offset_bottom = 966.99994
+rotation = 0.057577774
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.35686275, 0.35686275, 0.35686275, 1)
+theme_override_font_sizes/font_size = 12
+text = "Other"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MoneyLabel" type="Label" parent="." unique_id=1449867588]
+layout_mode = 0
+offset_left = 1790.0
+offset_top = 986.0
+offset_right = 1828.0425
+offset_bottom = 1003.0
+rotation = 0.07640223
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.35686275, 0.35686275, 0.35686275, 1)
+theme_override_font_sizes/font_size = 12
+text = "99"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="IncomeLabel" type="Label" parent="." unique_id=2018007962]
+layout_mode = 0
+offset_left = 1782.0
+offset_top = 1010.0
+offset_right = 1831.6877
+offset_bottom = 1027.0
+rotation = 0.059237726
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.35686275, 0.35686275, 0.35686275, 1)
+theme_override_font_sizes/font_size = 12
+text = "22"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="." unique_id=1344676873]
+layout_mode = 0
+offset_left = 1776.0
+offset_top = 1037.0
+offset_right = 1812.0
+offset_bottom = 1054.0
+rotation = 0.039273582
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.35686275, 0.35686275, 0.35686275, 1)
+theme_override_font_sizes/font_size = 12
+text = "88"
+horizontal_alignment = 1
+vertical_alignment = 1
