@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://s4ppgsxegecw"]
 
-[ext_resource type="Texture2D" uid="uid://vtb3r6jm12j5" path="res://Assets/Backgrounds/game_scene.png" id="1_x4qdi"]
+[ext_resource type="Texture2D" uid="uid://vtb3r6jm12j5" path="res://Assets/Backgrounds/game_scene.png" id="1_j7r11"]
 
 [node name="Control" type="Control" unique_id=1637338973]
 layout_mode = 3
@@ -11,33 +11,68 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=345596703]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_x4qdi")
+texture = ExtResource("1_j7r11")
 
 [node name="NameLabel" type="Label" parent="." unique_id=641653450]
 layout_mode = 0
-offset_left = 1131.0
-offset_top = 901.0
-offset_right = 1187.0
-offset_bottom = 933.825
+offset_left = 1099.0
+offset_top = 900.0
+offset_right = 1220.0
+offset_bottom = 927.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 18
 text = "Muster"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="MoneyLabel" type="Label" parent="." unique_id=698352952]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 845.0
+offset_top = 861.0
+offset_right = 897.0
+offset_bottom = 909.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.5251013, 0.5251013, 0.5251013, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 26
+text = "99"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="IncomeLabel" type="Label" parent="." unique_id=1334196601]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 585.0
+offset_top = 875.99994
+offset_right = 651.255
+offset_bottom = 898.99994
+rotation = 0.057595864
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.35686275, 0.35686275, 0.35686275, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 16
+text = "22"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ScoreLabel" type="Label" parent="." unique_id=198090938]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 583.0
+offset_top = 919.0
+offset_right = 639.7381
+offset_bottom = 942.0
+rotation = 0.061086524
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.35686275, 0.35686275, 0.35686275, 1)
+text = "88"
+horizontal_alignment = 1
+vertical_alignment = 1
