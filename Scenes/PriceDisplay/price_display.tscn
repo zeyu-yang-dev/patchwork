@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://dwrb8fr53a8ks"]
+
+[ext_resource type="Texture2D" uid="uid://vtb3r6jm12j5" path="res://Assets/Backgrounds/game_scene.png" id="1_s0gqp"]
+[ext_resource type="PackedScene" uid="uid://dxt1ole2c6kbx" path="res://Scenes/PriceDisplay/price_tag.tscn" id="2_6xm5p"]
+[ext_resource type="Script" uid="uid://cx37kt3uwt7id" path="res://Scenes/PriceDisplay/PriceDisplay.cs" id="3_45rbg"]
+
+[node name="Control" type="Control" unique_id=14997621]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("3_45rbg")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1001807054]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_s0gqp")
+
+[node name="PriceTag01" parent="." unique_id=1538675889 instance=ExtResource("2_6xm5p")]
+layout_mode = 1
+anchors_preset = 15
+offset_left = 903.0
+offset_top = 422.0
+offset_right = -1017.0
+offset_bottom = -658.0
+
+[node name="PriceTag02" parent="." unique_id=284296697 instance=ExtResource("2_6xm5p")]
+layout_mode = 1
+anchors_preset = 15
+offset_left = 1138.0
+offset_top = 422.0
+offset_right = -782.0
+offset_bottom = -658.0
+
+[node name="PriceTag03" parent="." unique_id=1864969792 instance=ExtResource("2_6xm5p")]
+layout_mode = 1
+anchors_preset = 15
+offset_left = 1392.0
+offset_top = 422.0
+offset_right = -528.0
+offset_bottom = -658.0
