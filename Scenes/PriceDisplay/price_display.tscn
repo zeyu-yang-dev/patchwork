@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://vtb3r6jm12j5" path="res://Assets/Backgrounds/game_scene.png" id="1_s0gqp"]
 [ext_resource type="PackedScene" uid="uid://dxt1ole2c6kbx" path="res://Scenes/PriceDisplay/price_tag.tscn" id="2_6xm5p"]
+[ext_resource type="Script" uid="uid://cx37kt3uwt7id" path="res://Scenes/PriceDisplay/PriceDisplay.cs" id="3_45rbg"]
 
 [node name="Control" type="Control" unique_id=14997621]
 layout_mode = 3
@@ -11,6 +12,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("3_45rbg")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1001807054]
 visible = false
