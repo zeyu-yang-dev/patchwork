@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://dxt1ole2c6kbx"]
+
+[node name="Control" type="Control" unique_id=1538675889]
+layout_mode = 3
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1920.0
+offset_bottom = -1080.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MoneyCost" type="Label" parent="." unique_id=910779725]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.35686275, 0.35686275, 0.35686275, 1)
+text = "6"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimeCost" type="Label" parent="." unique_id=2113461572]
+layout_mode = 0
+offset_left = 53.0
+offset_right = 93.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.35686275, 0.35686275, 0.35686275, 1)
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
