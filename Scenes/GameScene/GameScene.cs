@@ -5,6 +5,8 @@ namespace Patchwork.Scenes.GameScene;
 
 public partial class GameScene : Control
 {
+	public RootService RootService { get; private set; }
+	
 	private PatchBoard.PatchBoardView _patchBoardView;
 	private PatchShopView _patchShopView;
 	private ControlPanelView _controlPanelView;
@@ -18,8 +20,8 @@ public partial class GameScene : Control
 	private Dashboard.Dashboard _dashboardOtherPlayer;
 	
 	private PriceDisplay.PriceDisplay _priceDisplay;
-
-	public RootService RootService { get; private set; }
+	private UnselectablePatches.UnselectablePatches _unselectablePatches;
+	
 
 	// =================================================================================================================
 	
@@ -43,6 +45,9 @@ public partial class GameScene : Control
 		_dashboardOtherPlayer.Target = DisplayTarget.OtherPlayer;
 		
 		_priceDisplay = GetNode<PriceDisplay.PriceDisplay>("PriceDisplay");
+		_unselectablePatches = GetNode<UnselectablePatches.UnselectablePatches>("UnselectablePatches");
+		
+		
 		
 		// 让_patchBoardView订阅_patchShopView的事件，不能直接订阅是因为它们不相互持有
 		// 1. 按钮的index 2. 按钮的中心点的全局坐标 3. 从按钮中心指向鼠标位置的矢量
@@ -63,6 +68,7 @@ public partial class GameScene : Control
 		_dashboardCurrentPlayer.Initialize(rootService);
 		_dashboardOtherPlayer.Initialize(rootService);
 		_priceDisplay.Initialize(rootService);
+		_unselectablePatches.Initialize(rootService);
 	}
 	
 	// =================================================================================================================
