@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://bc6v3g6ododhn" path="res://Scenes/Dashboard/dash_board_other_player.tscn" id="20_auf0h"]
 [ext_resource type="Script" uid="uid://by74ayq3kmp2g" path="res://Scenes/Dashboard/Dashboard.cs" id="20_oieme"]
 [ext_resource type="PackedScene" uid="uid://dwrb8fr53a8ks" path="res://Scenes/PriceDisplay/price_display.tscn" id="22_cxqrt"]
+[ext_resource type="PackedScene" uid="uid://dlf1avnp7gsiv" path="res://Scenes/UnselectablePatches/unselectable_patches.tscn" id="23_6at6t"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_njm7v"]
 
@@ -238,3 +239,10 @@ script = ExtResource("20_oieme")
 
 [node name="PriceDisplay" parent="." unique_id=14997621 instance=ExtResource("22_cxqrt")]
 layout_mode = 1
+
+[node name="UnselectablePatches" parent="." unique_id=1639708157 instance=ExtResource("23_6at6t")]
+layout_mode = 1
+offset_left = 879.0
+offset_top = 141.0
+offset_right = -441.0
+offset_bottom = -889.0
