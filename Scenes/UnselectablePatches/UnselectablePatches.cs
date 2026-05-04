@@ -12,10 +12,10 @@ public partial class UnselectablePatches : Control
 	private const float PatchSpacing = 1.0f;
 	private const int PatchDisplayAmount = 12;
 	private const float PriceTagHeight = 20.0f;
-
-	// For scroll functionality.
-	private int _patchDisplayOffset = 0;
+	
+	private int _patchDisplayOffset = 0; // For scroll functionality.
 	private readonly List<TextureRect> _displayNodes = [];
+	private bool _priceTagsVisible = false;
 	private readonly List<Label> _priceTagNodes = [];
 	private Label _priceTagBackground;
 	
@@ -105,13 +105,13 @@ public partial class UnselectablePatches : Control
 	private void OnMouseExited()
 	{
 		_patchDisplayOffset = 0;
-		
+		_priceTagsVisible = false;
 		RefreshVisual();
 	}
 
 	private void OnMouseEntered()
 	{
-		
+		_priceTagsVisible = true;
 		RefreshVisual();
 	}
 	
@@ -136,11 +136,11 @@ public partial class UnselectablePatches : Control
 		image.Resize(Mathf.RoundToInt(PatchSize), Mathf.RoundToInt(PatchSize), Image.Interpolation.Lanczos);
 		return ImageTexture.CreateFromImage(image);
 	}
-	
+
 	/// <summary>
 	/// Refreshes the displayed patches with relation to _patchDisplayOffset.
 	/// </summary>
-	private void RefreshVisual()
+	private void RefreshPatches()
 	{
 		var unselectablePatches = _rootService.CurrentGame.PatchShop.GetUnselectablePatches();
 
@@ -158,6 +158,49 @@ public partial class UnselectablePatches : Control
 				_displayNodes[indexInDisplay].Texture = GetPatchTexture(unselectablePatches[indexInShop].Id);
 			}
 		}
+	}
+
+	/// <summary>
+	/// Refreshes the price tags with relation to _patchDisplayOffset.
+	/// </summary>
+	private void RefreshPriceTags()
+	{
+		var unselectablePatches = _rootService.CurrentGame.PatchShop.GetUnselectablePatches();
+
+		for (var indexInDisplay = 0; indexInDisplay < PatchDisplayAmount; indexInDisplay++)
+		{
+			// The index of the patch in unselectablePatches.
+			var indexInShop = indexInDisplay + _patchDisplayOffset;
+			
+			if (indexInShop >= unselectablePatches.Count)
+			{
+				_priceTagNodes[indexInDisplay].Text = "";
+			}
+			else
+			{
+				var text = unselectablePatches[indexInShop].MoneyCost + "/" + unselectablePatches[indexInShop].TimeCost;
+				_priceTagNodes[indexInDisplay].Text = text;
+			}
+		}
+	}
+
+	/// <summary>
+	/// Refreshes visibility of price tags and their background.
+	/// </summary>
+	private void RefreshPriceTagVisibility()
+	{
+		_priceTagBackground.Visible = _priceTagsVisible;
+		for (var i = 0; i < PatchDisplayAmount; i++)
+		{
+			_priceTagNodes[i].Visible = _priceTagsVisible;
+		}
+	}
+	
+	private void RefreshVisual()
+	{
+		RefreshPatches();
+		RefreshPriceTags();
+		RefreshPriceTagVisibility();
 	}
 	
 	private void OnGameStateChanged()

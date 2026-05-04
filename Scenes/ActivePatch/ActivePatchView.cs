@@ -8,17 +8,18 @@ namespace Patchwork.Scenes.ActivePatch;
 // 是PatchBoardView下的节点
 public partial class ActivePatchView : Control
 {
-	private const int MatrixSize = 5;
-	private const float CellSize = 50.0f;
-	private static readonly Vector2 ViewSize = new(MatrixSize * CellSize, MatrixSize * CellSize);
-	public static readonly Vector2 TopLeftToCenterOffset = ViewSize / 2.0f; // 从中心到左上角的距离
-	private const string OriginalTextureDirectory = "res://Assets/Patches/original";
-	private const string MirroredTextureDirectory = "res://Assets/Patches/mirrored";
-	
 	public event Action<Vector2> DragStarted;
 	
-	private RootService _rootService;
+	private const string OriginalTextureDirectory = "res://Assets/Patches/original";
+	private const string MirroredTextureDirectory = "res://Assets/Patches/mirrored";
+	private const int MatrixDimension = 5;
+	private const float MatrixCellSize = 50.0f;
+	private static readonly Vector2 ViewSize = new(MatrixDimension * MatrixCellSize, MatrixDimension * MatrixCellSize);
+	public  static readonly Vector2 TopLeftToCenterOffset = ViewSize / 2.0f; // 从中心到左上角的距离
+	private static readonly Color UnplaceablePatchModulate = new(1.0f, 1.0f, 1.0f, 0.55f);
+	
 	private TextureRect _textureDisplay;
+	private RootService _rootService;
 	
 	// =================================================================================================================
 
@@ -30,7 +31,6 @@ public partial class ActivePatchView : Control
 		_textureDisplay = GetNode<TextureRect>("TextureDisplay");
 		_textureDisplay.Size = ViewSize;
 		_textureDisplay.PivotOffset = TopLeftToCenterOffset;
-		
 	}
 	
 	// Initialize处理场景树外部的依赖注入
@@ -113,10 +113,8 @@ public partial class ActivePatchView : Control
 				// 在有坐标的情况下，按照是否能放置更新不透明度
 				_textureDisplay.Modulate = _rootService.PlayerActionService.IsPlaceable() 
 					? Colors.White 
-					: new Color(1.0f, 1.0f, 1.0f, 0.5f);
+					: UnplaceablePatchModulate;
 			}
-			
-			
 		}
 	}
 	

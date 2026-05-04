@@ -11,10 +11,11 @@ public partial class PatchShopView : Panel
     public event Action<int, Vector2, Vector2> PatchSelected;
 
     private const string OriginalTextureDirectory = "res://Assets/Patches/original";
-
-    private RootService _rootService;
-    private TextureButton[] _buttons;
+    private static readonly Color UnbuyablePatchModulate = new(1.0f, 1.0f, 1.0f, 0.65f);
+    
     private int _hiddenButtonIndex = -1; // 需要隐藏的button的index
+    private TextureButton[] _buttons;
+    private RootService _rootService;
     
     // =================================================================================================================
     
@@ -115,7 +116,7 @@ public partial class PatchShopView : Panel
                 _buttons[i].Visible = i != _hiddenButtonIndex;
                 _buttons[i].Modulate = buyablePatchOffsets.Contains(i)
                     ? Colors.White
-                    : new Color(1.0f, 1.0f, 1.0f, 0.5f);
+                    : UnbuyablePatchModulate;
                 _buttons[i].Disabled = !buyablePatchOffsets.Contains(i);
             }
             else
