@@ -11,10 +11,13 @@ public partial class UnselectablePatches : Control
 	private const float PatchSize = 50.0f;
 	private const float PatchSpacing = 1.0f;
 	private const int PatchDisplayAmount = 12;
+	private const float PriceTagHeight = 20.0f;
 
 	// For scroll functionality.
 	private int _patchDisplayOffset = 0;
 	private readonly List<TextureRect> _displayNodes = [];
+	private readonly List<Label> _priceTagNodes = [];
+	private Label _priceTagBackground;
 	
 	private RootService _rootService;
 	
@@ -22,21 +25,46 @@ public partial class UnselectablePatches : Control
 	{
 		MouseFilter = MouseFilterEnum.Stop;
 		MouseExited += OnMouseExited;
+		MouseEntered += OnMouseEntered;
 		
+		// Initialize nodes for patch display.
 		for (var indexInDisplay = 0; indexInDisplay < PatchDisplayAmount; indexInDisplay++)
 		{
 			var displayNode = new TextureRect();
+			displayNode.MouseFilter = MouseFilterEnum.Ignore;
 			
 			displayNode.Size = new Vector2(PatchSize, PatchSize);
-			displayNode.Position = new Vector2(
-				indexInDisplay * (PatchSize + PatchSpacing),
-				0
-			);
-			displayNode.Texture = GetPatchTexture(indexInDisplay);
-			displayNode.MouseFilter = MouseFilterEnum.Ignore;
+			displayNode.Position = new Vector2(indexInDisplay * (PatchSize + PatchSpacing), 0);
+			displayNode.Texture = GetPatchTexture(indexInDisplay); // Initial display content.
 			
 			_displayNodes.Add(displayNode);
 			AddChild(displayNode);
+		}
+		
+		// Initialize a node to display background for price tags.
+		var backgroundNode = new Label();
+		backgroundNode.MouseFilter = MouseFilterEnum.Ignore;
+		backgroundNode.Size = new Vector2(Size.X, PriceTagHeight);
+		backgroundNode.Position = new Vector2(0, PatchSize);
+		backgroundNode.AddThemeStyleboxOverride("normal",  CreateLabelBackground());
+		_priceTagBackground = backgroundNode;
+		AddChild(backgroundNode);
+		
+		// Initialize nodes for price tags.
+		for (var indexInDisplay = 0; indexInDisplay < PatchDisplayAmount; indexInDisplay++)
+		{
+			var priceTagNode = new Label();
+			priceTagNode.MouseFilter = MouseFilterEnum.Ignore;
+			
+			priceTagNode.Size = new Vector2(PatchSize, PriceTagHeight);
+			priceTagNode.Position = new Vector2(indexInDisplay * (PatchSize + PatchSpacing), PatchSize);
+			priceTagNode.HorizontalAlignment = HorizontalAlignment.Center;
+			priceTagNode.VerticalAlignment = VerticalAlignment.Center;
+			priceTagNode.AddThemeColorOverride("font_color", new Color(0.95f, 0.95f, 0.95f, 1.0f));
+			priceTagNode.Text = "9/9"; // Initial display content.
+			
+			_priceTagNodes.Add(priceTagNode);
+			AddChild(priceTagNode);
 		}
 	}
 	
@@ -77,7 +105,25 @@ public partial class UnselectablePatches : Control
 	private void OnMouseExited()
 	{
 		_patchDisplayOffset = 0;
+		
 		RefreshVisual();
+	}
+
+	private void OnMouseEntered()
+	{
+		
+		RefreshVisual();
+	}
+	
+	/// <summary>
+	/// Helper function to create a style box to display background.
+	/// </summary>
+	private static StyleBoxFlat CreateLabelBackground()
+	{
+		var background = new StyleBoxFlat();
+		background.BgColor = new Color(0.2f, 0.2f, 0.2f, 0.5f);
+		background.SetCornerRadiusAll(3);
+		return background;
 	}
 	
 	/// <summary>
