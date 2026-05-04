@@ -242,7 +242,7 @@ layout_mode = 1
 
 [node name="UnselectablePatches" parent="." unique_id=1639708157 instance=ExtResource("23_6at6t")]
 layout_mode = 1
-offset_left = 879.0
-offset_top = 141.0
-offset_right = -441.0
-offset_bottom = -889.0
+offset_left = 873.0
+offset_top = 142.0
+offset_right = -436.0
+offset_bottom = -888.0
