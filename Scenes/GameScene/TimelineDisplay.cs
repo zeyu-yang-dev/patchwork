@@ -55,10 +55,21 @@ public partial class TimelineDisplay : Node2D
 	/// </summary>
 	private void ResetTimeTokens()
 	{
-		foreach (var token in _tokens)
+		var currentGame = _rootService.CurrentGame;
+		var players = currentGame.Players;
+
+		for (var i = 0; i < players.Count; i++)
 		{
-			token.Position = new Vector2(0, token.Position.Y);
+			_tokens[i].Position = new Vector2(
+				players[i].TimePosition * TokenStepSize, 
+				_tokens[i].Position.Y
+			);
 		}
+		
+		// foreach (var token in _tokens)
+		// {
+		// 	token.Position = new Vector2(0, token.Position.Y);
+		// }
 	}
 
 	/// <summary>
@@ -222,6 +233,4 @@ public partial class TimelineDisplay : Node2D
 	{
 		ResetTimeTokens();
 	}
-	
-	
 }
