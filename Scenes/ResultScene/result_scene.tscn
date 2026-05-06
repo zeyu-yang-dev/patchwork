@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://b84lhv3efp2w2"]
 
+[ext_resource type="Script" uid="uid://c1nnxejfi7c73" path="res://Scenes/ResultScene/ResultScene.cs" id="1_apdpj"]
+
 [node name="ResultScene" type="Control" unique_id=1932748331]
 layout_mode = 3
 anchors_preset = 15
@@ -7,6 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_apdpj")
 
 [node name="Overlay" type="ColorRect" parent="." unique_id=1555816838]
 layout_mode = 1

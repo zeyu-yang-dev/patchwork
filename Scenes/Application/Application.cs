@@ -9,16 +9,29 @@ public partial class Application : Control
 	[Export] public string SecondPlayerName { get; set; } = "Player 2";
 
 	private RootService _rootService;
-
-	// 它会在节点进入场景树并准备好后，被 Godot 自动调用
+	private Patchwork.Scenes.GameScene.GameScene _gameScene;
+	private Patchwork.Scenes.ResultScene.ResultScene _resultScene;
+	
 	public override void _Ready()
 	{
 		_rootService = new RootService();
+		_rootService.GameEnded += OnGameEnded;
 		
-
-		var gameScene = GetNode<Patchwork.Scenes.GameScene.GameScene>("GameScene");
-		gameScene.Initialize(_rootService);
+		_gameScene = GetNode<Patchwork.Scenes.GameScene.GameScene>("GameScene");
+		_resultScene = GetNode<Patchwork.Scenes.ResultScene.ResultScene>("ResultScene");
+		
+		_gameScene.Initialize(_rootService);
+		
+		_gameScene.Visible = true;
+		_resultScene.Visible = false;
 		
 		_rootService.GameService.StartNewGame(FirstPlayerName, SecondPlayerName);
+	}
+	
+	private void OnGameEnded()
+	{
+		_gameScene.Visible = true;
+		_resultScene.Visible = true;
+		_resultScene.MoveToFront();
 	}
 }
