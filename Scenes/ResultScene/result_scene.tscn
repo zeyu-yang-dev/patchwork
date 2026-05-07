@@ -33,3 +33,50 @@ offset_right = 300.0
 offset_bottom = 175.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Window" unique_id=229790893]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Window/MarginContainer" unique_id=1090332584]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Window/MarginContainer/VBoxContainer" unique_id=1213817007]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Game End"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Players" type="HBoxContainer" parent="Window/MarginContainer/VBoxContainer" unique_id=1393416858]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[node name="FixItems01" type="VBoxContainer" parent="Window/MarginContainer/VBoxContainer/Players" unique_id=1775012740]
+layout_mode = 2
+
+[node name="Player01" type="VBoxContainer" parent="Window/MarginContainer/VBoxContainer/Players" unique_id=1449162892]
+layout_mode = 2
+
+[node name="FixItems02" type="VBoxContainer" parent="Window/MarginContainer/VBoxContainer/Players" unique_id=835562974]
+layout_mode = 2
+
+[node name="Player02" type="VBoxContainer" parent="Window/MarginContainer/VBoxContainer/Players" unique_id=323009264]
+layout_mode = 2
+
+[node name="Buttons" type="HBoxContainer" parent="Window/MarginContainer/VBoxContainer" unique_id=490259197]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+alignment = 1
+
+[node name="TextureButton" type="TextureButton" parent="Window/MarginContainer/VBoxContainer/Buttons" unique_id=2139576765]
+layout_mode = 2
+
+[node name="TextureButton2" type="TextureButton" parent="Window/MarginContainer/VBoxContainer/Buttons" unique_id=1010942567]
+layout_mode = 2
