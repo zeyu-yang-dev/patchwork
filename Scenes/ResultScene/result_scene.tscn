@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://c1nnxejfi7c73" path="res://Scenes/ResultScene/ResultScene.cs" id="1_apdpj"]
 [ext_resource type="Texture2D" uid="uid://bi1x521r3axxk" path="res://Assets/ResultScene/winner_texture.png" id="2_2lfqs"]
+[ext_resource type="Texture2D" uid="uid://dhtcfkmhic7yf" path="res://Assets/ResultScene/replay_btn_texture.png" id="3_bvdfd"]
+[ext_resource type="Texture2D" uid="uid://b8c1up6c6d2q5" path="res://Assets/ResultScene/exit_btn_texture.png" id="4_y7n8y"]
 
 [node name="ResultScene" type="Control" unique_id=1932748331]
 layout_mode = 3
@@ -57,7 +59,7 @@ vertical_alignment = 1
 [node name="Winner" type="HBoxContainer" parent="Window/MarginContainer/VBoxContainer" unique_id=1379043310]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-theme_override_constants/separation = 166
+theme_override_constants/separation = 165
 alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="Window/MarginContainer/VBoxContainer/Winner" unique_id=1093964835]
@@ -292,10 +294,19 @@ vertical_alignment = 1
 [node name="Buttons" type="HBoxContainer" parent="Window/MarginContainer/VBoxContainer" unique_id=490259197]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+theme_override_constants/separation = 60
 alignment = 1
 
 [node name="TextureButton" type="TextureButton" parent="Window/MarginContainer/VBoxContainer/Buttons" unique_id=2139576765]
+custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
+texture_normal = ExtResource("3_bvdfd")
+ignore_texture_size = true
+stretch_mode = 0
 
 [node name="TextureButton2" type="TextureButton" parent="Window/MarginContainer/VBoxContainer/Buttons" unique_id=1010942567]
+custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
+texture_normal = ExtResource("4_y7n8y")
+ignore_texture_size = true
+stretch_mode = 0
