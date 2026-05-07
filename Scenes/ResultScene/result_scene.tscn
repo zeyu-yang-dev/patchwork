@@ -30,10 +30,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -300.0
-offset_top = -175.0
-offset_right = 300.0
-offset_bottom = 175.0
+offset_left = -400.0
+offset_top = -225.0
+offset_right = 400.0
+offset_bottom = 225.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -42,47 +42,58 @@ layout_mode = 2
 theme_override_constants/margin_left = 25
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 25
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_bottom = 30
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Window/MarginContainer" unique_id=1090332584]
 layout_mode = 2
 theme_override_constants/separation = 10
 
 [node name="Title" type="Label" parent="Window/MarginContainer/VBoxContainer" unique_id=1213817007]
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
-theme_override_font_sizes/font_size = 25
-text = "Game End"
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 42
+text = "GAME END"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Winner" type="HBoxContainer" parent="Window/MarginContainer/VBoxContainer" unique_id=1379043310]
-custom_minimum_size = Vector2(0, 40)
+[node name="Spacer01" type="Control" parent="Window/MarginContainer/VBoxContainer" unique_id=2133233273]
 layout_mode = 2
-theme_override_constants/separation = 165
+
+[node name="Winner" type="HBoxContainer" parent="Window/MarginContainer/VBoxContainer" unique_id=1379043310]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_constants/separation = 200
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="Window/MarginContainer/VBoxContainer/Winner" unique_id=1093964835]
-custom_minimum_size = Vector2(120, 0)
+[node name="Player01" type="TextureRect" parent="Window/MarginContainer/VBoxContainer/Winner" unique_id=1093964835]
+custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 texture = ExtResource("2_2lfqs")
 expand_mode = 1
 
-[node name="TextureRect2" type="TextureRect" parent="Window/MarginContainer/VBoxContainer/Winner" unique_id=1749512817]
-custom_minimum_size = Vector2(120, 0)
+[node name="Player02" type="TextureRect" parent="Window/MarginContainer/VBoxContainer/Winner" unique_id=1749512817]
+custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 texture = ExtResource("2_2lfqs")
 expand_mode = 1
+
+[node name="Spacer02" type="Control" parent="Window/MarginContainer/VBoxContainer" unique_id=782025347]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
 
 [node name="Players" type="HBoxContainer" parent="Window/MarginContainer/VBoxContainer" unique_id=1393416858]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/separation = 5
+
+[node name="Spacer01" type="Control" parent="Window/MarginContainer/VBoxContainer/Players" unique_id=469556320]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
 
 [node name="FixItems01" type="VBoxContainer" parent="Window/MarginContainer/VBoxContainer/Players" unique_id=1775012740]
-custom_minimum_size = Vector2(0, 160)
+custom_minimum_size = Vector2(150, 160)
 layout_mode = 2
-size_flags_horizontal = 3
 size_flags_vertical = 0
 theme_override_constants/separation = 1
 
@@ -91,7 +102,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "Player 1"
 vertical_alignment = 1
 
@@ -101,7 +112,7 @@ size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.98334867, 0.829535, 5.390644e-06, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "Score"
 vertical_alignment = 1
 
@@ -110,7 +121,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "Gold"
 vertical_alignment = 1
 
@@ -119,7 +130,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "Filled Cells"
 vertical_alignment = 1
 
@@ -128,7 +139,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "7x7 Bonus"
 vertical_alignment = 1
 
@@ -144,7 +155,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "Player 1"
 vertical_alignment = 1
 
@@ -154,7 +165,7 @@ size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.98334867, 0.829535, 5.390644e-06, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "Score"
 vertical_alignment = 1
 
@@ -163,7 +174,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "Gold"
 vertical_alignment = 1
 
@@ -172,7 +183,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "Filled Cells"
 vertical_alignment = 1
 
@@ -181,14 +192,17 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "7x7 Bonus"
 vertical_alignment = 1
 
-[node name="FixItems02" type="VBoxContainer" parent="Window/MarginContainer/VBoxContainer/Players" unique_id=835562974]
-custom_minimum_size = Vector2(0, 160)
+[node name="Spacer02" type="Control" parent="Window/MarginContainer/VBoxContainer/Players" unique_id=598794406]
+custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+
+[node name="FixItems02" type="VBoxContainer" parent="Window/MarginContainer/VBoxContainer/Players" unique_id=835562974]
+custom_minimum_size = Vector2(150, 160)
+layout_mode = 2
 size_flags_vertical = 0
 theme_override_constants/separation = 1
 
@@ -197,7 +211,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "Player 2"
 vertical_alignment = 1
 
@@ -207,7 +221,7 @@ size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.98334867, 0.829535, 5.390644e-06, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "Score"
 vertical_alignment = 1
 
@@ -216,7 +230,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "Gold"
 vertical_alignment = 1
 
@@ -225,7 +239,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "Filled Cells"
 vertical_alignment = 1
 
@@ -234,7 +248,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "7x7 Bonus"
 vertical_alignment = 1
 
@@ -250,7 +264,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "Player 2"
 vertical_alignment = 1
 
@@ -260,7 +274,7 @@ size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.98334867, 0.829535, 5.390644e-06, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "Score"
 vertical_alignment = 1
 
@@ -269,7 +283,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "Gold"
 vertical_alignment = 1
 
@@ -278,7 +292,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "Filled Cells"
 vertical_alignment = 1
 
@@ -287,7 +301,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 text = "7x7 Bonus"
 vertical_alignment = 1
 
