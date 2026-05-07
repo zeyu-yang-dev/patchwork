@@ -10,7 +10,7 @@ public partial class PatchShopView : Panel
     // 1. 按钮的index 2. 按钮的中心点的全局坐标 3. 从按钮中心指向鼠标位置的向量
     public event Action<int, Vector2, Vector2> PatchSelected;
 
-    private const string OriginalTextureDirectory = "res://Assets/Patches/original";
+    private const string OriginalTextureDirectory = "res://Assets/GameScene/Patches/original";
     private static readonly Color UnbuyablePatchModulate = new(1.0f, 1.0f, 1.0f, 0.65f);
     
     private int _hiddenButtonIndex = -1; // 需要隐藏的button的index
