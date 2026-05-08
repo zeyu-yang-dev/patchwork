@@ -22,11 +22,26 @@ public partial class Application : Control
 		
 		_gameScene.Initialize(_rootService);
 		_resultScene.Initialize(_rootService);
+		_resultScene._replayButton.Pressed += OnReplayButtonPressed;
+		_resultScene._exitButton.Pressed += OnExitButtonPressed;
 		
 		_gameScene.Visible = true;
 		_resultScene.Visible = false;
 		
 		_rootService.GameService.StartNewGame(FirstPlayerName, SecondPlayerName);
+	}
+
+	private void OnReplayButtonPressed()
+	{
+		_rootService.GameService.StartNewGame(FirstPlayerName, SecondPlayerName);
+		
+		_gameScene.Visible = true;
+		_resultScene.Visible = false;
+	}
+
+	private void OnExitButtonPressed()
+	{
+		GetTree().Quit();
 	}
 	
 	private void OnGameEnded()

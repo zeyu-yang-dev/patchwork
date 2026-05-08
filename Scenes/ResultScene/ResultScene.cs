@@ -11,12 +11,13 @@ public partial class ResultScene : Control
 	private RootService _rootService;
 	private Label[][] _playerLabels;
 	private TextureRect[] _winnerLabels;
+	public TextureButton _replayButton;
+	public TextureButton _exitButton;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		var playersNode = GetNode<Node>("Window/MarginContainer/VBoxContainer/Players");
-
 		_playerLabels = 
 		[
 			playersNode.GetNode<Node>("Player01").GetChildren().OfType<Label>().ToArray(),
@@ -24,8 +25,11 @@ public partial class ResultScene : Control
 		];
 		
 		var winnerNode = GetNode<Node>("Window/MarginContainer/VBoxContainer/Winner");
-		
 		_winnerLabels = winnerNode.GetChildren().OfType<TextureRect>().ToArray();
+		
+		var buttonsNode = GetNode<Node>("Window/MarginContainer/VBoxContainer/Buttons");
+		_replayButton = buttonsNode.GetNode<TextureButton>("ReplayButton");
+		_exitButton = buttonsNode.GetNode<TextureButton>("ExitButton");
 	}
 
 	public void Initialize(RootService rootService)
@@ -33,7 +37,7 @@ public partial class ResultScene : Control
 		_rootService = rootService;
 		_rootService.GameEnded += OnGameEnded;
 	}
-
+	
 	private void RefreshScoreBoard()
 	{
 		var players = _rootService.CurrentGame.Players;
@@ -55,9 +59,6 @@ public partial class ResultScene : Control
 		_winnerLabels[winnerIndex].Modulate = new Color(1, 1, 1, 1);
 		_winnerLabels[1 - winnerIndex].Modulate = new Color(1, 1, 1, 0);
 	}
-
-	
-	
 	
 	private void OnGameEnded()
 	{

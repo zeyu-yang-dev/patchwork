@@ -316,14 +316,14 @@ layout_mode = 2
 theme_override_constants/separation = 60
 alignment = 1
 
-[node name="TextureButton" type="TextureButton" parent="Window/MarginContainer/VBoxContainer/Buttons" unique_id=2139576765]
+[node name="ReplayButton" type="TextureButton" parent="Window/MarginContainer/VBoxContainer/Buttons" unique_id=2139576765]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 texture_normal = ExtResource("3_bvdfd")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="TextureButton2" type="TextureButton" parent="Window/MarginContainer/VBoxContainer/Buttons" unique_id=1010942567]
+[node name="ExitButton" type="TextureButton" parent="Window/MarginContainer/VBoxContainer/Buttons" unique_id=1010942567]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 texture_normal = ExtResource("4_y7n8y")
