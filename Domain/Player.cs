@@ -19,5 +19,5 @@ public class Player(string name)
     public int Income => PatchBoard.Income;
     
     // plus 157 to ensure that the score starts from 0
-    public int Score => Money - 2 * PatchBoard.CountEmptyCells() + (HasSevenBySevenBonus ? 7 : 0) + 157;
+    public int Score => Money - 2 * PatchBoard.CountEmptyCells() + (HasSevenBySevenBonus ? 7 : 0) + 157 + 5;
 }

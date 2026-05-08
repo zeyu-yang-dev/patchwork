@@ -21,6 +21,7 @@ public partial class Application : Control
 		_resultScene = GetNode<Patchwork.Scenes.ResultScene.ResultScene>("ResultScene");
 		
 		_gameScene.Initialize(_rootService);
+		_resultScene.Initialize(_rootService);
 		
 		_gameScene.Visible = true;
 		_resultScene.Visible = false;
