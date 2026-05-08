@@ -10,6 +10,7 @@ public partial class ResultScene : Control
 {
 	private RootService _rootService;
 	private Label[][] _playerLabels;
+	private TextureRect[] _winnerLabels;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -22,7 +23,9 @@ public partial class ResultScene : Control
 			playersNode.GetNode<Node>("Player02").GetChildren().OfType<Label>().ToArray()
 		];
 		
+		var winnerNode = GetNode<Node>("Window/MarginContainer/VBoxContainer/Winner");
 		
+		_winnerLabels = winnerNode.GetChildren().OfType<TextureRect>().ToArray();
 	}
 
 	public void Initialize(RootService rootService)
@@ -46,11 +49,19 @@ public partial class ResultScene : Control
 		}
 	}
 
+	private void RefreshWinnerLabels()
+	{
+		var winnerIndex = _rootService.CurrentGame.GetWinnerIndex();
+		_winnerLabels[winnerIndex].Modulate = new Color(1, 1, 1, 1);
+		_winnerLabels[1 - winnerIndex].Modulate = new Color(1, 1, 1, 0);
+	}
+
 	
 	
 	
 	private void OnGameEnded()
 	{
 		RefreshScoreBoard();
+		RefreshWinnerLabels();
 	}
 }
