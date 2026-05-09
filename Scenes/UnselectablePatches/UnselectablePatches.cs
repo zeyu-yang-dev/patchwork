@@ -7,7 +7,7 @@ namespace Patchwork.Scenes.UnselectablePatches;
 
 public partial class UnselectablePatches : Control
 {
-	private const string OriginalTextureDirectory = "res://Assets/Patches/original";
+	private const string OriginalTextureDirectory = "res://Assets/GameScene/Patches/original";
 	private const float PatchSize = 50.0f;
 	private const float PatchSpacing = 1.0f;
 	private const int PatchDisplayAmount = 12;

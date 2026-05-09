@@ -9,7 +9,8 @@ public class Player(string name)
 
     public int Money { get; set; } = 5;
 
-    public int TimePosition { get; set; } = 0;
+    // TODO: change initial position back to 0 after test phase
+    public int TimePosition { get; set; } = 49;
 
     public PatchBoard PatchBoard { get; } = new();
 
@@ -18,5 +19,5 @@ public class Player(string name)
     public int Income => PatchBoard.Income;
     
     // plus 157 to ensure that the score starts from 0
-    public int Score => Money - 2 * PatchBoard.CountEmptyCells() + (HasSevenBySevenBonus ? 7 : 0) + 157;
+    public int Score => Money - 2 * PatchBoard.CountEmptyCells() + (HasSevenBySevenBonus ? 7 : 0) + 157 + 5;
 }

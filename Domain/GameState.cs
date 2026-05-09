@@ -53,19 +53,19 @@ public class GameState
         return true;
     }
 
-    public Player GetWinner()
+    public int GetWinnerIndex()
     {
         if (!IsGameOver())
         {
-            return null;
+            throw new InvalidOperationException("The game is not over yet!");
         }
 
         if (Players[0].Score == Players[1].Score)
         {
             
-            return Players[FirstPlayerIndexToReachEnd];
+            return FirstPlayerIndexToReachEnd;
         }
 
-        return Players[0].Score > Players[1].Score ? Players[0] : Players[1];
+        return Players[0].Score > Players[1].Score ? 0 : 1;
     }
 }

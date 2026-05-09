@@ -13,6 +13,9 @@ public partial class TimelineDisplay : Node2D
 	private const float TokenSpeed = 120.0f;
 	private static readonly Vector2 SpecialPatchSpawnGlobal = new(525.0f, 555.0f);
 	
+	private Vector2[] _specialPatchOriginalPosition;
+	private Vector2[] _specialPatchOriginalScale;
+	
 	private RootService _rootService;
 	private InputBlocker _inputBlocker;
 	private Sprite2D[] _tokens;
@@ -36,6 +39,9 @@ public partial class TimelineDisplay : Node2D
 			.GetChildren()
 			.Select(node => node.GetNode<AnimatedSprite2D>("CoinAnimation"))
 			.ToArray();
+		
+		_specialPatchOriginalPosition = _specialPatches.Select(sprite => sprite.GetPosition()).ToArray();
+		_specialPatchOriginalScale = _specialPatches.Select(sprite => sprite.GetScale()).ToArray();
 	}
 	
 	public void Initialize(RootService rootService)
@@ -51,23 +57,48 @@ public partial class TimelineDisplay : Node2D
 	// =================================================================================================================
 
 	/// <summary>
+	/// Resets the visibility, scale and position for all special patch sprites.
+	/// </summary>
+	private void ResetSpecialPatches()
+	{
+		for (var i = 0; i < _specialPatches.Length; i++)
+		{
+			_specialPatches[i].Visible = true;
+			_specialPatches[i].Scale = _specialPatchOriginalScale[i];
+			_specialPatches[i].Position = _specialPatchOriginalPosition[i];
+		}
+	}
+	
+	/// <summary>
 	/// Resets the X position for both tokens.
 	/// </summary>
 	private void ResetTimeTokens()
 	{
-		foreach (var token in _tokens)
+		var currentGame = _rootService.CurrentGame;
+		var players = currentGame.Players;
+
+		for (var i = 0; i < players.Count; i++)
 		{
-			token.Position = new Vector2(0, token.Position.Y);
+			_tokens[i].Position = new Vector2(
+				players[i].TimePosition * TokenStepSize, 
+				_tokens[i].Position.Y
+			);
 		}
+		
+		// foreach (var token in _tokens)
+		// {
+		// 	token.Position = new Vector2(0, token.Position.Y);
+		// }
 	}
 
 	/// <summary>
-	/// Returns the index of the player and the token, for which the token should be moved.
+	/// Returns null if the time positon stays unchanged, no animation will be played.
 	/// </summary>
-	/// <returns>Index of the player and the corresponding token. Null if no need to move.</returns>
+	/// <returns>The index of the player and the token, for which the token should be moved.</returns>
 	private int? GetTargetIndex()
 	{
 		var currentGame = _rootService.CurrentGame;
+		
 		for (var i = 0; i < _tokens.Length; i++)
 		{
 			var player = currentGame.Players[i];
@@ -159,7 +190,7 @@ public partial class TimelineDisplay : Node2D
 		
 		await ToSignal(tween, Tween.SignalName.Finished);
 		
-		sprite.QueueFree();
+		sprite.Visible = false;
 	}
 	
 	// =================================================================================================================
@@ -221,7 +252,6 @@ public partial class TimelineDisplay : Node2D
 	private void OnGameStarted()
 	{
 		ResetTimeTokens();
+		ResetSpecialPatches();
 	}
-	
-	
 }

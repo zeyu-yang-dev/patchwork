@@ -17,8 +17,8 @@ public partial class PatchBoardDisplay : Node2D
 	private float CellSize => Target == DisplayTarget.CurrentPlayer ? 50.0f : 20.0f;
 	
 	private const int MatrixSize = 5;
-	private const string OriginalTextureDirectory = "res://Assets/Patches/original";
-	private const string MirroredTextureDirectory = "res://Assets/Patches/mirrored";
+	private const string OriginalTextureDirectory = "res://Assets/GameScene/Patches/original";
+	private const string MirroredTextureDirectory = "res://Assets/GameScene/Patches/mirrored";
 	
 	private RootService _rootService;
 

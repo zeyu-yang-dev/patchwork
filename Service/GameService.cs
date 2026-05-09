@@ -23,15 +23,23 @@ public class GameService(RootService rootService)
         // If there is a patch waiting to be placed, the turn shouldn't be ended.
         if (currentGame.CurrentPlacedPatch != null) return;
         
+        // Notifies root service when the game should be ended.
+        if (currentGame.IsGameOver())
+        {
+            rootService.NotifyGameEnded();
+            return;
+        }
+        
+        // Gets the current player and the other player.
         var currentPlayer = currentGame.CurrentPlayer;
         var currentPlayerIndex = currentGame.CurrentPlayerIndex;
         var otherPlayerIndex = currentPlayerIndex == 0 ? 1 : 0;
         var otherPlayer = currentGame.Players[otherPlayerIndex];
         
         // Decides the next player in turn and switches the current player.
-        currentGame.CurrentPlayerIndex =
-            currentPlayer.TimePosition > otherPlayer.TimePosition
-                ? otherPlayerIndex
+        currentGame.CurrentPlayerIndex = 
+            currentPlayer.TimePosition > otherPlayer.TimePosition 
+                ? otherPlayerIndex 
                 : currentPlayerIndex;
         
         // Notify UI to refresh

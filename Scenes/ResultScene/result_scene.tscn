@@ -1,0 +1,355 @@
+[gd_scene format=3 uid="uid://b84lhv3efp2w2"]
+
+[ext_resource type="Script" uid="uid://c1nnxejfi7c73" path="res://Scenes/ResultScene/ResultScene.cs" id="1_apdpj"]
+[ext_resource type="Texture2D" uid="uid://bi1x521r3axxk" path="res://Assets/ResultScene/winner_texture.png" id="2_2lfqs"]
+[ext_resource type="Shader" uid="uid://dtrv840l1mpae" path="res://Scenes/ResultScene/result_scene.gdshader" id="2_i4sgj"]
+[ext_resource type="Texture2D" uid="uid://dmxim1w5m12tj" path="res://Assets/ResultScene/background.png" id="2_y7n8y"]
+[ext_resource type="Texture2D" uid="uid://dhtcfkmhic7yf" path="res://Assets/ResultScene/replay_btn_texture.png" id="3_bvdfd"]
+[ext_resource type="Texture2D" uid="uid://b8c1up6c6d2q5" path="res://Assets/ResultScene/exit_btn_texture.png" id="4_y7n8y"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i7mjw"]
+shader = ExtResource("2_i4sgj")
+shader_parameter/blur_strength = 1.2
+shader_parameter/tint_color = Vector4(0.92, 0.72, 0.36, 0.18)
+
+[node name="ResultScene" type="Control" unique_id=1932748331]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_apdpj")
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=1555816838]
+material = SubResource("ShaderMaterial_i7mjw")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
+[node name="Window" type="PanelContainer" parent="." unique_id=84749878]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -225.0
+offset_right = 400.0
+offset_bottom = 225.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="Window" unique_id=1038720193]
+layout_mode = 2
+texture = ExtResource("2_y7n8y")
+
+[node name="MarginContainer" type="MarginContainer" parent="Window" unique_id=229790893]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Window/MarginContainer" unique_id=1090332584]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Window/MarginContainer/VBoxContainer" unique_id=1213817007]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.5489626, 0.5489626, 0.54896253, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 42
+text = "GAME END"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer01" type="Control" parent="Window/MarginContainer/VBoxContainer" unique_id=2133233273]
+layout_mode = 2
+
+[node name="Winner" type="HBoxContainer" parent="Window/MarginContainer/VBoxContainer" unique_id=1379043310]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_constants/separation = 200
+alignment = 1
+
+[node name="Player01" type="TextureRect" parent="Window/MarginContainer/VBoxContainer/Winner" unique_id=1093964835]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+texture = ExtResource("2_2lfqs")
+expand_mode = 1
+
+[node name="Player02" type="TextureRect" parent="Window/MarginContainer/VBoxContainer/Winner" unique_id=1749512817]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+texture = ExtResource("2_2lfqs")
+expand_mode = 1
+
+[node name="Spacer02" type="Control" parent="Window/MarginContainer/VBoxContainer" unique_id=782025347]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="Players" type="HBoxContainer" parent="Window/MarginContainer/VBoxContainer" unique_id=1393416858]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Spacer01" type="Control" parent="Window/MarginContainer/VBoxContainer/Players" unique_id=469556320]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="FixItems01" type="VBoxContainer" parent="Window/MarginContainer/VBoxContainer/Players" unique_id=1775012740]
+custom_minimum_size = Vector2(150, 160)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 1
+
+[node name="Name" type="Label" parent="Window/MarginContainer/VBoxContainer/Players/FixItems01" unique_id=308409421]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.5489626, 0.5489626, 0.54896253, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 25
+text = "Player 1"
+vertical_alignment = 1
+
+[node name="Score" type="Label" parent="Window/MarginContainer/VBoxContainer/Players/FixItems01" unique_id=1358002868]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.98334867, 0.829535, 5.390644e-06, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 25
+text = "Score"
+vertical_alignment = 1
+
+[node name="Gold" type="Label" parent="Window/MarginContainer/VBoxContainer/Players/FixItems01" unique_id=1799639254]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.5489626, 0.5489626, 0.54896253, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 25
+text = "Gold"
+vertical_alignment = 1
+
+[node name="Filled" type="Label" parent="Window/MarginContainer/VBoxContainer/Players/FixItems01" unique_id=293910218]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.5489626, 0.5489626, 0.54896253, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 25
+text = "Filled Cells"
+vertical_alignment = 1
+
+[node name="Bonus" type="Label" parent="Window/MarginContainer/VBoxContainer/Players/FixItems01" unique_id=1950982771]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.5489626, 0.5489626, 0.54896253, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 25
+text = "7x7 Bonus"
+vertical_alignment = 1
+
+[node name="Player01" type="VBoxContainer" parent="Window/MarginContainer/VBoxContainer/Players" unique_id=1449162892]
+custom_minimum_size = Vector2(0, 160)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_constants/separation = 1
+
+[node name="Name" type="Label" parent="Window/MarginContainer/VBoxContainer/Players/Player01" unique_id=597438191]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.5489626, 0.5489626, 0.54896253, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 25
+text = "Player 1"
+vertical_alignment = 1
+
+[node name="Score" type="Label" parent="Window/MarginContainer/VBoxContainer/Players/Player01" unique_id=365117885]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.98334867, 0.829535, 5.390644e-06, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 25
+text = "Score"
+vertical_alignment = 1
+
+[node name="Gold" type="Label" parent="Window/MarginContainer/VBoxContainer/Players/Player01" unique_id=320978194]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.5489626, 0.5489626, 0.54896253, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 25
+text = "Gold"
+vertical_alignment = 1
+
+[node name="Filled" type="Label" parent="Window/MarginContainer/VBoxContainer/Players/Player01" unique_id=992467855]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.5489626, 0.5489626, 0.54896253, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 25
+text = "Filled Cells"
+vertical_alignment = 1
+
+[node name="Bonus" type="Label" parent="Window/MarginContainer/VBoxContainer/Players/Player01" unique_id=731120680]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.5489626, 0.5489626, 0.54896253, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 25
+text = "7x7 Bonus"
+vertical_alignment = 1
+
+[node name="Spacer02" type="Control" parent="Window/MarginContainer/VBoxContainer/Players" unique_id=598794406]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+
+[node name="FixItems02" type="VBoxContainer" parent="Window/MarginContainer/VBoxContainer/Players" unique_id=835562974]
+custom_minimum_size = Vector2(150, 160)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 1
+
+[node name="Name" type="Label" parent="Window/MarginContainer/VBoxContainer/Players/FixItems02" unique_id=397398593]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.5489626, 0.5489626, 0.54896253, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 25
+text = "Player 2"
+vertical_alignment = 1
+
+[node name="Score" type="Label" parent="Window/MarginContainer/VBoxContainer/Players/FixItems02" unique_id=1199984386]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.98334867, 0.829535, 5.390644e-06, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 25
+text = "Score"
+vertical_alignment = 1
+
+[node name="Gold" type="Label" parent="Window/MarginContainer/VBoxContainer/Players/FixItems02" unique_id=800813812]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.5489626, 0.5489626, 0.54896253, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 25
+text = "Gold"
+vertical_alignment = 1
+
+[node name="Filled" type="Label" parent="Window/MarginContainer/VBoxContainer/Players/FixItems02" unique_id=477129587]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.5489626, 0.5489626, 0.54896253, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 25
+text = "Filled Cells"
+vertical_alignment = 1
+
+[node name="Bonus" type="Label" parent="Window/MarginContainer/VBoxContainer/Players/FixItems02" unique_id=1710611823]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.5489626, 0.5489626, 0.54896253, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 25
+text = "7x7 Bonus"
+vertical_alignment = 1
+
+[node name="Player02" type="VBoxContainer" parent="Window/MarginContainer/VBoxContainer/Players" unique_id=323009264]
+custom_minimum_size = Vector2(0, 160)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_constants/separation = 1
+
+[node name="Name" type="Label" parent="Window/MarginContainer/VBoxContainer/Players/Player02" unique_id=1766652894]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.5489626, 0.5489626, 0.54896253, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 25
+text = "Player 2"
+vertical_alignment = 1
+
+[node name="Score" type="Label" parent="Window/MarginContainer/VBoxContainer/Players/Player02" unique_id=2014982632]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.98334867, 0.829535, 5.390644e-06, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 25
+text = "Score"
+vertical_alignment = 1
+
+[node name="Gold" type="Label" parent="Window/MarginContainer/VBoxContainer/Players/Player02" unique_id=1338400061]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.5489626, 0.5489626, 0.54896253, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 25
+text = "Gold"
+vertical_alignment = 1
+
+[node name="Filled" type="Label" parent="Window/MarginContainer/VBoxContainer/Players/Player02" unique_id=966122484]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.5489626, 0.5489626, 0.54896253, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 25
+text = "Filled Cells"
+vertical_alignment = 1
+
+[node name="Bonus" type="Label" parent="Window/MarginContainer/VBoxContainer/Players/Player02" unique_id=1820250322]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.5489626, 0.5489626, 0.54896253, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 25
+text = "7x7 Bonus"
+vertical_alignment = 1
+
+[node name="Buttons" type="HBoxContainer" parent="Window/MarginContainer/VBoxContainer" unique_id=490259197]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_constants/separation = 60
+alignment = 1
+
+[node name="ReplayButton" type="TextureButton" parent="Window/MarginContainer/VBoxContainer/Buttons" unique_id=2139576765]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+texture_normal = ExtResource("3_bvdfd")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="ExitButton" type="TextureButton" parent="Window/MarginContainer/VBoxContainer/Buttons" unique_id=1010942567]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+texture_normal = ExtResource("4_y7n8y")
+ignore_texture_size = true
+stretch_mode = 0

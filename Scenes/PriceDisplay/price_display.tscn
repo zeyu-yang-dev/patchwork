@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dwrb8fr53a8ks"]
 
-[ext_resource type="Texture2D" uid="uid://vtb3r6jm12j5" path="res://Assets/Backgrounds/game_scene.png" id="1_s0gqp"]
+[ext_resource type="Texture2D" uid="uid://vtb3r6jm12j5" path="res://Assets/GameScene/Backgrounds/game_scene.png" id="1_s0gqp"]
 [ext_resource type="PackedScene" uid="uid://dxt1ole2c6kbx" path="res://Scenes/PriceDisplay/price_tag.tscn" id="2_6xm5p"]
 [ext_resource type="Script" uid="uid://cx37kt3uwt7id" path="res://Scenes/PriceDisplay/PriceDisplay.cs" id="3_45rbg"]
 

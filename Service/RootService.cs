@@ -11,6 +11,7 @@ public class RootService
 {
     public event Action StateChanged;
     public event Action GameStarted;
+    public event Action GameEnded;
     
     public event Action<int, int> AdvanceStarted;
     public event Action<List<int>, int, int> IncomeChecked;
@@ -37,6 +38,11 @@ public class RootService
     public void NotifyGameStarted()
     {
         GameStarted?.Invoke();
+    }
+
+    public void NotifyGameEnded()
+    {
+        GameEnded?.Invoke();
     }
 
     public void NotifyAdvanceStarted(int startPosition, int targetPosition)

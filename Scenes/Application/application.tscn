@@ -1,21 +1,20 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3 uid="uid://v8pyisjlccw5"]
 
-[ext_resource type="Script" path="res://Scenes/Application/Application.cs" id="1_7x5g7"]
+[ext_resource type="Script" uid="uid://iji7yc53flpu" path="res://Scenes/Application/Application.cs" id="1_7x5g7"]
 [ext_resource type="PackedScene" uid="uid://13sfseu7pmqx" path="res://Scenes/GameScene/game_scene.tscn" id="2_v1c1n"]
+[ext_resource type="PackedScene" uid="uid://b84lhv3efp2w2" path="res://Scenes/ResultScene/result_scene.tscn" id="3_wvjdg"]
 
-[node name="Application" type="Control"]
-script = ExtResource("1_7x5g7")
+[node name="Application" type="Control" unique_id=403480248]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_7x5g7")
 
-[node name="GameScene" parent="." instance=ExtResource("2_v1c1n")]
+[node name="GameScene" parent="." unique_id=1777705315 instance=ExtResource("2_v1c1n")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+
+[node name="ResultScene" parent="." unique_id=1932748331 instance=ExtResource("3_wvjdg")]
+layout_mode = 1

@@ -23,10 +23,10 @@ public partial class ControlPanelView : Panel
         _confirmButton = GetNode<TextureButton>("PlacementButtons/ConfirmPlacementButton");
         _skipButton = GetNode<TextureButton>("SkipButton");
         
-        _rotateLeftButton.ButtonDown += OnRotateLeftPressed;
-        _rotateRightButton.ButtonDown += OnRotateRightPressed;
-        _mirrorButton.ButtonDown += OnMirrorPressed;
-        _confirmButton.ButtonDown += OnConfirmPressed;
+        _rotateLeftButton.Pressed += OnRotateLeftPressed;
+        _rotateRightButton.Pressed += OnRotateRightPressed;
+        _mirrorButton.Pressed += OnMirrorPressed;
+        _confirmButton.Pressed += OnConfirmPressed;
         _skipButton.Pressed += OnSkipPressed;
     }
 

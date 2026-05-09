@@ -10,8 +10,8 @@ public partial class ActivePatchView : Control
 {
 	public event Action<Vector2> DragStarted;
 	
-	private const string OriginalTextureDirectory = "res://Assets/Patches/original";
-	private const string MirroredTextureDirectory = "res://Assets/Patches/mirrored";
+	private const string OriginalTextureDirectory = "res://Assets/GameScene/Patches/original";
+	private const string MirroredTextureDirectory = "res://Assets/GameScene/Patches/mirrored";
 	private const int MatrixDimension = 5;
 	private const float MatrixCellSize = 50.0f;
 	private static readonly Vector2 ViewSize = new(MatrixDimension * MatrixCellSize, MatrixDimension * MatrixCellSize);

@@ -126,6 +126,7 @@ public class PatchShop
             patches.Add(new Patch(id));
         }
 
+        // TODO: uncomment after test phase
         // Random.Shared.Shuffle(CollectionsMarshal.AsSpan(patches));
 
         return patches;
