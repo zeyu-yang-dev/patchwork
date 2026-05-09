@@ -47,7 +47,13 @@ public partial class Application : Control
 	private void OnGameEnded()
 	{
 		_gameScene.Visible = true;
+		
 		_resultScene.Visible = true;
+		_resultScene.Modulate = new Color(1, 1, 1, 0);
+		
 		_resultScene.MoveToFront();
+		
+		var tween = CreateTween();
+		tween.TweenProperty(_resultScene, "modulate:a", 1.0f, 0.5f);
 	}
 }
