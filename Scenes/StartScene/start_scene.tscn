@@ -2,6 +2,8 @@
 
 [ext_resource type="Shader" uid="uid://dtrv840l1mpae" path="res://Scenes/ResultScene/result_scene.gdshader" id="1_htgbc"]
 [ext_resource type="Texture2D" uid="uid://dr1pami371rdb" path="res://Assets/StartScene/background.png" id="2_t1k6b"]
+[ext_resource type="Texture2D" uid="uid://cipc5bn3konek" path="res://Assets/StartScene/start_btn_texture.png" id="3_3jcyc"]
+[ext_resource type="Texture2D" uid="uid://b8c1up6c6d2q5" path="res://Assets/ResultScene/exit_btn_texture.png" id="4_v8dw6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_htgbc"]
 shader = ExtResource("1_htgbc")
@@ -101,6 +103,22 @@ layout_mode = 2
 custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
 
-[node name="Buttons" type="HBoxContainer" parent="Window/MarginContainer/VBoxContainer" unique_id=677514135]
+[node name="Buttons" type="HBoxContainer" parent="Window/MarginContainer/VBoxContainer" unique_id=28525483]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+theme_override_constants/separation = 60
 alignment = 1
+
+[node name="StartButton" type="TextureButton" parent="Window/MarginContainer/VBoxContainer/Buttons" unique_id=1950563864]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+texture_normal = ExtResource("3_3jcyc")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="ExitButton" type="TextureButton" parent="Window/MarginContainer/VBoxContainer/Buttons" unique_id=38530140]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+texture_normal = ExtResource("4_v8dw6")
+ignore_texture_size = true
+stretch_mode = 0
