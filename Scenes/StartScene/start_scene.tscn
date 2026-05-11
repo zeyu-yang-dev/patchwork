@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://hg0c74infprn"]
 
 [ext_resource type="Shader" uid="uid://dtrv840l1mpae" path="res://Scenes/ResultScene/result_scene.gdshader" id="1_htgbc"]
+[ext_resource type="Texture2D" uid="uid://dr1pami371rdb" path="res://Assets/StartScene/background.png" id="2_t1k6b"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_htgbc"]
 shader = ExtResource("1_htgbc")
@@ -23,3 +24,21 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Window" type="PanelContainer" parent="." unique_id=393698111]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -225.0
+offset_right = 400.0
+offset_bottom = 225.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="Window" unique_id=1557713893]
+layout_mode = 2
+texture = ExtResource("2_t1k6b")

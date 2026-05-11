@@ -14,11 +14,11 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_7x5g7")
 
-[node name="StartScene" parent="." unique_id=1729287461 instance=ExtResource("2_7yxgi")]
-layout_mode = 1
-
 [node name="GameScene" parent="." unique_id=1777705315 instance=ExtResource("2_v1c1n")]
 layout_mode = 1
 
 [node name="ResultScene" parent="." unique_id=1932748331 instance=ExtResource("3_wvjdg")]
+layout_mode = 1
+
+[node name="StartScene" parent="." unique_id=1729287461 instance=ExtResource("2_7yxgi")]
 layout_mode = 1
