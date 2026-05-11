@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://v8pyisjlccw5"]
 
 [ext_resource type="Script" uid="uid://iji7yc53flpu" path="res://Scenes/Application/Application.cs" id="1_7x5g7"]
+[ext_resource type="PackedScene" uid="uid://hg0c74infprn" path="res://Scenes/StartScene/start_scene.tscn" id="2_7yxgi"]
 [ext_resource type="PackedScene" uid="uid://13sfseu7pmqx" path="res://Scenes/GameScene/game_scene.tscn" id="2_v1c1n"]
 [ext_resource type="PackedScene" uid="uid://b84lhv3efp2w2" path="res://Scenes/ResultScene/result_scene.tscn" id="3_wvjdg"]
 
@@ -12,6 +13,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_7x5g7")
+
+[node name="StartScene" parent="." unique_id=1729287461 instance=ExtResource("2_7yxgi")]
+layout_mode = 1
 
 [node name="GameScene" parent="." unique_id=1777705315 instance=ExtResource("2_v1c1n")]
 layout_mode = 1
