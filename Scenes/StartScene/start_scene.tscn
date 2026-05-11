@@ -42,3 +42,65 @@ grow_vertical = 2
 [node name="Background" type="TextureRect" parent="Window" unique_id=1557713893]
 layout_mode = 2
 texture = ExtResource("2_t1k6b")
+
+[node name="MarginContainer" type="MarginContainer" parent="Window" unique_id=261659891]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Window/MarginContainer" unique_id=1494707469]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Window/MarginContainer/VBoxContainer" unique_id=529964272]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.5489626, 0.5489626, 0.54896253, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 42
+text = "PATCHWORK"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer01" type="Control" parent="Window/MarginContainer/VBoxContainer" unique_id=1774237488]
+layout_mode = 2
+
+[node name="InputArea" type="HBoxContainer" parent="Window/MarginContainer/VBoxContainer" unique_id=699704045]
+layout_mode = 2
+alignment = 1
+
+[node name="FixItems" type="VBoxContainer" parent="Window/MarginContainer/VBoxContainer/InputArea" unique_id=1001875720]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Window/MarginContainer/VBoxContainer/InputArea/FixItems" unique_id=349601103]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.5489626, 0.5489626, 0.54896253, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 25
+text = "Player 1:"
+vertical_alignment = 1
+
+[node name="Name2" type="Label" parent="Window/MarginContainer/VBoxContainer/InputArea/FixItems" unique_id=547961955]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.5489626, 0.5489626, 0.54896253, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 25
+text = "Player 2:"
+vertical_alignment = 1
+
+[node name="Textfields" type="VBoxContainer" parent="Window/MarginContainer/VBoxContainer/InputArea" unique_id=1951571055]
+layout_mode = 2
+
+[node name="Spacer02" type="Control" parent="Window/MarginContainer/VBoxContainer" unique_id=665650379]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="Buttons" type="HBoxContainer" parent="Window/MarginContainer/VBoxContainer" unique_id=677514135]
+layout_mode = 2
+alignment = 1
