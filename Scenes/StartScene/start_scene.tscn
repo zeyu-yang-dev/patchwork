@@ -1,7 +1,23 @@
 [gd_scene format=3 uid="uid://hg0c74infprn"]
 
+[ext_resource type="Shader" uid="uid://dtrv840l1mpae" path="res://Scenes/ResultScene/result_scene.gdshader" id="1_htgbc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_htgbc"]
+shader = ExtResource("1_htgbc")
+shader_parameter/blur_strength = 1.2
+shader_parameter/tint_color = Vector4(0.92, 0.72, 0.36, 0.18)
+
 [node name="StartScene" type="Control" unique_id=1729287461]
 layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=806038134]
+material = SubResource("ShaderMaterial_htgbc")
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
