@@ -10,7 +10,7 @@ public class Player(string name)
     public int Money { get; set; } = 5;
 
     // TODO: change initial position back to 0 after test phase
-    public int TimePosition { get; set; } = 49;
+    public int TimePosition { get; set; } = 0;
 
     public PatchBoard PatchBoard { get; } = new();
 
