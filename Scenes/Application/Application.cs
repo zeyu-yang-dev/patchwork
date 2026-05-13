@@ -24,10 +24,12 @@ public partial class Application : Control
 		
 		_gameScene.Initialize(_rootService);
 		_resultScene.Initialize(_rootService);
-		_startScene.Initialize(_rootService);
 		_resultScene._replayButton.Pressed += OnReplayButtonPressed;
 		_resultScene._exitButton.Pressed += OnExitButtonPressed;
-
+		_startScene.Initialize(_rootService);
+		_startScene._startButton.Pressed += OnStartButtonPressed;
+		_startScene._exitButton.Pressed += OnExitButtonPressed;
+		
 		_startScene.Visible = true;
 		_gameScene.Visible = true;
 		_resultScene.Visible = false;
@@ -59,5 +61,10 @@ public partial class Application : Control
 	private void OnExitButtonPressed()
 	{
 		GetTree().Quit();
+	}
+
+	private void OnStartButtonPressed()
+	{
+		_rootService.GameService.StartNewGame(FirstPlayerName, SecondPlayerName);
 	}
 }
