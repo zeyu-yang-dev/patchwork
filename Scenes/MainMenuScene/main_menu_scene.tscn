@@ -1,24 +1,24 @@
 [gd_scene format=3 uid="uid://hg0c74infprn"]
 
-[ext_resource type="Shader" uid="uid://dtrv840l1mpae" path="res://Scenes/ResultScene/result_scene.gdshader" id="1_htgbc"]
-[ext_resource type="Script" uid="uid://bx84vpgawlksp" path="res://Scenes/StartScene/StartScene.cs" id="1_v8dw6"]
-[ext_resource type="Texture2D" uid="uid://dr1pami371rdb" path="res://Assets/StartScene/background.png" id="2_t1k6b"]
-[ext_resource type="Texture2D" uid="uid://cipc5bn3konek" path="res://Assets/StartScene/start_btn_texture.png" id="3_3jcyc"]
-[ext_resource type="Texture2D" uid="uid://b8c1up6c6d2q5" path="res://Assets/ResultScene/exit_btn_texture.png" id="4_v8dw6"]
+[ext_resource type="Script" uid="uid://bx84vpgawlksp" path="res://Scenes/MainMenuScene/MainMenuScene.cs" id="1_cktwe"]
+[ext_resource type="Shader" uid="uid://dtrv840l1mpae" path="res://Scenes/ResultScene/result_scene.gdshader" id="2_2ojsq"]
+[ext_resource type="Texture2D" uid="uid://dr1pami371rdb" path="res://Assets/StartScene/background.png" id="3_a7etm"]
+[ext_resource type="Texture2D" uid="uid://cipc5bn3konek" path="res://Assets/StartScene/start_btn_texture.png" id="4_mxhv7"]
+[ext_resource type="Texture2D" uid="uid://b8c1up6c6d2q5" path="res://Assets/ResultScene/exit_btn_texture.png" id="5_3i8xp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_htgbc"]
-shader = ExtResource("1_htgbc")
+shader = ExtResource("2_2ojsq")
 shader_parameter/blur_strength = 1.2
 shader_parameter/tint_color = Vector4(0.92, 0.72, 0.36, 0.18)
 
-[node name="StartScene" type="Control" unique_id=1729287461]
+[node name="MainMenuScene" type="Control" unique_id=1729287461]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_v8dw6")
+script = ExtResource("1_cktwe")
 
 [node name="Overlay" type="ColorRect" parent="." unique_id=806038134]
 material = SubResource("ShaderMaterial_htgbc")
@@ -45,7 +45,7 @@ grow_vertical = 2
 
 [node name="Background" type="TextureRect" parent="Window" unique_id=1557713893]
 layout_mode = 2
-texture = ExtResource("2_t1k6b")
+texture = ExtResource("3_a7etm")
 
 [node name="MarginContainer" type="MarginContainer" parent="Window" unique_id=261659891]
 layout_mode = 2
@@ -131,13 +131,13 @@ alignment = 1
 [node name="StartButton" type="TextureButton" parent="Window/MarginContainer/VBoxContainer/Buttons" unique_id=1950563864]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
-texture_normal = ExtResource("3_3jcyc")
+texture_normal = ExtResource("4_mxhv7")
 ignore_texture_size = true
 stretch_mode = 0
 
 [node name="ExitButton" type="TextureButton" parent="Window/MarginContainer/VBoxContainer/Buttons" unique_id=38530140]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
-texture_normal = ExtResource("4_v8dw6")
+texture_normal = ExtResource("5_3i8xp")
 ignore_texture_size = true
 stretch_mode = 0

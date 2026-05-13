@@ -4,9 +4,9 @@ using Patchwork.Service;
 using System;
 using System.Linq;
 
-namespace Patchwork.Scenes.StartScene;
+namespace Patchwork.Scenes.MainMenuScene;
 
-public partial class StartScene : Control
+public partial class MainMenuScene : Control
 {
 	private RootService _rootService;
 	public TextureButton _startButton;

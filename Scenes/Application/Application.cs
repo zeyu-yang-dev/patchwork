@@ -11,7 +11,7 @@ public partial class Application : Control
 	private RootService _rootService;
 	private Patchwork.Scenes.GameScene.GameScene _gameScene;
 	private Patchwork.Scenes.ResultScene.ResultScene _resultScene;
-	private Patchwork.Scenes.StartScene.StartScene _startScene;
+	private Patchwork.Scenes.MainMenuScene.MainMenuScene _mainMenuScene;
 	
 	public override void _Ready()
 	{
@@ -20,17 +20,17 @@ public partial class Application : Control
 		
 		_gameScene = GetNode<Patchwork.Scenes.GameScene.GameScene>("GameScene");
 		_resultScene = GetNode<Patchwork.Scenes.ResultScene.ResultScene>("ResultScene");
-		_startScene = GetNode<Patchwork.Scenes.StartScene.StartScene>("StartScene");
+		_mainMenuScene = GetNode<Patchwork.Scenes.MainMenuScene.MainMenuScene>("MainMenuScene");
 		
 		_gameScene.Initialize(_rootService);
 		_resultScene.Initialize(_rootService);
 		_resultScene._replayButton.Pressed += OnReplayButtonPressed;
 		_resultScene._exitButton.Pressed += OnExitButtonPressed;
-		_startScene.Initialize(_rootService);
-		_startScene._startButton.Pressed += OnStartButtonPressed;
-		_startScene._exitButton.Pressed += OnExitButtonPressed;
+		_mainMenuScene.Initialize(_rootService);
+		_mainMenuScene._startButton.Pressed += OnStartButtonPressed;
+		_mainMenuScene._exitButton.Pressed += OnExitButtonPressed;
 		
-		_startScene.Visible = true;
+		_mainMenuScene.Visible = true;
 		_gameScene.Visible = true;
 		_resultScene.Visible = false;
 		
