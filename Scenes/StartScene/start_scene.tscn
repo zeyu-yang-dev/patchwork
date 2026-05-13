@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://hg0c74infprn"]
 
 [ext_resource type="Shader" uid="uid://dtrv840l1mpae" path="res://Scenes/ResultScene/result_scene.gdshader" id="1_htgbc"]
+[ext_resource type="Script" uid="uid://bx84vpgawlksp" path="res://Scenes/StartScene/StartScene.cs" id="1_v8dw6"]
 [ext_resource type="Texture2D" uid="uid://dr1pami371rdb" path="res://Assets/StartScene/background.png" id="2_t1k6b"]
 [ext_resource type="Texture2D" uid="uid://cipc5bn3konek" path="res://Assets/StartScene/start_btn_texture.png" id="3_3jcyc"]
 [ext_resource type="Texture2D" uid="uid://b8c1up6c6d2q5" path="res://Assets/ResultScene/exit_btn_texture.png" id="4_v8dw6"]
@@ -17,6 +18,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_v8dw6")
 
 [node name="Overlay" type="ColorRect" parent="." unique_id=806038134]
 material = SubResource("ShaderMaterial_htgbc")

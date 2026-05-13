@@ -11,6 +11,7 @@ public partial class Application : Control
 	private RootService _rootService;
 	private Patchwork.Scenes.GameScene.GameScene _gameScene;
 	private Patchwork.Scenes.ResultScene.ResultScene _resultScene;
+	private Patchwork.Scenes.StartScene.StartScene _startScene;
 	
 	public override void _Ready()
 	{
@@ -19,9 +20,11 @@ public partial class Application : Control
 		
 		_gameScene = GetNode<Patchwork.Scenes.GameScene.GameScene>("GameScene");
 		_resultScene = GetNode<Patchwork.Scenes.ResultScene.ResultScene>("ResultScene");
+		_startScene = GetNode<Patchwork.Scenes.StartScene.StartScene>("StartScene");
 		
 		_gameScene.Initialize(_rootService);
 		_resultScene.Initialize(_rootService);
+		_startScene.Initialize(_rootService);
 		_resultScene._replayButton.Pressed += OnReplayButtonPressed;
 		_resultScene._exitButton.Pressed += OnExitButtonPressed;
 		
@@ -29,19 +32,6 @@ public partial class Application : Control
 		_resultScene.Visible = false;
 		
 		_rootService.GameService.StartNewGame(FirstPlayerName, SecondPlayerName);
-	}
-
-	private void OnReplayButtonPressed()
-	{
-		_rootService.GameService.StartNewGame(FirstPlayerName, SecondPlayerName);
-		
-		_gameScene.Visible = true;
-		_resultScene.Visible = false;
-	}
-
-	private void OnExitButtonPressed()
-	{
-		GetTree().Quit();
 	}
 	
 	private void OnGameEnded()
@@ -55,5 +45,18 @@ public partial class Application : Control
 		
 		var tween = CreateTween();
 		tween.TweenProperty(_resultScene, "modulate:a", 1.0f, 0.5f);
+	}
+
+	private void OnReplayButtonPressed()
+	{
+		_rootService.GameService.StartNewGame(FirstPlayerName, SecondPlayerName);
+		
+		_gameScene.Visible = true;
+		_resultScene.Visible = false;
+	}
+
+	private void OnExitButtonPressed()
+	{
+		GetTree().Quit();
 	}
 }
