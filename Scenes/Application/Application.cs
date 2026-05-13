@@ -27,11 +27,12 @@ public partial class Application : Control
 		_startScene.Initialize(_rootService);
 		_resultScene._replayButton.Pressed += OnReplayButtonPressed;
 		_resultScene._exitButton.Pressed += OnExitButtonPressed;
-		
+
+		_startScene.Visible = true;
 		_gameScene.Visible = true;
 		_resultScene.Visible = false;
 		
-		_rootService.GameService.StartNewGame(FirstPlayerName, SecondPlayerName);
+		// _rootService.GameService.StartNewGame(FirstPlayerName, SecondPlayerName);
 	}
 	
 	private void OnGameEnded()
