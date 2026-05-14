@@ -1,7 +1,5 @@
 using Godot;
-using Patchwork.Domain;
 using Patchwork.Service;
-using System;
 using System.Linq;
 
 namespace Patchwork.Scenes.ResultScene;
@@ -11,10 +9,9 @@ public partial class ResultScene : Control
 	private RootService _rootService;
 	private Label[][] _playerLabels;
 	private TextureRect[] _winnerLabels;
-	public TextureButton _replayButton;
-	public TextureButton _exitButton;
+	private TextureButton _replayButton;
+	private TextureButton _exitButton;
 	
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		var playersNode = GetNode<Node>("Window/MarginContainer/VBoxContainer/Players");

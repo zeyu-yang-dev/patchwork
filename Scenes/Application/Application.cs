@@ -5,9 +5,6 @@ namespace Patchwork.Scenes.Application;
 
 public partial class Application : Control
 {
-	[Export] public string FirstPlayerName { get; set; } = "Player 1";
-	[Export] public string SecondPlayerName { get; set; } = "Player 2";
-
 	private RootService _rootService;
 	private Patchwork.Scenes.GameScene.GameScene _gameScene;
 	private Patchwork.Scenes.ResultScene.ResultScene _resultScene;
