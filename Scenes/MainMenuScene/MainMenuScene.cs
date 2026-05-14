@@ -33,6 +33,8 @@ public partial class MainMenuScene : Control
 	
 	private void OnStartButtonPressed()
 	{
+		if (_textFields[0].Text == "" || _textFields[1].Text == "") return;
+		
 		_rootService.GameService.StartNewGame(_textFields[0].Text, _textFields[1].Text);
 		
 		var tween = CreateTween();

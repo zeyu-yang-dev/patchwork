@@ -9,7 +9,8 @@ public class Player(string name)
 
     public int Money { get; set; } = 5;
     
-    public int TimePosition { get; set; } = 0;
+    // TODO
+    public int TimePosition { get; set; } = 51;
 
     public PatchBoard PatchBoard { get; } = new();
 

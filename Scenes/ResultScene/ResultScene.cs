@@ -30,6 +30,9 @@ public partial class ResultScene : Control
 		var buttonsNode = GetNode<Node>("Window/MarginContainer/VBoxContainer/Buttons");
 		_replayButton = buttonsNode.GetNode<TextureButton>("ReplayButton");
 		_exitButton = buttonsNode.GetNode<TextureButton>("ExitButton");
+		
+		_replayButton.Pressed += OnReplayButtonPressed;
+		_exitButton.Pressed += OnExitButtonPressed;
 	}
 
 	public void Initialize(RootService rootService)
@@ -64,5 +67,32 @@ public partial class ResultScene : Control
 	{
 		RefreshScoreBoard();
 		RefreshWinnerLabels();
+		
+		Modulate = new Color(1, 1, 1, 0);  // transparent
+		Visible = true;
+		MoveToFront();
+		
+		// Plays fade-in animation
+		var tween = CreateTween();
+		tween.TweenProperty(this, "modulate:a", 1.0f, 1.0f);
+	}
+	
+	private void OnReplayButtonPressed()
+	{
+		var players = _rootService.CurrentGame.Players;
+		_rootService.GameService.StartNewGame(players[0].Name, players[1].Name);
+		
+		var tween = CreateTween();
+		tween.TweenProperty(this, "modulate:a", 0.0f, 1.0f);
+		
+		tween.Finished += () =>
+		{
+			Visible = false;
+		};
+	}
+	
+	private void OnExitButtonPressed()
+	{
+		GetTree().Quit();
 	}
 }
