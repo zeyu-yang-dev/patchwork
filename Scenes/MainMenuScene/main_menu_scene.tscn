@@ -69,7 +69,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Spacer01" type="Control" parent="Window/MarginContainer/VBoxContainer" unique_id=1774237488]
-custom_minimum_size = Vector2(0, 20)
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
 [node name="InputArea" type="HBoxContainer" parent="Window/MarginContainer/VBoxContainer" unique_id=699704045]
@@ -101,18 +101,18 @@ theme_override_font_sizes/font_size = 25
 text = "Player 2:"
 vertical_alignment = 1
 
-[node name="Textfields" type="VBoxContainer" parent="Window/MarginContainer/VBoxContainer/InputArea" unique_id=1951571055]
+[node name="TextFields" type="VBoxContainer" parent="Window/MarginContainer/VBoxContainer/InputArea" unique_id=1951571055]
 custom_minimum_size = Vector2(190, 0)
 layout_mode = 2
 alignment = 1
 
-[node name="LineEdit01" type="LineEdit" parent="Window/MarginContainer/VBoxContainer/InputArea/Textfields" unique_id=650182297]
+[node name="LineEdit01" type="LineEdit" parent="Window/MarginContainer/VBoxContainer/InputArea/TextFields" unique_id=650182297]
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "Martin"
 placeholder_text = "Enter Player 1 Name"
 
-[node name="LineEdit02" type="LineEdit" parent="Window/MarginContainer/VBoxContainer/InputArea/Textfields" unique_id=192960332]
+[node name="LineEdit02" type="LineEdit" parent="Window/MarginContainer/VBoxContainer/InputArea/TextFields" unique_id=192960332]
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "Erich"
@@ -121,6 +121,7 @@ placeholder_text = "Enter Player 2 Name"
 [node name="Spacer02" type="Control" parent="Window/MarginContainer/VBoxContainer" unique_id=665650379]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="Buttons" type="HBoxContainer" parent="Window/MarginContainer/VBoxContainer" unique_id=28525483]
 custom_minimum_size = Vector2(0, 40)

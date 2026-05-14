@@ -33,8 +33,6 @@ public partial class Application : Control
 		_mainMenuScene.Visible = true;
 		_gameScene.Visible = true;
 		_resultScene.Visible = false;
-		
-		// _rootService.GameService.StartNewGame(FirstPlayerName, SecondPlayerName);
 	}
 	
 	private void OnGameEnded()
@@ -63,6 +61,9 @@ public partial class Application : Control
 
 	private void OnStartButtonPressed()
 	{
+		FirstPlayerName = _mainMenuScene._textFields[0].Text;
+		SecondPlayerName = _mainMenuScene._textFields[1].Text;
+		
 		_rootService.GameService.StartNewGame(FirstPlayerName, SecondPlayerName);
 		
 		var tween = CreateTween();
