@@ -27,8 +27,6 @@ public partial class Application : Control
 		_resultScene._replayButton.Pressed += OnReplayButtonPressed;
 		_resultScene._exitButton.Pressed += OnExitButtonPressed;
 		_mainMenuScene.Initialize(_rootService);
-		_mainMenuScene._startButton.Pressed += OnStartButtonPressed;
-		_mainMenuScene._exitButton.Pressed += OnExitButtonPressed;
 		
 		_mainMenuScene.Visible = true;
 		_gameScene.Visible = true;
@@ -57,21 +55,5 @@ public partial class Application : Control
 	private void OnExitButtonPressed()
 	{
 		GetTree().Quit();
-	}
-
-	private void OnStartButtonPressed()
-	{
-		FirstPlayerName = _mainMenuScene._textFields[0].Text;
-		SecondPlayerName = _mainMenuScene._textFields[1].Text;
-		
-		_rootService.GameService.StartNewGame(FirstPlayerName, SecondPlayerName);
-		
-		var tween = CreateTween();
-		tween.TweenProperty(_mainMenuScene, "modulate:a", 0.0f, 1.0f);
-		
-		tween.Finished += () =>
-		{
-			_mainMenuScene.Visible = false;
-		};
 	}
 }

@@ -9,9 +9,9 @@ namespace Patchwork.Scenes.MainMenuScene;
 public partial class MainMenuScene : Control
 {
 	private RootService _rootService;
-	public LineEdit[] _textFields;
-	public TextureButton _startButton;
-	public TextureButton _exitButton;
+	private LineEdit[] _textFields;
+	private TextureButton _startButton;
+	private TextureButton _exitButton;
 	
 	public override void _Ready()
 	{
@@ -21,12 +21,31 @@ public partial class MainMenuScene : Control
 		var buttonsNode = GetNode<Node>("Window/MarginContainer/VBoxContainer/Buttons");
 		_startButton = buttonsNode.GetNode<TextureButton>("StartButton");
 		_exitButton = buttonsNode.GetNode<TextureButton>("ExitButton");
+
+		_startButton.Pressed += OnStartButtonPressed;
+		_exitButton.Pressed += OnExitButtonPressed;
 	}
 	
 	public void Initialize(RootService rootService)
 	{
 		_rootService = rootService;
 	}
-
 	
+	private void OnStartButtonPressed()
+	{
+		_rootService.GameService.StartNewGame(_textFields[0].Text, _textFields[1].Text);
+		
+		var tween = CreateTween();
+		tween.TweenProperty(this, "modulate:a", 0.0f, 1.0f);
+		
+		tween.Finished += () =>
+		{
+			Visible = false;
+		};
+	}
+
+	private void OnExitButtonPressed()
+	{
+		GetTree().Quit();
+	}
 }
