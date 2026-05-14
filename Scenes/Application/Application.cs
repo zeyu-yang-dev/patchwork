@@ -39,15 +39,13 @@ public partial class Application : Control
 	
 	private void OnGameEnded()
 	{
-		_gameScene.Visible = true;
-		
 		_resultScene.Visible = true;
 		_resultScene.Modulate = new Color(1, 1, 1, 0);
 		
 		_resultScene.MoveToFront();
 		
 		var tween = CreateTween();
-		tween.TweenProperty(_resultScene, "modulate:a", 1.0f, 0.5f);
+		tween.TweenProperty(_resultScene, "modulate:a", 1.0f, 1.0f);
 	}
 
 	private void OnReplayButtonPressed()
@@ -66,5 +64,13 @@ public partial class Application : Control
 	private void OnStartButtonPressed()
 	{
 		_rootService.GameService.StartNewGame(FirstPlayerName, SecondPlayerName);
+		
+		var tween = CreateTween();
+		tween.TweenProperty(_mainMenuScene, "modulate:a", 0.0f, 1.0f);
+		
+		tween.Finished += () =>
+		{
+			_mainMenuScene.Visible = false;
+		};
 	}
 }
