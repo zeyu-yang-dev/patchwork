@@ -1,7 +1,5 @@
 using Godot;
-using Patchwork.Domain;
 using Patchwork.Service;
-using System;
 using System.Linq;
 
 namespace Patchwork.Scenes.ResultScene;
@@ -11,10 +9,9 @@ public partial class ResultScene : Control
 	private RootService _rootService;
 	private Label[][] _playerLabels;
 	private TextureRect[] _winnerLabels;
-	public TextureButton _replayButton;
-	public TextureButton _exitButton;
+	private TextureButton _replayButton;
+	private TextureButton _exitButton;
 	
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		var playersNode = GetNode<Node>("Window/MarginContainer/VBoxContainer/Players");
@@ -30,6 +27,9 @@ public partial class ResultScene : Control
 		var buttonsNode = GetNode<Node>("Window/MarginContainer/VBoxContainer/Buttons");
 		_replayButton = buttonsNode.GetNode<TextureButton>("ReplayButton");
 		_exitButton = buttonsNode.GetNode<TextureButton>("ExitButton");
+		
+		_replayButton.Pressed += OnReplayButtonPressed;
+		_exitButton.Pressed += OnExitButtonPressed;
 	}
 
 	public void Initialize(RootService rootService)
@@ -64,5 +64,32 @@ public partial class ResultScene : Control
 	{
 		RefreshScoreBoard();
 		RefreshWinnerLabels();
+		
+		Modulate = new Color(1, 1, 1, 0);  // transparent
+		Visible = true;
+		MoveToFront();
+		
+		// Plays fade-in animation
+		var tween = CreateTween();
+		tween.TweenProperty(this, "modulate:a", 1.0f, 1.0f);
+	}
+	
+	private void OnReplayButtonPressed()
+	{
+		var players = _rootService.CurrentGame.Players;
+		_rootService.GameService.StartNewGame(players[0].Name, players[1].Name);
+		
+		var tween = CreateTween();
+		tween.TweenProperty(this, "modulate:a", 0.0f, 1.0f);
+		
+		tween.Finished += () =>
+		{
+			Visible = false;
+		};
+	}
+	
+	private void OnExitButtonPressed()
+	{
+		GetTree().Quit();
 	}
 }

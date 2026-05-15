@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c1nnxejfi7c73" path="res://Scenes/ResultScene/ResultScene.cs" id="1_apdpj"]
 [ext_resource type="Texture2D" uid="uid://bi1x521r3axxk" path="res://Assets/ResultScene/winner_texture.png" id="2_2lfqs"]
-[ext_resource type="Shader" uid="uid://dtrv840l1mpae" path="res://Scenes/ResultScene/result_scene.gdshader" id="2_i4sgj"]
+[ext_resource type="Shader" uid="uid://dtrv840l1mpae" path="res://Scenes/ResultScene/menu_scene_shader.gdshader" id="2_i4sgj"]
 [ext_resource type="Texture2D" uid="uid://dmxim1w5m12tj" path="res://Assets/ResultScene/background.png" id="2_y7n8y"]
 [ext_resource type="Texture2D" uid="uid://dhtcfkmhic7yf" path="res://Assets/ResultScene/replay_btn_texture.png" id="3_bvdfd"]
 [ext_resource type="Texture2D" uid="uid://b8c1up6c6d2q5" path="res://Assets/ResultScene/exit_btn_texture.png" id="4_y7n8y"]
@@ -29,7 +29,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0)
 
 [node name="Window" type="PanelContainer" parent="." unique_id=84749878]
 layout_mode = 1

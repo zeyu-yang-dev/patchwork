@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://iji7yc53flpu" path="res://Scenes/Application/Application.cs" id="1_7x5g7"]
 [ext_resource type="PackedScene" uid="uid://13sfseu7pmqx" path="res://Scenes/GameScene/game_scene.tscn" id="2_v1c1n"]
 [ext_resource type="PackedScene" uid="uid://b84lhv3efp2w2" path="res://Scenes/ResultScene/result_scene.tscn" id="3_wvjdg"]
+[ext_resource type="PackedScene" uid="uid://hg0c74infprn" path="res://Scenes/MainMenuScene/main_menu_scene.tscn" id="4_7yxgi"]
 
 [node name="Application" type="Control" unique_id=403480248]
 layout_mode = 3
@@ -17,4 +18,7 @@ script = ExtResource("1_7x5g7")
 layout_mode = 1
 
 [node name="ResultScene" parent="." unique_id=1932748331 instance=ExtResource("3_wvjdg")]
+layout_mode = 1
+
+[node name="MainMenuScene" parent="." unique_id=1729287461 instance=ExtResource("4_7yxgi")]
 layout_mode = 1

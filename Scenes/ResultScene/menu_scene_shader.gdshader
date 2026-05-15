@@ -14,5 +14,8 @@ void fragment() {
     col += texture(screen_texture, uv + vec2(0.0, px.y)) * 0.15;
     col += texture(screen_texture, uv - vec2(0.0, px.y)) * 0.15;
 
-    COLOR = mix(col, tint_color, tint_color.a);
+    vec4 final_color = mix(col, tint_color, tint_color.a);
+    final_color.a *= COLOR.a;
+
+    COLOR = final_color;
 }

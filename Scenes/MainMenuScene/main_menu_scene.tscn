@@ -1,0 +1,144 @@
+[gd_scene format=3 uid="uid://hg0c74infprn"]
+
+[ext_resource type="Script" uid="uid://bx84vpgawlksp" path="res://Scenes/MainMenuScene/MainMenuScene.cs" id="1_cktwe"]
+[ext_resource type="Shader" uid="uid://dtrv840l1mpae" path="res://Scenes/ResultScene/menu_scene_shader.gdshader" id="2_2ojsq"]
+[ext_resource type="Texture2D" uid="uid://dr1pami371rdb" path="res://Assets/StartScene/background.png" id="3_a7etm"]
+[ext_resource type="Texture2D" uid="uid://cipc5bn3konek" path="res://Assets/StartScene/start_btn_texture.png" id="4_mxhv7"]
+[ext_resource type="Texture2D" uid="uid://b8c1up6c6d2q5" path="res://Assets/ResultScene/exit_btn_texture.png" id="5_3i8xp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_htgbc"]
+shader = ExtResource("2_2ojsq")
+shader_parameter/blur_strength = 1.2
+shader_parameter/tint_color = Vector4(0.92, 0.72, 0.36, 0.18)
+
+[node name="MainMenuScene" type="Control" unique_id=1729287461]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cktwe")
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=806038134]
+material = SubResource("ShaderMaterial_htgbc")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Window" type="PanelContainer" parent="." unique_id=393698111]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -225.0
+offset_right = 400.0
+offset_bottom = 225.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="Window" unique_id=1557713893]
+layout_mode = 2
+texture = ExtResource("3_a7etm")
+
+[node name="MarginContainer" type="MarginContainer" parent="Window" unique_id=261659891]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Window/MarginContainer" unique_id=1494707469]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Window/MarginContainer/VBoxContainer" unique_id=529964272]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.5489626, 0.5489626, 0.54896253, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 42
+text = "PATCHWORK"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer01" type="Control" parent="Window/MarginContainer/VBoxContainer" unique_id=1774237488]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="InputArea" type="HBoxContainer" parent="Window/MarginContainer/VBoxContainer" unique_id=699704045]
+layout_mode = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="FixItems" type="VBoxContainer" parent="Window/MarginContainer/VBoxContainer/InputArea" unique_id=1001875720]
+layout_mode = 2
+alignment = 1
+
+[node name="FixName01" type="Label" parent="Window/MarginContainer/VBoxContainer/InputArea/FixItems" unique_id=349601103]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.5489626, 0.5489626, 0.54896253, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 25
+text = "Player 1:"
+vertical_alignment = 1
+
+[node name="FixName02" type="Label" parent="Window/MarginContainer/VBoxContainer/InputArea/FixItems" unique_id=547961955]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.5489626, 0.5489626, 0.54896253, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 25
+text = "Player 2:"
+vertical_alignment = 1
+
+[node name="TextFields" type="VBoxContainer" parent="Window/MarginContainer/VBoxContainer/InputArea" unique_id=1951571055]
+custom_minimum_size = Vector2(190, 0)
+layout_mode = 2
+alignment = 1
+
+[node name="LineEdit01" type="LineEdit" parent="Window/MarginContainer/VBoxContainer/InputArea/TextFields" unique_id=650182297]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Martin"
+placeholder_text = "Enter Player 1 Name"
+
+[node name="LineEdit02" type="LineEdit" parent="Window/MarginContainer/VBoxContainer/InputArea/TextFields" unique_id=192960332]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Erich"
+placeholder_text = "Enter Player 2 Name"
+
+[node name="Spacer02" type="Control" parent="Window/MarginContainer/VBoxContainer" unique_id=665650379]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Buttons" type="HBoxContainer" parent="Window/MarginContainer/VBoxContainer" unique_id=28525483]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_constants/separation = 60
+alignment = 1
+
+[node name="StartButton" type="TextureButton" parent="Window/MarginContainer/VBoxContainer/Buttons" unique_id=1950563864]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+texture_normal = ExtResource("4_mxhv7")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="ExitButton" type="TextureButton" parent="Window/MarginContainer/VBoxContainer/Buttons" unique_id=38530140]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+texture_normal = ExtResource("5_3i8xp")
+ignore_texture_size = true
+stretch_mode = 0
