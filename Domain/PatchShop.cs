@@ -127,7 +127,7 @@ public class PatchShop
         }
 
         // TODO: uncomment after test phase
-        // Random.Shared.Shuffle(CollectionsMarshal.AsSpan(patches));
+        Random.Shared.Shuffle(CollectionsMarshal.AsSpan(patches));
 
         return patches;
     }
